@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userID String @id @db.Char(26)
+  name String
+  surname String
+
+  // NOTE: Foreign key "links"
+  credential Credentials[]
+  plantation Plantation[]
+}
+
+model Credentials {
+  email String @id
+  password String
+  githubID String?
+  googleID String?
+  userID String @unique @db.Char(26)
+  // NOTE: Foreign key (1:N relation with `User` table)
+  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
+}
+
+model Plantation {
+  plantationID Int @id @default(autoincrement())
+  location String?
+  userID String @db.Char(26)
+  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
+
+  plantation_plant Plantation_Plant[]
+}
+
+model Plant {
+  plantID Int @id @default(autoincrement())
+  plantName String
+  plantFamily String?
+  plantDescription String?
+  suggestedTemperature Int?
+  scientificName String
+
+  plant_treatment Plant_Treatment[]
+  plantation_plant Plantation_Plant[]
+}
+
+model Treatment {
+  treatmentID Int @id @default(autoincrement())
+  treatmentType String
+
+  plant_treatment Plant_Treatment[]
+}
+
+model Plant_Treatment {
+  plantTreatmentID Int @id @default(autoincrement())
+  treatmentNotes String?
+  treatmentDate DateTime
+  // NOTE: `treatmentTimesRecurrence` and `treatmentDaysRecurrence` have value checks to be higher than 0
+  treatmentTimesRecurrence Int @default(dbgenerated("1"))
+  treatmentDaysRecurrence Int?
+  treatmentID Int
+  plantID Int
+
+  treatment Treatment @relation(fields: [treatmentID], references: [treatmentID], onDelete: Cascade)
+  plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
+}
+
+model Plantation_Plant {
+  plantationPlantID Int @id @default(autoincrement())
+  plantationID Int
+  plantID Int
+
+  plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
+  plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
+}
