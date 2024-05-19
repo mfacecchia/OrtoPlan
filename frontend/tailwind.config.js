@@ -31,7 +31,11 @@ module.exports = {
     ]
   },
   theme: {
-    extend: {}
+    extend: {
+      backgroundImage: {
+        'navbar': 'url("../assets/icons/navbar.webp")'
+      }
+    }
   },
   plugins: [require("daisyui")]
 };

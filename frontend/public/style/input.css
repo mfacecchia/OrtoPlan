@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+    nav{
+        @apply w-full overflow-hidden flex justify-between box-border px-3 py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
+    }
+    nav img{
+        @apply h-6;
+    }
+    nav div{
+        @apply space-x-3
+    }
+}
