@@ -17,11 +17,14 @@
     *{
         @apply scroll-smooth;
     }
+    body{
+        @apply overflow-x-clip min-h-screen relative;
+    }
     h1{
         @apply text-2xl;
     }
     p{
-        @apply text-base;
+        @apply text-base leading-tight;
     }
     nav{
         @apply w-full overflow-hidden flex justify-between box-border px-3 py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
@@ -40,5 +43,11 @@
 @layer components{
     .green-line{
         @apply border-none h-1 rounded-full bg-primary;
+    }
+    .bigger-text{
+        @apply text-4xl
+    }
+    .app-description h1{
+        @apply bigger-text text-secondary w-3/4 font-bold mb-5;
     }
 }

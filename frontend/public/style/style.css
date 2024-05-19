@@ -503,6 +503,11 @@ html {
     * {
   scroll-behavior: smooth;
 }
+    body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: clip;
+}
     h1 {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -510,6 +515,7 @@ html {
     p {
   font-size: 1rem;
   line-height: 1.5rem;
+  line-height: 1.25;
 }
     nav {
   box-sizing: border-box;
@@ -772,53 +778,39 @@ html {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
 }
+.app-description h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-bottom: 1.25rem;
+  width: 75%;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
+}
 .static {
   position: static;
 }
-.absolute {
-  position: absolute;
-}
-.relative {
-  position: relative;
-}
-.left-0 {
-  left: 0px;
-}
-.bottom-0 {
-  bottom: 0px;
+.my-11 {
+  margin-top: 2.75rem;
+  margin-bottom: 2.75rem;
 }
 .flex {
   display: flex;
 }
-.h-\[1000px\] {
-  height: 1000px;
-}
-.h-\[200\%\] {
-  height: 200%;
+.w-40 {
+  width: 10rem;
 }
 .w-5\/6 {
   width: 83.333333%;
 }
-.w-40 {
-  width: 10rem;
-}
-.w-\[200\%\] {
-  width: 200%;
-}
-.w-\[400\%\] {
-  width: 400%;
-}
-.w-\[1000\%\] {
-  width: 1000%;
-}
-.w-\[1000px\] {
-  width: 1000px;
-}
-.w-11 {
-  width: 2.75rem;
-}
 .w-\[300\%\] {
   width: 300%;
+}
+.w-full {
+  width: 100%;
+}
+.w-32 {
+  width: 8rem;
 }
 .max-w-none {
   max-width: none;
@@ -854,6 +846,7 @@ html {
 .text-center {
   text-align: center;
 }
-.leading-tight {
-  line-height: 1.25;
+.text-primary {
+  --tw-text-opacity: 1;
+  color: var(--fallback-p,oklch(var(--p)/var(--tw-text-opacity)));
 }
