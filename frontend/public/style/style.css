@@ -504,8 +504,8 @@ html {
   scroll-behavior: smooth;
 }
     h1 {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
     p {
   font-size: 1rem;
@@ -692,6 +692,14 @@ html {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
+:where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):not(summary, .active, .btn).focus, :where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):not(summary, .active, .btn):focus, :where(.menu li:not(.menu-title, .disabled) > *:not(ul, details, .menu-title)):is(summary):not(.active, .btn):focus-visible, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):not(summary, .active, .btn).focus, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):not(summary, .active, .btn):focus, :where(.menu li:not(.menu-title, .disabled) > details > summary:not(.menu-title)):is(summary):not(.active, .btn):focus-visible {
+  cursor: pointer;
+  background-color: var(--fallback-bc,oklch(var(--bc)/0.1));
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
 @keyframes modal-pop {
 
   0% {
@@ -757,11 +765,79 @@ html {
     opacity: 1;
   }
 }
+.green-line {
+  height: 0.25rem;
+  border-radius: 9999px;
+  border-style: none;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
+}
 .static {
   position: static;
 }
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.left-0 {
+  left: 0px;
+}
+.bottom-0 {
+  bottom: 0px;
+}
 .flex {
   display: flex;
+}
+.h-\[1000px\] {
+  height: 1000px;
+}
+.h-\[200\%\] {
+  height: 200%;
+}
+.w-5\/6 {
+  width: 83.333333%;
+}
+.w-40 {
+  width: 10rem;
+}
+.w-\[200\%\] {
+  width: 200%;
+}
+.w-\[400\%\] {
+  width: 400%;
+}
+.w-\[1000\%\] {
+  width: 1000%;
+}
+.w-\[1000px\] {
+  width: 1000px;
+}
+.w-11 {
+  width: 2.75rem;
+}
+.w-\[300\%\] {
+  width: 300%;
+}
+.max-w-none {
+  max-width: none;
+}
+.origin-center {
+  transform-origin: center;
+}
+@keyframes showHideAnim {
+
+  0%, 30% {
+    transform: scaleX(0);;
+  }
+
+  80% {
+    transform: scaleX(100%);;
+  }
+}
+.animate-showHide {
+  animation: showHideAnim 2s ease-in-out infinite alternate;
 }
 .flex-col {
   flex-direction: column;
@@ -771,4 +847,13 @@ html {
 }
 .justify-center {
   justify-content: center;
+}
+.gap-y-5 {
+  row-gap: 1.25rem;
+}
+.text-center {
+  text-align: center;
+}
+.leading-tight {
+  line-height: 1.25;
 }

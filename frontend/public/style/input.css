@@ -18,7 +18,7 @@
         @apply scroll-smooth;
     }
     h1{
-        @apply text-xl;
+        @apply text-2xl;
     }
     p{
         @apply text-base;
@@ -34,5 +34,11 @@
     }
     section{
         @apply w-full box-border px-3 py-11;
+    }
+}
+
+@layer components{
+    .green-line{
+        @apply border-none h-1 rounded-full bg-primary;
     }
 }
