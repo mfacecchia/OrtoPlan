@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 @layer base{
+    @font-face {
+        font-family: 'AdobeClean';
+        src: url(../assets/fonts/AdobeClean-SemiLight.otf) format("opentype");
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'AdobeClean';
+        src: url(../assets/fonts/AdobeClean-Bold.otf) format("opentype");
+        font-display: swap;
+        font-weight: bold;
+    }
+    *{
+        @apply scroll-smooth;
+    }
+    h1{
+        @apply text-xl;
+    }
+    p{
+        @apply text-base;
+    }
     nav{
         @apply w-full overflow-hidden flex justify-between box-border px-3 py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
     }
@@ -11,5 +31,8 @@
     }
     nav div{
         @apply space-x-3
+    }
+    section{
+        @apply w-full box-border px-3 py-11;
     }
 }

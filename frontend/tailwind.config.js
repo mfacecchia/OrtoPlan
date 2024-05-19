@@ -34,8 +34,11 @@ module.exports = {
     extend: {
       backgroundImage: {
         'navbar': 'url("../assets/icons/navbar.webp")'
+      },
+      fontFamily: {
+        "sans": ["AdobeClean", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
       }
-    }
+    },
   },
   plugins: [require("daisyui")]
 };
