@@ -83,3 +83,5 @@ model Plantation_Plant {
   plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
   plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
 }
+
+// TODO: Add notifications model
