@@ -37,6 +37,19 @@ module.exports = {
       },
       fontFamily: {
         "sans": ["AdobeClean", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
+      },
+      animation: {
+        'showHide': 'showHideAnim 2s ease-in-out infinite alternate'
+      },
+      keyframes: {
+        'showHideAnim': {
+          '0%, 30%': {
+            transform: 'scaleX(0);'
+          },
+          '80%': {
+            transform: 'scaleX(100%);'
+          }
+        }
       }
     },
   },
