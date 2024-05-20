@@ -17,6 +17,10 @@ app.get('/signup', (req, res) => {
     res.render('pages/signup');
 });
 
+app.get('/user/plantations', (req, res) => {
+    res.render('pages/plantationsScreening');
+})
+
 app.listen(5500, () => {
     console.log("Pong.");
 });
