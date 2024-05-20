@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+    <%- include('../partials/head.partial.ejs') %>
+    <body>
+        <%- include('../partials/nav.partial.ejs', {isSignupPage: true}) %>
+        <section class = "m-auto flex flex-col justify-center items-center">
+            <b>Welcome</b>
+            <div class = "flex-col-container">
+                <h1 class = "bigger-text text-secondary font-bold">SIGN-UP</h1>
+                <hr class = "animate-showHide w-20 green-line">
+            </div>
+            <form class = "mt-5" id = "userSignup" method = "post">
+                <div class="join">
+                    <input type = "text" name = "firstName" placeholder = "First Name" required>
+                    <input type = "text" name = "lastName" placeholder = "Last name" required>
+                </div>
+                <input type = "email" name = "email" placeholder = "Email*" required>
+                <input type = "password" name = "password" placeholder = "Password*" required>
+                <button type = "submit">Join us</button>
+            </form>
+        </section>
+        <%- include('../partials/footer.partial.ejs') %>
+    </body>
+</html>

@@ -2,7 +2,7 @@
     <a href = "/"><img src = "assets/icons/favicon_wide.svg"></a>
 
     <div>
-        <a href = "" title = "Create an account">Sign-up</a>
+        <a <% if(typeof isSignupPage !== 'undefined'){ %> class = "text-primary" <% } %> href = "/signup" title = "Create an account">Sign-up</a>
         <a <% if(typeof isLoginPage !== 'undefined'){ %> class = "text-primary" <% } %> href = "/login" title = "Log-in into your account">Log-in</a>
     </div>
 </nav>

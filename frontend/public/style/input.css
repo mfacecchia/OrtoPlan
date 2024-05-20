@@ -68,6 +68,12 @@
     form button[type="submit"]{
         @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3;
     }
+    form .join input:first-child{
+        @apply rounded-r-none;
+    }
+    form .join input:last-child{
+        @apply rounded-l-none;
+    }
 }
 
 @layer components{

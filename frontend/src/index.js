@@ -13,6 +13,10 @@ app.get('/login', (req, res) => {
     res.render('pages/login');
 });
 
+app.get('/signup', (req, res) => {
+    res.render('pages/signup');
+});
+
 app.listen(5500, () => {
     console.log("Pong.");
 });
