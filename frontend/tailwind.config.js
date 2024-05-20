@@ -33,7 +33,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'navbar': 'url("../assets/icons/navbar.webp")'
+        'navbar': 'url("../assets/icons/navbar.webp")',
+        'footer': 'url("../assets/icons/footer.webp")'
       },
       fontFamily: {
         "sans": ["AdobeClean", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]

@@ -38,6 +38,12 @@
     nav div{
         @apply space-x-3
     }
+    footer{
+        @apply w-full py-7 bg-footer bg-cover bg-no-repeat flex items-center justify-start gap-5 text-base-100;
+    }
+    footer img{
+        @apply size-11;
+    }
     section{
         @apply w-full py-11;
     }

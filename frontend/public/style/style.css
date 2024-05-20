@@ -544,6 +544,24 @@ html {
   margin-right: calc(0.75rem * var(--tw-space-x-reverse));
   margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
+    footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  background-image: url("../assets/icons/footer.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+  --tw-text-opacity: 1;
+  color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity)));
+}
+    footer img {
+  width: 2.75rem;
+  height: 2.75rem;
+}
     section {
   width: 100%;
   padding-top: 2.75rem;
