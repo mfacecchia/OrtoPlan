@@ -839,11 +839,10 @@ html {
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
 }
 .reviewCards {
-  display: flex;
+  display: grid;
   width: 100%;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  place-items: center;
   gap: 1.25rem;
 }
 .review {
@@ -892,6 +891,9 @@ html {
   margin-top: 2.75rem;
   margin-bottom: 2.75rem;
 }
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
 .flex {
   display: flex;
 }
@@ -903,6 +905,9 @@ html {
 }
 .w-full {
   width: 100%;
+}
+.w-36 {
+  width: 9rem;
 }
 .origin-center {
   transform-origin: center;

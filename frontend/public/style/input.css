@@ -69,7 +69,7 @@
         @apply bigger-text text-secondary w-3/4 font-bold;
     }
     .reviewCards{
-        @apply w-full flex flex-wrap justify-center items-center gap-5;
+        @apply w-full grid grid-cols-1 place-items-center gap-5;
     }
     .review{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
