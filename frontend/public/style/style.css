@@ -807,6 +807,9 @@ html {
 .w-full {
   width: 100%;
 }
+.w-5\/6 {
+  width: 83.333333%;
+}
 .origin-center {
   transform-origin: center;
 }
