@@ -38,8 +38,11 @@
     section{
         @apply w-full box-border px-3 py-11;
     }
+    img{
+        @apply max-w-none;
+    }
     img[src="assets/icons/grass.webp"]{
-        @apply w-[300%] max-w-none;
+        @apply w-[300%];
     }
 }
 
@@ -50,7 +53,25 @@
     .bigger-text{
         @apply text-4xl
     }
+    .app-description div{
+        @apply mb-5;
+    }
     .app-description h1{
-        @apply bigger-text text-secondary w-3/4 font-bold mb-5;
+        @apply bigger-text text-secondary w-3/4 font-bold;
+    }
+    .reviewCards{
+        @apply w-full flex flex-wrap justify-center items-center gap-5;
+    }
+    .review{
+        @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
+    }
+    .review figure{
+        @apply flex justify-center h-40 shadow-md;
+    }
+    .review .reviewContent{
+        @apply space-y-1 box-border px-3 text-left;
+    }
+    .reviewContent h2{
+        @apply font-bold text-xl;
     }
 }
