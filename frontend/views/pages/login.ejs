@@ -3,7 +3,19 @@
 <html lang = "en">
     <%- include('../partials/head.partial.ejs') %>
     <body>
-        <%- include('../partials/nav.partial.ejs') %>
+        <%- include('../partials/nav.partial.ejs', {isLoginPage: true}) %>
+        <section class = "m-auto flex flex-col justify-center items-center">
+            <b>Welcome back</b>
+            <div class = "flex-col-container">
+                <h1 class = "bigger-text text-secondary font-bold">Log-in</h1>
+                <hr class = "animate-showHide w-16 green-line">
+            </div>
+            <form class = "mt-5" id = "userLogin">
+                <input type = "email" name = "email" placeholder = "Email*">
+                <input type = "password" name = "password" placeholder = "Password*">
+                <button type = "submit">Login</button>
+            </form>
+        </section>
         <%- include('../partials/footer.partial.ejs') %>
     </body>
 </html>

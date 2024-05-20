@@ -53,6 +53,21 @@
     img[src="assets/icons/grass.webp"]{
         @apply w-[300%];
     }
+    form{
+        @apply flex flex-col items-center justify-center gap-y-3 w-full;
+    }
+    form input{
+        @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2;
+    }
+    form input:user-invalid{
+        @apply border-error text-error;
+    }
+    input::placeholder{
+        @apply text-neutral
+    }
+    form button[type="submit"]{
+        @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3;
+    }
 }
 
 @layer components{

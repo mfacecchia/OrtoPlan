@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('pages/login');
-})
+});
 
 app.listen(5500, () => {
     console.log("Pong.");

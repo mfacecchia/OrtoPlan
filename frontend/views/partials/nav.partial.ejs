@@ -3,6 +3,6 @@
 
     <div>
         <a href = "" title = "Create an account">Sign-up</a>
-        <a href = "/login" title = "Log-in into your account">Log-in</a>
+        <a <% if(typeof isLoginPage !== 'undefined'){ %> class = "text-primary" <% } %> href = "/login" title = "Log-in into your account">Log-in</a>
     </div>
 </nav>
