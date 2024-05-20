@@ -26,8 +26,11 @@
     p{
         @apply text-base leading-tight;
     }
+    nav, footer, section{
+        @apply box-border px-3;
+    }
     nav{
-        @apply w-full overflow-hidden flex justify-between box-border px-3 py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
+        @apply w-full overflow-hidden flex justify-between py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
     }
     nav img{
         @apply h-6;
@@ -36,7 +39,7 @@
         @apply space-x-3
     }
     section{
-        @apply w-full box-border px-3 py-11;
+        @apply w-full py-11;
     }
     img{
         @apply max-w-none;
