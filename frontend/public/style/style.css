@@ -550,6 +550,10 @@ html {
   padding-top: 2.75rem;
   padding-bottom: 2.75rem;
 }
+    img[src="assets/icons/grass.webp"] {
+  width: 300%;
+  max-width: none;
+}
 
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
@@ -800,20 +804,8 @@ html {
 .w-40 {
   width: 10rem;
 }
-.w-5\/6 {
-  width: 83.333333%;
-}
-.w-\[300\%\] {
-  width: 300%;
-}
 .w-full {
   width: 100%;
-}
-.w-32 {
-  width: 8rem;
-}
-.max-w-none {
-  max-width: none;
 }
 .origin-center {
   transform-origin: center;

@@ -38,6 +38,9 @@
     section{
         @apply w-full box-border px-3 py-11;
     }
+    img[src="assets/icons/grass.webp"]{
+        @apply w-[300%] max-w-none;
+    }
 }
 
 @layer components{
