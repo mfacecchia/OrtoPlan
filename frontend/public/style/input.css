@@ -83,4 +83,7 @@
     .reviewContent h2{
         @apply font-bold text-xl;
     }
+    .flex-col-container{
+        @apply flex flex-col items-center gap-y-2;
+    }
 }

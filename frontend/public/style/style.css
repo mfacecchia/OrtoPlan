@@ -884,6 +884,12 @@ html {
   line-height: 1.75rem;
   font-weight: 700;
 }
+.flex-col-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+}
 .static {
   position: static;
 }
@@ -891,11 +897,11 @@ html {
   margin-top: 2.75rem;
   margin-bottom: 2.75rem;
 }
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
 .flex {
   display: flex;
+}
+.w-36 {
+  width: 9rem;
 }
 .w-40 {
   width: 10rem;
@@ -905,9 +911,6 @@ html {
 }
 .w-full {
   width: 100%;
-}
-.w-36 {
-  width: 9rem;
 }
 .origin-center {
   transform-origin: center;
