@@ -836,6 +836,22 @@ html {
   --tw-content: attr(aria-label);
   content: var(--tw-content);
 }
+.carousel {
+  display: inline-flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.diff {
+  position: relative;
+  display: grid;
+  width: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+  grid-template-columns: auto 1fr;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -1493,6 +1509,9 @@ html {
     transform: scale(1);
   }
 }
+.carousel::-webkit-scrollbar {
+  display: none;
+}
 @keyframes checkmark {
 
   0% {
@@ -1649,6 +1668,11 @@ html {
 .menu :where(li > .menu-dropdown-toggle.menu-dropdown-show):after {
   transform: rotate(225deg);
   margin-top: 0;
+}
+.mockup-phone .display {
+  overflow: hidden;
+  border-radius: 40px;
+  margin-top: -25px;
 }
 .mockup-browser .mockup-browser-toolbar .input {
   position: relative;
@@ -2046,6 +2070,9 @@ html {
   display: flex;
   height: 10rem;
   justify-content: center;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -2160,11 +2187,18 @@ html {
 .flex {
   display: flex;
 }
+.size-full {
+  width: 100%;
+  height: 100%;
+}
 .\!h-36 {
   height: 9rem !important;
 }
 .h-60 {
   height: 15rem;
+}
+.h-64 {
+  height: 16rem;
 }
 .h-8 {
   height: 2rem;
@@ -2175,11 +2209,17 @@ html {
 .w-1\/2 {
   width: 50%;
 }
+.w-14 {
+  width: 3.5rem;
+}
 .w-16 {
   width: 4rem;
 }
 .w-20 {
   width: 5rem;
+}
+.w-24 {
+  width: 6rem;
 }
 .w-32 {
   width: 8rem;
@@ -2253,8 +2293,30 @@ html {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
 }
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.bg-defaultPlantation {
+  background-image: url("../assets/icons/plantation.webp");
+}
+.bg-defaultPlant {
+  background-image: url("../assets/icons/plant.webp");
+}
+.bg-cover {
+  background-size: cover;
+}
+.bg-center {
+  background-position: center;
+}
+.p-0 {
+  padding: 0px;
+}
 .p-2 {
   padding: 0.5rem;
+}
+.p-4 {
+  padding: 1rem;
 }
 .py-0 {
   padding-top: 0px;
@@ -2281,10 +2343,21 @@ html {
   --tw-text-opacity: 1;
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
 }
+.opacity-30 {
+  opacity: 0.3;
+}
+.mix-blend-difference {
+  mix-blend-mode: difference;
+}
 .\!shadow-none {
   --tw-shadow: 0 0 #0000 !important;
   --tw-shadow-colored: 0 0 #0000 !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+.shadow-lg {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);

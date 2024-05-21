@@ -108,7 +108,7 @@
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
     }
     .customCard figure{
-        @apply flex justify-center h-40 shadow-md relative;
+        @apply flex justify-center h-40 shadow-md relative overflow-hidden bg-cover bg-center;
     }
     .customCard .cardContent{
         @apply space-y-1 box-border px-3 text-left;

@@ -34,7 +34,9 @@ module.exports = {
     extend: {
       backgroundImage: {
         'navbar': 'url("../assets/icons/navbar.webp")',
-        'footer': 'url("../assets/icons/footer.webp")'
+        'footer': 'url("../assets/icons/footer.webp")',
+        'defaultPlantation': 'url("../assets/icons/plantation.webp")',
+        'defaultPlant': 'url("../assets/icons/plant.webp")'
       },
       fontFamily: {
         "sans": ["AdobeClean", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
