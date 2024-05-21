@@ -54,16 +54,19 @@
         @apply w-[300%];
     }
     form{
-        @apply flex flex-col items-center justify-center gap-y-3 w-full;
+        @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden;
     }
-    form input{
-        @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2;
+    form input, .inputStyleContainer{
+        @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2 outline-none;
     }
-    form input:user-invalid{
+    form input:user-invalid, form .inputStyleContainer:has(input:user-invalid){
         @apply border-error text-error;
     }
     input::placeholder{
-        @apply text-neutral
+        @apply text-neutral;
+    }
+    .inputStyleContainer input{
+        @apply border-none p-0;
     }
     form button[type="submit"]{
         @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3;
@@ -76,6 +79,12 @@
     }
     hr{
         @apply w-full;
+    }
+    form h1{
+        @apply text-primary font-bold;
+    }
+    form header{
+        @apply text-center mb-5
     }
 }
 
@@ -134,5 +143,13 @@
     }
     .dropdown-content li{
         @apply w-full my-1 text-right;
+    }
+    /* Overriding default `hover` text color property for `btn-primary` daisyUI class */
+    .btn-primary:hover{
+        @apply text-base-100;
+    }
+    /* Overriding default max-width: 20rem (too large for most displays, leading to content overflow problems) */
+    .tooltip::before{
+        @apply !max-w-40;
     }
 }
