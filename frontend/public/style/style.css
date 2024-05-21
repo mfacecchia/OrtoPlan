@@ -653,6 +653,9 @@ html {
   margin-bottom: 1.25rem;
   text-align: center;
 }
+    .modal-box header {
+  margin-bottom: 1.25rem;
+}
 
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
@@ -843,14 +846,6 @@ html {
   scroll-behavior: smooth;
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-.diff {
-  position: relative;
-  display: grid;
-  width: 100%;
-  overflow: hidden;
-  container-type: inline-size;
-  grid-template-columns: auto 1fr;
 }
 .dropdown {
   position: relative;
@@ -1312,6 +1307,11 @@ html {
   visibility: visible;
   opacity: 1;
 }
+.modal-action {
+  display: flex;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
 :root:has(:is(.modal-open, .modal:target, .modal-toggle:checked + .modal, .modal[open])) {
   overflow: hidden;
   scrollbar-gutter: stable;
@@ -1336,6 +1336,10 @@ html {
 
   .btn-primary {
     --btn-color: var(--fallback-p);
+  }
+
+  .btn-error {
+    --btn-color: var(--fallback-er);
   }
 }
 @supports (color: color-mix(in oklab, black, black)) {
@@ -1390,6 +1394,15 @@ html {
   .btn-primary {
     --btn-color: var(--p);
   }
+
+  .btn-error {
+    --btn-color: var(--er);
+  }
+}
+.btn-error {
+  --tw-text-opacity: 1;
+  color: var(--fallback-erc,oklch(var(--erc)/var(--tw-text-opacity)));
+  outline-color: var(--fallback-er,oklch(var(--er)/1));
 }
 .btn.glass {
   --tw-shadow: 0 0 #0000;
@@ -1730,6 +1743,11 @@ html {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.modal-action > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 @keyframes modal-pop {
 
@@ -2184,6 +2202,9 @@ html {
 .mt-5 {
   margin-top: 1.25rem;
 }
+.box-border {
+  box-sizing: border-box;
+}
 .flex {
   display: flex;
 }
@@ -2265,6 +2286,9 @@ html {
 .animate-showHide {
   animation: showHideAnim 2s ease-in-out infinite alternate;
 }
+.flex-row {
+  flex-direction: row;
+}
 .flex-col {
   flex-direction: column;
 }
@@ -2297,11 +2321,11 @@ html {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
-.bg-defaultPlantation {
-  background-image: url("../assets/icons/plantation.webp");
-}
 .bg-defaultPlant {
   background-image: url("../assets/icons/plant.webp");
+}
+.bg-defaultPlantation {
+  background-image: url("../assets/icons/plantation.webp");
 }
 .bg-cover {
   background-size: cover;
@@ -2346,9 +2370,6 @@ html {
 .opacity-30 {
   opacity: 0.3;
 }
-.mix-blend-difference {
-  mix-blend-mode: difference;
-}
 .\!shadow-none {
   --tw-shadow: 0 0 #0000 !important;
   --tw-shadow-colored: 0 0 #0000 !important;
@@ -2364,6 +2385,7 @@ html {
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
 .hover\:stroke-primary:hover {
   stroke: var(--fallback-p,oklch(var(--p)/1));
 }

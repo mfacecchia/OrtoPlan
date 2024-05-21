@@ -86,6 +86,9 @@
     form header{
         @apply text-center mb-5
     }
+    .modal-box header{
+        @apply mb-5;
+    }
 }
 
 @layer components{
@@ -123,6 +126,7 @@
         @apply grid justify-start grid-cols-1;
     }
 }
+
 @layer components{
     .menu hr{
         @apply mx-auto w-10/12;
