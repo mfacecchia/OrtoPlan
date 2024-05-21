@@ -50,7 +50,7 @@
     img{
         @apply max-w-none;
     }
-    img[src="assets/icons/grass.webp"]{
+    img[src*="grass.webp"]{
         @apply w-[300%];
     }
     form{
@@ -74,6 +74,9 @@
     form .join input:last-child{
         @apply rounded-l-none;
     }
+    hr{
+        @apply w-full;
+    }
 }
 
 @layer components{
@@ -89,37 +92,47 @@
     .app-description h1{
         @apply bigger-text text-secondary w-3/4 font-bold;
     }
-    .reviewCards{
+    .cardsContainer{
         @apply w-full grid grid-cols-1 place-items-center gap-5;
     }
-    .review{
+    .customCard{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
     }
-    .review figure{
-        @apply flex justify-center h-40 shadow-md;
+    .customCard figure{
+        @apply flex justify-center h-40 shadow-md relative;
     }
-    .review .reviewContent{
+    .customCard .cardContent{
         @apply space-y-1 box-border px-3 text-left;
     }
-    .reviewContent h2{
+    .cardContent h2{
         @apply font-bold text-xl;
     }
     .flex-col-container{
         @apply flex flex-col items-center gap-y-2;
     }
+    .plantationsPlantsList{
+        @apply grid justify-start grid-cols-1;
+    }
+}
+@layer components{
+    .menu hr{
+        @apply mx-auto w-10/12;
+    }
+    /* built-in daisyUI `menu` customization (aligns list elements to right) */
+    .menu.textToRight li a{
+        @apply justify-end gap-1;
+    }
+    /* Adds an header to the built-in daisyUI dropdown menu at a fixed position */
     .dropdown-content header{
-        @apply sticky left-0 top-0 bg-base-100 z-30 pt-2;
+        @apply sticky left-0 top-0 bg-base-100 z-30 box-border pt-2 px-4 mb-4;
+    }
+    .dropdown-content header hr{
+        @apply w-full;
     }
     .dropdown-content h1{
         @apply text-xl;
     }
-    .dropdown-content > li:first-of-type{
-        @apply mt-3;
-    }
     .dropdown-content li{
-        @apply my-1;
-    }
-    .dropdown-content li a{
-        @apply pl-0;
+        @apply w-full my-1 text-right;
     }
 }
