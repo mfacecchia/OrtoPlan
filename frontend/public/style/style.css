@@ -562,6 +562,9 @@ html {
   padding-bottom: 1.75rem;
   --tw-text-opacity: 1;
   color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity)));
+  --tw-shadow: 0 -20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --tw-shadow-colored: 0 -20px 25px -5px var(--tw-shadow-color), 0 10px 10px -5px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
     footer img {
   width: 2.75rem;
@@ -2674,7 +2677,6 @@ form[method="dialog"] .btn-square {
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
 .hover\:stroke-primary:hover {
   stroke: var(--fallback-p,oklch(var(--p)/1));
 }
