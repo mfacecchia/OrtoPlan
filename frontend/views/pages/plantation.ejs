@@ -84,9 +84,33 @@
                 </div>
             </div>
         </section>
+        <div class = "toast">
+
+        </div>
         <%- include('../partials/footer.partial.ejs') %>
 
         <!-- TODO: Move this to external JS file -->
+        <script>
+            function createElement(elementName, attributes = null, classes = null){
+                /*
+                    * Creates an element from the given `elementName` and possible `attributes` and `classes` names
+                    * NOTE: The `attributes` parameter should be an Object with the attribute name as key and the relative value as Object value
+                    * NOTE: The `classes` parameter should be an Array with all the classes names as values
+                    * Returns an instance of chosen `elementName` element
+                */
+                const element = document.createElement(elementName);
+                if(attributes){
+                    // Applying all attributes to the new element
+                    for(const attributeName in attributes){
+                        element.setAttribute(attributeName, attributes[attributeName]);
+                    }
+                }
+                if(classes){
+                    element.classList.add(...classes);
+                }
+                return element;
+            }
+        </script>
         <script>
             /*
                 * NOTE: Variable used to determine if the user wants to update the form's data
@@ -166,8 +190,12 @@
                     try{
                         document.querySelector(`[data-plant-id="${plantID}"]`).remove();
                     }catch(err){
-                        // TODO: Render message on the bottom-right side of page
-                        console.log("Unknown error.");
+                        // Outputting an error message in case the plant is not found from the provided ID
+                        const errorMessageContainer = createElement('div', null, ['alert', 'alert-error', 'animate-disappear', 'text-base-100']);
+                        const errorMessage = createElement('span')
+                        errorMessage.textContent = "Couldn't remove the selected plant, please try again.";
+                        errorMessageContainer.appendChild(errorMessage);
+                        document.querySelector('.toast').appendChild(errorMessageContainer);
                     }
                 }
             }

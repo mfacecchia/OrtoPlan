@@ -186,4 +186,10 @@
     .btn-primary:hover{
         @apply !text-base-100;
     }
+    .toast{
+        @apply whitespace-normal;
+    }
+    .alert{
+        @apply max-w-56 text-right;
+    }
 }

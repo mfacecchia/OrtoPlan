@@ -2381,11 +2381,21 @@ form[method="dialog"] .btn-square {
   --tw-text-opacity: 1 !important;
   color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity))) !important;
 }
+.toast {
+  white-space: normal;
+}
+.alert {
+  max-width: 14rem;
+  text-align: right;
+}
 .static {
   position: static;
 }
 .absolute {
   position: absolute;
+}
+.relative {
+  position: relative;
 }
 .right-0 {
   right: 0px;
@@ -2502,6 +2512,20 @@ form[method="dialog"] .btn-square {
   --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+@keyframes disappearAnim {
+
+  90% {
+    opacity: 100;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.animate-disappear {
+  animation: disappearAnim 3s ease-in-out forwards;
+}
 @keyframes showHideAnim {
 
   0%, 30% {
@@ -2615,6 +2639,10 @@ form[method="dialog"] .btn-square {
 }
 .font-bold {
   font-weight: 700;
+}
+.text-base-100 {
+  --tw-text-opacity: 1;
+  color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity)));
 }
 .text-error {
   --tw-text-opacity: 1;

@@ -42,7 +42,8 @@ module.exports = {
         "sans": ["AdobeClean", "ui-sans-serif", "system-ui", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
       },
       animation: {
-        'showHide': 'showHideAnim 2s ease-in-out infinite alternate'
+        'showHide': 'showHideAnim 2s ease-in-out infinite alternate',
+        'disappear': 'disappearAnim 3s ease-in-out forwards'
       },
       keyframes: {
         'showHideAnim': {
@@ -51,6 +52,15 @@ module.exports = {
           },
           '80%': {
             transform: 'scaleX(100%);'
+          }
+        },
+        'disappearAnim': {
+          '90%': {
+            opacity: 100
+          },
+          '100%': {
+            opacity: 0,
+            visibility: 'hidden'
           }
         }
       }
