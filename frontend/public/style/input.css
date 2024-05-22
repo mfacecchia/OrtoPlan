@@ -167,7 +167,7 @@
         @apply w-full my-1 text-right;
     }
     /* Overriding default `text color` property for `btn-primary` daisyUI class */
-    .btn-primary{
+    .btn-primary, .btn-error{
         @apply text-base-100;
     }
     /* Overriding default max-width: 20rem (too large for most displays, leading to content overflow problems) */
