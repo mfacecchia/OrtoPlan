@@ -56,6 +56,9 @@
     form{
         @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden;
     }
+    form :is(input, textarea){
+        @apply bg-base-100;
+    }
     form :is(input, textarea), .inputStyleContainer{
         @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2 outline-none;
     }
