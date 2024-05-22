@@ -19,6 +19,54 @@
                 </form>
             </div>
         </dialog>
+        <dialog class = "modal" id = "treatments">
+            <div class = "modal-box space-y-5 text-center">
+                <form method = "dialog">
+                    <button class = "btn btn-square rounded-md btn-outline absolute right-2 top-2 btn-primary">X</button>
+                </form>
+                <div class = "flex flex-col justify-center items-center">
+                    <header class = "mb-0">
+                        <h1 class = "text-secondary font-bold">Treatments</h1>
+                        <hr class = "animate-showHide w-20 green-line mx-auto">
+                    </header>
+                </div>
+                <form class = "items-start" id = "treatmentForm">
+                    <div class = "flex w-full items-center gap-5">
+                        <input type = "text" name = "treatmentType" placeholder = "Treatment Type*" value = "Irrigation" required disabled>
+                        <div class = "flex flex-nowrap ml-auto p-1 box-border gap-x-2">
+                            <button data-btn-action = "Edit" class = "btn btn-primary rounded-md"><img src = "/assets/icons/edit.svg" alt = "Modify treatment"></button>
+                            <button data-btn-action = "Remove" class = "btn btn-error rounded-md"><img src = "/assets/icons/erase.svg" alt = "Remove treatment"></button>
+                        </div>
+                    </div>
+                    <input type = "date" name = "treatmentDate" value = "2024-05-20" required disabled>
+                    <div class = "flex items-center gap-3">
+                        <span>every</span>
+                        <input class = "max-w-16" type = "number" name = "recurrenceDays" value = "30" required disabled>
+                        <span>days</span>
+                    </div>
+                    <textarea disabled>No notes for this treatment</textarea>
+                </form>
+                <hr>
+                <form class = "items-start" id = "treatmentForm">
+                    <div class = "flex w-full items-center gap-5">
+                        <input type = "text" name = "treatmentType" placeholder = "Treatment Type*" value = "Pruning" required disabled>
+                        <div class = "flex flex-nowrap ml-auto p-1 box-border gap-x-2">
+                            <button data-btn-action = "Edit" class = "btn btn-primary rounded-md"><img src = "/assets/icons/edit.svg" alt = "Modify treatment"></button>
+                            <button data-btn-action = "Remove" class = "btn btn-error rounded-md"><img src = "/assets/icons/erase.svg" alt = "Remove treatment"></button>
+                        </div>
+                    </div>
+                    <input type = "date" name = "treatmentDate" value = "2024-05-28" required disabled>
+                    <div class = "flex items-center gap-3">
+                        <span>every</span>
+                        <input class = "max-w-16" type = "number" name = "recurrenceDays" value = "120" required disabled>
+                        <span>days</span>
+                    </div>
+                    <textarea disabled>Remove dead branches only, shape hedges into a rounded form</textarea>
+                </form>
+                <hr>
+                <div class = "btn btn-primary rounded-full w-1/2 py-2 px-3" id = "newTreatment" role = "button"><p>New treatment</p></div>
+            </div>
+        </dialog>
         <!-- TODO: Add new plant creation dialog form -->
         <section class = "h-64 bg-defaultPlantation bg-cover bg-center p-0 shadow-lg">
             <div class = "size-full bg-black opacity-30"></div>
@@ -35,6 +83,7 @@
                     <!-- TODO: Use GlideJS carousel to display forecast => https://glidejs.com/docs/ -->
                 </div>
             </section>
+            <!-- TODO: Change "Plants" color to "secondary" -->
             <h1 class = "font-bold">Your <span class = "text-primary">Plants</span></h1>
             <hr class = "animate-showHide w-24 green-line origin-left">
             <div class = "cardsContainer mt-5">
@@ -44,7 +93,7 @@
                             <!-- TODO: Move this to partials -->
                             <img tabindex = "0" role = "button" class = "h-full" src = "/assets/icons/menu.svg" alt = "Plant settings">
                             <ul class = "dropdown-content z-10 menu p-2 py-0 shadow-xl bg-base-100 rounded-xl w-40 overflow-y-scroll mr-3 textToRight">
-                                <li><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>
+                                <li onclick = "document.querySelector('#treatments').showModal()"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>
                                 <hr class = "w-1/2">
                                 <li class = "textToRight" onclick = "document.querySelector('#removePlant').showModal();"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>
                             </ul>
@@ -66,5 +115,12 @@
             </div>
         </section>
         <%- include('../partials/footer.partial.ejs') %>
+
+        <script>
+            document.querySelector('#treatmentForm').addEventListener('submit', e => {
+                // TODO: Add event based on event main target
+                e.preventDefault();
+            })
+        </script>
     </body>
 </html>
