@@ -578,7 +578,7 @@ html {
     img[src*="grass.webp"] {
   width: 300%;
 }
-  form {
+    form {
   display: flex;
   width: 100%;
   flex-direction: column;
