@@ -1,0 +1,23 @@
+<dialog class = "modal" id = "confirmRemoval">
+    <div class = "modal-box">
+        <div class = "flex flex-col justify-center items-center text-center">
+            <header>
+                <% if(typeof customHeader !== 'undefined'){ %>
+                    <><%= customHeader %></p>
+                <% }else{ %>
+                    <b>Confirm removal</b>
+                <% } %>
+                <h1 class = "font-bold text-error">Warning</h1>
+            </header>
+            <% if(typeof customMessage !== 'undefined'){ %>
+                <%- customMessage %>
+            <% }else{ %>
+                <p>Are you sure you want to remove this element?</p>
+            <% } %>
+        </div>
+        <form method = "dialog" class = "modal-action flex-row p-2 box-border gap-3">
+            <button type = "button" tabindex = "0" class = "btn btn-primary" onclick = "document.querySelector('#confirmRemoval').close()">No, close</button>
+            <button tabindex = "0" class = "btn btn-error">Yes, i'm sure</button>
+        </form>
+    </div>
+</dialog>

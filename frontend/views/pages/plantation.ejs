@@ -4,21 +4,8 @@
     <%- include('../partials/head.partial.ejs', {title: "Plantations"}) %>
     <body>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
-        <dialog class = "modal" id = "removePlant">
-            <div class = "modal-box">
-                <div class = "flex flex-col justify-center items-center text-center">
-                    <header>
-                        <b>Plant Removal</b>
-                        <h1 class = "font-bold text-error">Warning</h1>
-                    </header>
-                    <p>Are you sure you want to remove "<span></span>"?</p>
-                </div>
-                <form method = "dialog" class = "modal-action flex-row p-2 box-border gap-3">
-                    <button type = "button" tabindex = "0" class = "btn btn-primary" onclick = "document.querySelector('#removePlant').close()">No, close</button>
-                    <button tabindex = "0" class = "btn btn-error">Yes, i'm sure</button>
-                </form>
-            </div>
-        </dialog>
+        <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
+        <!-- TODO: Move this to partials directory -->
         <dialog class = "modal" id = "treatments">
             <div class = "modal-box space-y-5 text-center">
                 <form method = "dialog">
@@ -172,12 +159,16 @@
         </script>
         <script>
             function confirmPlantRemoval(plantID){
-                const plantDialog = document.querySelector('#removePlant');
+                const plantDialog = document.querySelector('#confirmRemoval');
                 plantDialog.querySelector('p span').textContent = 'Plant 1';
                 plantDialog.showModal();
                 const confirmRemovalForm = plantDialog.querySelector('form').onsubmit = e => {
-                    // TODO: Manage plant not found error
-                    document.querySelector(`[data-plant-id="10"]`).remove();
+                    try{
+                        document.querySelector(`[data-plant-id="${plantID}"]`).remove();
+                    }catch(err){
+                        // TODO: Render message on the bottom-right side of page
+                        console.log("Unknown error.");
+                    }
                 }
             }
         </script>
