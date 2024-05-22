@@ -1,0 +1,19 @@
+<form class = "items-start treatmentForm" data-treatment-id = "<%= treatmentID %>">
+    <div class = "flex w-full items-center gap-5">
+        <input type = "text" name = "treatmentType" placeholder = "Treatment Type*" value = "<%= type %>" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
+        <div class = "flex flex-nowrap ml-auto p-1 box-border gap-x-2">
+            <button data-btn-action = "Edit" class = "btn btn-primary rounded-md" title = "Modify treatment"><img src = "/assets/icons/edit.svg" alt = "Modify treatment"></button>
+            <button data-btn-action = "Remove" class = "btn btn-error rounded-md" title = "Remove treatment"><img src = "/assets/icons/erase.svg" alt = "Remove treatment"></button>
+        </div>
+    </div>
+    <input type = "date" name = "treatmentDate" value = "<%= date %>" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
+    <div class = "flex items-center gap-3">
+        <span>every</span>
+        <input class = "max-w-16" type = "number" name = "recurrenceDays" value = "<%= recurrence %>" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
+        <span>days</span>
+    </div>
+    <textarea <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>><% if(typeof notes !== 'undefined'){ %> <%= notes %> <% }else{ %> No notes available <% } %></textarea>
+</form>
+<% if(typeof separator !== 'undefined'){ %>
+    <hr>
+<% } %>

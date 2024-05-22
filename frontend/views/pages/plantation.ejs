@@ -30,40 +30,22 @@
                         <hr class = "animate-showHide w-20 green-line mx-auto">
                     </header>
                 </div>
-                <form class = "items-start" id = "treatmentForm">
-                    <div class = "flex w-full items-center gap-5">
-                        <input type = "text" name = "treatmentType" placeholder = "Treatment Type*" value = "Irrigation" required disabled>
-                        <div class = "flex flex-nowrap ml-auto p-1 box-border gap-x-2">
-                            <button data-btn-action = "Edit" class = "btn btn-primary rounded-md"><img src = "/assets/icons/edit.svg" alt = "Modify treatment"></button>
-                            <button data-btn-action = "Remove" class = "btn btn-error rounded-md"><img src = "/assets/icons/erase.svg" alt = "Remove treatment"></button>
-                        </div>
-                    </div>
-                    <input type = "date" name = "treatmentDate" value = "2024-05-20" required disabled>
-                    <div class = "flex items-center gap-3">
-                        <span>every</span>
-                        <input class = "max-w-16" type = "number" name = "recurrenceDays" value = "30" required disabled>
-                        <span>days</span>
-                    </div>
-                    <textarea disabled>No notes for this treatment</textarea>
-                </form>
-                <hr>
-                <form class = "items-start" id = "treatmentForm">
-                    <div class = "flex w-full items-center gap-5">
-                        <input type = "text" name = "treatmentType" placeholder = "Treatment Type*" value = "Pruning" required disabled>
-                        <div class = "flex flex-nowrap ml-auto p-1 box-border gap-x-2">
-                            <button data-btn-action = "Edit" class = "btn btn-primary rounded-md"><img src = "/assets/icons/edit.svg" alt = "Modify treatment"></button>
-                            <button data-btn-action = "Remove" class = "btn btn-error rounded-md"><img src = "/assets/icons/erase.svg" alt = "Remove treatment"></button>
-                        </div>
-                    </div>
-                    <input type = "date" name = "treatmentDate" value = "2024-05-28" required disabled>
-                    <div class = "flex items-center gap-3">
-                        <span>every</span>
-                        <input class = "max-w-16" type = "number" name = "recurrenceDays" value = "120" required disabled>
-                        <span>days</span>
-                    </div>
-                    <textarea disabled>Remove dead branches only, shape hedges into a rounded form</textarea>
-                </form>
-                <hr>
+                <%- include('../partials/treatmentForm.partial.ejs', {
+                    treatmentID: 1,
+                    type: "Irrigation",
+                    date: "2024-05-20",
+                    recurrence: 30,
+                    isDisabled: true,
+                    separator: true
+                }) %>
+                <%- include('../partials/treatmentForm.partial.ejs', {
+                    treatmentID: 2,
+                    type: "Pruning",
+                    date: "2024-05-30",
+                    recurrence: 120,
+                    isDisabled: true,
+                    separator: true
+                }) %>
                 <div class = "btn btn-primary rounded-full w-1/2 py-2 px-3" id = "newTreatment" role = "button"><p>New treatment</p></div>
             </div>
         </dialog>
@@ -117,10 +99,12 @@
         <%- include('../partials/footer.partial.ejs') %>
 
         <script>
-            document.querySelector('#treatmentForm').addEventListener('submit', e => {
-                // TODO: Add event based on event main target
-                e.preventDefault();
-            })
+            document.querySelectorAll('.treatmentForm').forEach(form => {
+                form.addEventListener('submit', e => {
+                    // TODO: Add event based on event main target
+                    e.preventDefault();
+                });
+            });
         </script>
     </body>
 </html>
