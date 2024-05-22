@@ -587,7 +587,7 @@ html {
   row-gap: 0.75rem;
   overflow: hidden;
 }
-    form input, .inputStyleContainer {
+    form :is(input, textarea), .inputStyleContainer {
   width: 100%;
   border-radius: 0.5rem;
   border-width: 1.5px;
@@ -600,21 +600,45 @@ html {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-    form input:user-invalid, form .inputStyleContainer:has(input:user-invalid) {
+    form :is(input, textarea):user-invalid, form .inputStyleContainer:has(:is(input, textarea):user-invalid) {
   --tw-border-opacity: 1;
   border-color: var(--fallback-er,oklch(var(--er)/var(--tw-border-opacity)));
   --tw-text-opacity: 1;
   color: var(--fallback-er,oklch(var(--er)/var(--tw-text-opacity)));
 }
-    input::-moz-placeholder {
+    :is(input, textarea)::-moz-placeholder {
   --tw-text-opacity: 1;
   color: var(--fallback-n,oklch(var(--n)/var(--tw-text-opacity)));
 }
-    input::placeholder {
+    :is(input, textarea)::placeholder {
   --tw-text-opacity: 1;
   color: var(--fallback-n,oklch(var(--n)/var(--tw-text-opacity)));
 }
-    .inputStyleContainer input {
+    :is(input, textarea):disabled[name="treatmentType"] {
+  font-weight: 700;
+}
+    :is(input, textarea):disabled {
+  cursor: not-allowed;
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+  color: var(--fallback-bc,oklch(var(--bc)/0.4));
+}
+    :is(input, textarea):disabled::-moz-placeholder {
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+  --tw-placeholder-opacity: 0.2;
+}
+    :is(input, textarea):disabled::placeholder {
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+  --tw-placeholder-opacity: 0.2;
+}
+    :is(input, textarea):disabled {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+  opacity: 0.9;
+}
+    .inputStyleContainer :is(input, textarea) {
   border-style: none;
   padding: 0px;
 }
@@ -632,6 +656,10 @@ html {
   font-weight: 700;
   --tw-text-opacity: 1;
   color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity)));
+}
+    form button[data-btn-action] {
+  padding: 0.5rem;
+  outline-offset: 1px;
 }
     form .join input:first-child {
   border-top-right-radius: 0px;
@@ -655,6 +683,12 @@ html {
 }
     .modal-box header {
   margin-bottom: 1.25rem;
+}
+    textarea {
+  min-height: 2.75rem;
+}
+    button img {
+  height: 1.25rem;
 }
 
 *, ::before, ::after {
@@ -916,6 +950,16 @@ html {
   .dropdown.dropdown-hover:hover .dropdown-content {
     visibility: visible;
     opacity: 1;
+  }
+
+  .btm-nav > *.disabled:hover,
+      .btm-nav > *[disabled]:hover {
+    pointer-events: none;
+    --tw-border-opacity: 0;
+    background-color: var(--fallback-n,oklch(var(--n)/var(--tw-bg-opacity)));
+    --tw-bg-opacity: 0.1;
+    color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+    --tw-text-opacity: 0.2;
   }
 
   .btn:hover {
@@ -1315,6 +1359,31 @@ html {
 :root:has(:is(.modal-open, .modal:target, .modal-toggle:checked + .modal, .modal[open])) {
   overflow: hidden;
   scrollbar-gutter: stable;
+}
+.textarea {
+  min-height: 3rem;
+  flex-shrink: 1;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 2;
+  border-radius: var(--rounded-btn, 0.5rem);
+  border-width: 1px;
+  border-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+.btm-nav > *.disabled,
+    .btm-nav > *[disabled] {
+  pointer-events: none;
+  --tw-border-opacity: 0;
+  background-color: var(--fallback-n,oklch(var(--n)/var(--tw-bg-opacity)));
+  --tw-bg-opacity: 0.1;
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+  --tw-text-opacity: 0.2;
 }
 @media (prefers-reduced-motion: no-preference) {
 
@@ -1802,6 +1871,34 @@ html {
     background-position: -50%;
   }
 }
+.textarea:focus {
+  box-shadow: none;
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 2px;
+  outline-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+}
+.textarea-disabled,
+  .textarea:disabled,
+  .textarea[disabled] {
+  cursor: not-allowed;
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+  color: var(--fallback-bc,oklch(var(--bc)/0.4));
+}
+.textarea-disabled::-moz-placeholder, .textarea:disabled::-moz-placeholder, .textarea[disabled]::-moz-placeholder {
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+  --tw-placeholder-opacity: 0.2;
+}
+.textarea-disabled::placeholder,
+  .textarea:disabled::placeholder,
+  .textarea[disabled]::placeholder {
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+  --tw-placeholder-opacity: 0.2;
+}
 @keyframes toast-pop {
 
   0% {
@@ -2156,14 +2253,31 @@ html {
   width: 100%;
   text-align: right;
 }
-/* Overriding default `hover` text color property for `btn-primary` daisyUI class */
-.btn-primary:hover {
+/* Overriding default `text color` property for `btn-primary` daisyUI class */
+.btn-primary {
   --tw-text-opacity: 1;
   color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity)));
 }
 /* Overriding default max-width: 20rem (too large for most displays, leading to content overflow problems) */
 .tooltip::before {
   max-width: 10rem !important;
+}
+.modal-action > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0px;
+}
+.btn:has(img) {
+  height: auto;
+  min-height: 0px;
+}
+form[method="dialog"] .btn-square {
+  width: 2rem;
+  height: 2rem;
+  min-height: 0px;
+  min-width: 0px;
+}
+.btn-primary:hover {
+  --tw-text-opacity: 1 !important;
+  color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity))) !important;
 }
 .static {
   position: static;
@@ -2189,12 +2303,22 @@ html {
 .m-auto {
   margin: auto;
 }
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
 .my-11 {
   margin-top: 2.75rem;
   margin-bottom: 2.75rem;
 }
+.mb-0 {
+  margin-bottom: 0px;
+}
 .mb-5 {
   margin-bottom: 1.25rem;
+}
+.ml-auto {
+  margin-left: auto;
 }
 .mr-3 {
   margin-right: 0.75rem;
@@ -2263,6 +2387,9 @@ html {
 .w-full {
   width: 100%;
 }
+.max-w-16 {
+  max-width: 4rem;
+}
 .origin-center {
   transform-origin: center;
 }
@@ -2295,17 +2422,41 @@ html {
 .flex-nowrap {
   flex-wrap: nowrap;
 }
+.items-start {
+  align-items: flex-start;
+}
 .items-center {
   align-items: center;
 }
 .justify-center {
   justify-content: center;
 }
+.gap-3 {
+  gap: 0.75rem;
+}
+.gap-5 {
+  gap: 1.25rem;
+}
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
 .gap-y-5 {
   row-gap: 1.25rem;
 }
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
 .overflow-y-scroll {
   overflow-y: scroll;
+}
+.rounded {
+  border-radius: 0.25rem;
+}
+.rounded-full {
+  border-radius: 9999px;
 }
 .rounded-md {
   border-radius: 0.375rem;
@@ -2336,15 +2487,26 @@ html {
 .p-0 {
   padding: 0px;
 }
+.p-1 {
+  padding: 0.25rem;
+}
 .p-2 {
   padding: 0.5rem;
 }
 .p-4 {
   padding: 1rem;
 }
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .pt-0 {
   padding-top: 0px;
@@ -2385,7 +2547,6 @@ html {
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
 .hover\:stroke-primary:hover {
   stroke: var(--fallback-p,oklch(var(--p)/1));
 }
