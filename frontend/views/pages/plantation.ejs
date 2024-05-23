@@ -57,6 +57,11 @@
             <h1 class = "font-bold">Your <span class = "text-secondary">Plants</span></h1>
             <hr class = "animate-showHide w-24 green-line origin-left">
             <div class = "cardsContainer mt-5">
+                <!--
+                    NOTE: HOW TO PRINTOUT ALL PLANTS ON PAGE LOAD 
+                    The  endpoint makes a GET request to the server, which returns the whole list of plants related to that plantation
+                    and then with a `forEach()` EJS loop, output all the plants based on the cards partial (still needs to be updated, read note below)
+                -->
                 <div class = "customCard" data-plant-id = "1">
                     <figure class = "bg-defaultPlant">
                         <div class = "absolute top-0 right-0 h-8 dropdown dropdown-end" alt = "Plantation Settings" title = "Plantation settings">

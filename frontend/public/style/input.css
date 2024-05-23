@@ -54,7 +54,7 @@
         @apply w-[300%];
     }
     form{
-        @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden;
+        @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden box-border p-2;
     }
     form :is(input, textarea){
         @apply bg-base-100;

@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang = "en">
     <%- include('../partials/head.partial.ejs', {title: "Plantations"}) %>
     <body>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
-        <dialog id = "newPlantation" class = "modal">
-            <div class = "modal-box">
-                <form method = "dialog">
-                    <button class = "btn btn-sm btn-square btn-outline btn-primary rounded-md absolute right-2 top-2">X</button>
-                </form>
-                <form id = "newPlantationForm">
-                    <header>
-                        <b>New Plantation</b>
-                        <h1>Create a new plantation</h1>
-                    </header>
-                    <input type = "text" name = "plantationName" placeholder = "Name*" required maxlength = "191">
-                    <div class = "flex inputStyleContainer">
-                        <input type = "text" name = "plantationLocation" placeholder = "Location name" maxlength = "191" required>
-                        <div class = "tooltip tooltip-left tooltip-info flex items-center" data-tip='We use location data to enhance your experience by giving you relevant weather information about your new plantation.'>
-                            <img class = "w-4" src = "/assets/icons/info.svg" alt = "Information about giving location data" title = "About location data">
-                        </div>
-                    </div>
-                    <input type = "number" name = "plantationLocation" placeholder = "Location postcode (CAP)" maxlength = "5">
-                    <button type = "submit">Submit</button>
-                </form>
-            </div>
-        </dialog>
+        <%- include('../partials/addPlantPlantation.partial.ejs', {
+            customHeader: "New plantation",
+            customTitle: "Add a new plantation",
+            formFields: [
+                '<input type = "text" name = "plantationName" placeholder = "Name*" required maxlength = "191">',
+                '<div class = "flex inputStyleContainer">\
+                    <input type = "text" name = "plantationLocation" placeholder = "Location name" maxlength = "191" required>\
+                    <div class = "tooltip tooltip-left tooltip-info flex items-center" data-tip=\'We use location data to enhance your experience by giving you relevant weather information about your new plantation.\'>\
+                        <img class = "w-4" src = "/assets/icons/info.svg" alt = "Information about giving location data" title = "About location data" tabindex = "0">\
+                    </div>\
+                </div>',
+                '<input type = "number" name = "plantationLocation" placeholder = "Location postcode (CAP)" maxlength = "5">',
+                '<button tabindex = "0" type = "submit">Submit</button>'
+            ]
+        }) %>
         <section>
             <div class = "mb-5">
                 <h1 class = "font-bold">Your <span class = "text-secondary">Plantations</span></h1>
@@ -48,7 +41,7 @@
                         <h2>Plantation 1</h2>
                     </a>
                 </div>
-                <div class = "customCard" onclick = "document.querySelector('#newPlantation').showModal();">
+                <div class = "customCard" onclick = "document.querySelector('#newPlantPlantation').showModal();">
                     <figure class = "!shadow-none !h-36">
                         <img src = "/assets/icons/new_plantation.svg">
                     </figure>
@@ -59,5 +52,13 @@
             </div>
         </section>
         <%- include('../partials/footer.partial.ejs') %>
+
+        <script>
+            const newPlantationModal = document.querySelector('#newPlantPlantation');
+            // Resetting the form to its initial state on modal close
+            newPlantationModal.onclose = e => {
+                snewPlantationModal.querySelector('#newPlantPlantationForm').reset();
+            }
+        </script>
     </body>
 </html>
