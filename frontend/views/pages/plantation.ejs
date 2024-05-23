@@ -5,6 +5,16 @@
     <body>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
         <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
+        <%- include('../partials/addPlantPlantation.partial.ejs', {
+            customHeader: "New plant",
+            customTitle: "Add a new plant",
+            formFields: [
+                '<input type = "text" name = "name" placeholder = "Plant name*" required maxlength = "191">',
+                '<input type = "text" name = "family" placeholder = "Plant family" maxlength = "191">',
+                '<input type = "text" name = "scientificName" placeholder = "Plant scientific name" maxlength = "191">',
+                '<button tabindex = "0" type = "submit">Submit</button>'
+            ]
+        }) %>
         <!-- TODO: Move this to partials directory -->
         <dialog class = "modal" id = "treatments">
             <div class = "modal-box space-y-5 text-center">
@@ -81,7 +91,7 @@
                         <h2>Plant 1</h2>
                     </div>
                 </div>
-                <div class = "customCard" onclick = "document.querySelector('#newPlantation').showModal();">
+                <div class = "customCard" onclick = "document.querySelector('#newPlantPlantation').showModal();">
                     <figure class = "!shadow-none !h-36">
                         <img src = "/assets/icons/new_plant.svg">
                     </figure>
@@ -96,6 +106,7 @@
         </div>
         <%- include('../partials/footer.partial.ejs') %>
 
+        <script src = "/script/utilities.js"></script>
         <!-- TODO: Move this to external JS file -->
         <script>
             function createElement(elementName, attributes = null, classes = null){
