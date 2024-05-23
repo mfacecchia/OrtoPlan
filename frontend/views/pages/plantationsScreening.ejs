@@ -53,12 +53,7 @@
         </section>
         <%- include('../partials/footer.partial.ejs') %>
 
-        <script>
-            const newPlantationModal = document.querySelector('#newPlantPlantation');
-            // Resetting the form to its initial state on modal close
-            newPlantationModal.onclose = e => {
-                snewPlantationModal.querySelector('#newPlantPlantationForm').reset();
-            }
-        </script>
+        <!-- NOTE: Script declaration -->
+        <script src = "/script/utilities.js"></script>
     </body>
 </html>
