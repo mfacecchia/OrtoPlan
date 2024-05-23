@@ -2292,7 +2292,6 @@ html {
   display: flex;
   height: 10rem;
   justify-content: center;
-  overflow: hidden;
   background-size: cover;
   background-position: center;
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -2652,6 +2651,10 @@ form[method="dialog"] .btn-square {
 .text-error {
   --tw-text-opacity: 1;
   color: var(--fallback-er,oklch(var(--er)/var(--tw-text-opacity)));
+}
+.text-info {
+  --tw-text-opacity: 1;
+  color: var(--fallback-in,oklch(var(--in)/var(--tw-text-opacity)));
 }
 .text-primary {
   --tw-text-opacity: 1;
