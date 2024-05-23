@@ -1,0 +1,17 @@
+<div class = "customCard" <% if(typeof cardData !== 'undefined'){ %> <%= cardData[0] %> = <%= cardData[1] %> <% } %>>
+    <figure class = "<%= cardBg %>">
+        <div class = "absolute top-0 right-0 h-8 dropdown dropdown-end" title = "<%= dropdownTitle %>">
+            <img tabindex = "0" role = "button" class = "h-full" src = "/assets/icons/menu.svg" alt = "Settings button">
+            <ul class = "dropdown-content z-10 menu p-2 py-0 shadow-xl bg-base-100 rounded-xl w-40 overflow-y-scroll mr-3 textToRight">
+                <% dropdownOptions.forEach(option => { %>
+                    <%- option %>
+                    <hr class = "w-1/2">
+                <% }) %>
+            </ul>
+        </div>
+    </figure>
+    <div class = "cardContent">
+        <p class = "text-primary"><%= cardSubtitle %></p>
+        <h2><%= cardTitle %></h2>
+    </div>
+</div>

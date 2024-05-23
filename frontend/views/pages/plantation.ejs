@@ -15,7 +15,6 @@
                 '<button tabindex = "0" type = "submit">Submit</button>'
             ]
         }) %>
-        <!-- TODO: Move this to partials directory -->
         <dialog class = "modal" id = "treatments">
             <div class = "modal-box space-y-5 text-center">
                 <form method = "dialog">
@@ -72,25 +71,18 @@
                     The  endpoint makes a GET request to the server, which returns the whole list of plants related to that plantation
                     and then with a `forEach()` EJS loop, output all the plants based on the cards partial (still needs to be updated, read note below)
                 -->
-                <div class = "customCard" data-plant-id = "1">
-                    <figure class = "bg-defaultPlant">
-                        <div class = "absolute top-0 right-0 h-8 dropdown dropdown-end" alt = "Plantation Settings" title = "Plantation settings">
-                            <!-- TODO: Move this to partials -->
-                            <img tabindex = "0" role = "button" class = "h-full" src = "/assets/icons/menu.svg" alt = "Plant settings">
-                            <ul class = "dropdown-content z-10 menu p-2 py-0 shadow-xl bg-base-100 rounded-xl w-40 overflow-y-scroll mr-3 textToRight">
-                                <li onclick = "document.querySelector('#treatments').showModal()"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>
-                                <hr class = "w-1/2">
-                                <li class = "textToRight" onclick = "confirmPlantRemoval(1)"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>
-                                <hr class = "w-1/2">
-                                <li class = "textToRight" onclick = "showPlantInformation(1)"><a tabindex = "0"><span class = "text-info">Plant's</span> Information</a></li>
-                            </ul>
-                        </div>
-                    </figure>
-                    <div class = "cardContent">
-                        <p class = "text-primary">Plant family</p>
-                        <h2>Plant 1</h2>
-                    </div>
-                </div>
+                <%- include('../partials/card.partial.ejs', {
+                    cardData: ['data-plant-id', '1'],
+                    cardBg: "bg-defaultPlant",
+                    dropdownTitle: "Plant settings",
+                    dropdownOptions: [
+                        '<li onclick = "document.querySelector(\'#treatments\').showModal()"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>',
+                        '<li class = "textToRight" onclick = "confirmPlantRemoval(1)"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
+                        '<li class = "textToRight" onclick = "showPlantInformation(1)"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>'
+                    ],
+                    cardSubtitle: "Plant family",
+                    cardTitle: "Plant 1"
+                }) %>
                 <div class = "customCard" onclick = "document.querySelector('#newPlantPlantation').showModal();">
                     <figure class = "!shadow-none !h-36">
                         <img src = "/assets/icons/new_plant.svg">
