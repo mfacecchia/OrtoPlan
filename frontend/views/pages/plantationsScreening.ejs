@@ -4,6 +4,7 @@
     <%- include('../partials/head.partial.ejs', {title: "Plantations"}) %>
     <body>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
+        <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
         <%- include('../partials/addPlantPlantation.partial.ejs', {
             customHeader: "New plantation",
             customTitle: "Add a new plantation",
@@ -30,7 +31,7 @@
                     cardBg: "bg-defaultPlantation",
                     dropdownTitle: "Plantation settings",
                     dropdownOptions: [
-                        '<li class = "textToRight"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>',
+                        '<li class = "textToRight" onclick = "confirmRemoval(1, "plantation")"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>'
                     ],
                     cardSubtitle: "Pescara, IT",
                     cardTitle: "Plantation 1"
@@ -45,6 +46,9 @@
                 </div>
             </div>
         </section>
+        <div class = "toast">
+
+        </div>
         <%- include('../partials/footer.partial.ejs') %>
 
         <!-- NOTE: Script declaration -->
