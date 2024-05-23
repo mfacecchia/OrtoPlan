@@ -77,7 +77,7 @@
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
                         '<li onclick = "document.querySelector(\'#treatments\').showModal()"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>',
-                        '<li class = "textToRight" onclick = "confirmRemoval(1, true)"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
+                        '<li class = "textToRight" onclick = "confirmRemoval(1, \'plant\')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
                         '<li class = "textToRight" onclick = "showPlantInformation(1)"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>'
                     ],
                     cardSubtitle: "Plant family",
@@ -109,6 +109,7 @@
             let editButtonClicksCount = 0;
 
             document.querySelectorAll('.treatmentForm').forEach(form => {
+                const treatmentID = form.getAttribute('data-treatment-id');
                 form.querySelector('button[data-btn-action="Remove"]').addEventListener('click', e => {
                     if(editButtonClicksCount){
                         editButtonClicksCount = 0;
@@ -116,8 +117,8 @@
                         return
                     }
                     e.target.parentNode.setAttribute('type', 'button')
-                    // TODO: Open confirmation modal
-                    console.log(`Remove treatment with ID ${form.getAttribute('data-treatment-id')}`);
+                    // TODO: Remove <hr> as well
+                    confirmRemoval(treatmentID, 'treatment');
                 });
                 form.querySelector('button[data-btn-action="Edit"]').addEventListener('click', e => {
                     editButtonClicksCount++;

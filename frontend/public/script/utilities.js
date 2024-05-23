@@ -24,30 +24,37 @@ function resetModalForm(modal, index = 1){
     } catch(err){ }
 }
 
-function confirmRemoval(id, isPlant, printError = true){
+function confirmRemoval(id, elementType, printError = true){
     /*
         * Manages the plant/plantation removal based on the modal selection
         * Takes as parameter the plant/plantation id and uses it to process all the relative removal confirmation mechanism
-        * The `isPlant` parameter accepts a boolean value and is used to determine the element to remove
+        * The `elementType` parameter accepts a string value and is used to determine the element to remove (the element should contain a `data-elementType-id` attribute)
         * The `printError` prameter allows to choose whetever to display an erorr message to the user or not
     */
-    const elementSelector = isPlant? `[data-plant-id="${id}"]`: `[data-plantation-id="${id}"]`;
+    const elementSelector = `[data-${elementType}-id="${id}"]`;
     const dialog = document.querySelector('#confirmRemoval');
     let elementName = undefined
     try{
-        elementName = document.querySelector(`${elementSelector} [role="definition"]`).textContent;
+        elementName = document.querySelector(`${elementSelector} [role="definition"]`).textContent || document.querySelector(`${elementSelector} [role="definition"]`).value;
     }catch(err){
         if(printError) displayError("Element not found.");
         return;
     }
     dialog.querySelector('p span').textContent = elementName;
     dialog.showModal();
-    const confirmRemovalForm = dialog.querySelector('form').onsubmit = e => {
+    dialog.querySelector('form').onsubmit = e => {
         try{
             document.querySelector(elementSelector).remove();
         }catch(err){
             // Outputting an error message in case the plant is not found from the provided ID
             if(printError) displayError("Couldn't remove the selected element, please try again.");
+        }
+        if(elementType === 'treatment'){
+            // Removing the excessive dividers in case the element to be removed is a plant's treatment
+            try{
+                document.querySelector('#treatments .modal-box > hr').remove();
+                document.querySelector('#treatments .modal-box hr + hr').remove();
+            }catch(err){}
         }
     }
 }
