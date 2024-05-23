@@ -2503,6 +2503,18 @@ form[method="dialog"] .btn-square {
 .w-full {
   width: 100%;
 }
+.w-11 {
+  width: 2.75rem;
+}
+.w-44 {
+  width: 11rem;
+}
+.w-3 {
+  width: 0.75rem;
+}
+.w-2 {
+  width: 0.5rem;
+}
 .max-w-16 {
   max-width: 4rem;
 }

@@ -5,16 +5,21 @@
         </form>
         <form id = "newPlantPlantationForm">
             <header>
-                <% if(typeof customHeader !== 'undefined'){ %>
-                    <b><%= customHeader %></b>
-                <% }else{ %>
-                    <b>New element</b>
-                <% } %>
-                <% if(typeof customTitle !== 'undefined'){ %>
-                    <h1><%= customTitle %></h1>
-                <% }else{ %>
-                    <h1>Create a new element</h1>
-                <% } %>
+                <b>
+                    <% if(typeof customHeader !== 'undefined'){ %>
+                        <%= customHeader %>
+                    <% }else{ %>
+                        New plant/plantation
+                    <% } %>
+                </b>
+                <h1 class = "text-secondary">
+                    <% if(typeof customTitle !== 'undefined'){ %>
+                        <%= customTitle %>
+                    <% }else{ %>
+                        Create a new plant/plantation
+                    <% } %>
+                </h1>
+                <hr class = "animate-showHide w-24 green-line mx-auto">
             </header>
             <% formFields.forEach(field => { %>
                 <%- field %>
