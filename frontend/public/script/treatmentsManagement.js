@@ -5,7 +5,7 @@
 */
 let editButtonClicksCount = 0;
 
-document.querySelectorAll('.treatmentForm').forEach(form => {
+function addTreatmentButtonEvents(form){
     const treatmentID = form.getAttribute('data-treatment-id');
     form.querySelector('button[data-btn-action="Remove"]').addEventListener('click', e => {
         if(editButtonClicksCount){
@@ -38,7 +38,7 @@ document.querySelectorAll('.treatmentForm').forEach(form => {
         formFields[0].focus();
         editButtonClicksCount >= 2? updateTreatmentInfo(e, form): editButtonClicksCount++;
     });
-});
+}
 
 function updateTreatmentInfo(e, form){
     e.preventDefault();
@@ -64,4 +64,85 @@ function resetTreatmentsList(form){
         treatmentForm.querySelectorAll('button').forEach(button => button.removeAttribute('disabled'));
     });
     document.querySelector('#newTreatment').removeAttribute('disabled');
+}
+
+async function getPlantTreatments(plantID){
+    // Obtaining data from the API
+    const treatmentsData = await makeTreatmentsRequest(plantID);
+    if(!treatmentsData || !Array.isArray(treatmentsData)){
+        displayError('Could not retrieve treatments data.');
+        return;
+    }
+
+    const treatmentsModal = document.querySelector('#treatments');
+    const formParentNode = treatmentsModal.querySelector('.treatmentForm').parentNode;
+    const treatmentFormTempate = treatmentsModal.querySelector('.treatmentForm').cloneNode(true);
+    const separatorsList = formParentNode.querySelectorAll('hr');
+
+    treatmentsModal.querySelector('#newTreatment').onclick = e => newTreatment(plantID);
+    treatmentsModal.querySelector('.treatmentForm').remove();
+    
+    // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
+    treatmentsModal.onclose = (e) => {
+        try{
+            formParentNode.querySelector('.noTreatmentsNotice').remove();
+        }catch(err){};
+        formParentNode.querySelectorAll('.treatmentForm').forEach(form => {
+            form.remove();
+        });
+        for(let i = 1; i < separatorsList.length; i++){
+            separatorsList[i].remove();
+        }
+        const elementsAdded = insertTreatmentInList(formParentNode, treatmentFormTempate);
+        elementsAdded[1].remove();
+    }
+
+    separatorsList[1].remove();
+    if(treatmentsData.length){
+        treatmentsData.forEach(treatment => {
+            let treatmentForm = treatmentFormTempate.cloneNode(true);
+            treatmentForm.setAttribute('data-treatment-id', treatment.treatmentID);
+            ["treatmentType", "treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
+                treatmentForm.querySelector(`[name="${field}"]`).setAttribute('value', treatment[field]);
+            });
+            // Inserting form's data as well as the divider before the new treatment button
+            treatmentForm = insertTreatmentInList(formParentNode, treatmentForm);
+            addTreatmentButtonEvents(treatmentForm[0]);
+        });
+    }
+    else{
+        const noTreatmentsNotice = document.createElement('p');
+        noTreatmentsNotice.textContent = 'No treatments for this plant.';
+        noTreatmentsNotice.classList.add('noTreatmentsNotice');
+        insertTreatmentInList(formParentNode, noTreatmentsNotice);
+    }
+    treatmentsModal.showModal();
+}
+
+function newTreatment(){
+    document.querySelector('#newTreatment').showModal();
+    // TODO: Remove the no treatments notice before adding the form
+}
+
+async function makeTreatmentsRequest(plantID){
+    return[{
+        treatmentID: 11,
+        treatmentType: 'Irrigation',
+        treatmentDate: '2024-10-10',
+        treatmentRecurrence: '0',
+        notes: ''
+    }];
+    try{
+        const res = await fetch();
+        return await res.json();
+    }catch(err){
+        return false;
+    }
+}
+
+function insertTreatmentInList(formParentNode, treatmentForm){
+    const elementsAdded = [];
+    elementsAdded.push(formParentNode.insertBefore(treatmentForm, formParentNode.querySelector('[role="definition"]').nextSibling));
+    elementsAdded.push(formParentNode.insertBefore(document.createElement('hr'), elementsAdded[0].nextSibling));
+    return elementsAdded;
 }

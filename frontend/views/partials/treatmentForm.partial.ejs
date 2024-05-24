@@ -9,10 +9,10 @@
     <input type = "date" name = "treatmentDate" value = "<%= date %>" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
     <div class = "flex items-center gap-3">
         <span>every</span>
-        <input class = "max-w-16" type = "number" name = "recurrenceDays" value = "<%= recurrence %>" placeholder = "Recurrence" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
+        <input class = "max-w-16" type = "number" name = "treatmentRecurrence" value = "<%= recurrence %>" placeholder = "Recurrence" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
         <span>days</span>
     </div>
-    <textarea <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>><% if(typeof notes !== 'undefined'){ %> <%= notes %> <% }else{ %>No notes available<% } %></textarea>
+    <textarea name = "notes" <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>><% if(typeof notes !== 'undefined'){ %> <%= notes %> <% }else{ %>No notes available<% } %></textarea>
 </form>
 <% if(typeof separator !== 'undefined'){ %>
     <hr>

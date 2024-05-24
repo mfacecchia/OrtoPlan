@@ -18,34 +18,37 @@
                 '<button tabindex = "0" type = "submit">Submit</button>'
             ]
         }) %>
+        <%- include('../partials/addPlantPlantation.partial.ejs', {
+            modalID: 'newTreatment',
+            customHeader: "New treatment",
+            customTitle: "Add a new treatment for \"<span></span>\"",
+            formFields: [
+                '<input type = "text" name = "treatmentType" placeholder = "Treatment Type*" required>',
+                '<input type = "date" name = "treatmentDate" required>',
+                '<input type = "number" name = "treatmentDate" placeholder = "Recurrence*" required>',
+                '<textarea name = "notes" placeholder = "Notes for this treatment"></textarea>',
+                '<button tabindex = "0" type = "submit">Submit</button>'
+            ]
+        }) %>
         <dialog class = "modal" id = "treatments">
             <div class = "modal-box space-y-5 text-center">
                 <form method = "dialog">
                     <button class = "btn btn-square rounded-md btn-outline absolute right-2 top-2 btn-primary">X</button>
                 </form>
-                <div class = "flex flex-col justify-center items-center">
+                <div class = "flex flex-col justify-center items-center" role = "definition">
                     <header class = "mb-0">
                         <h1 class = "text-secondary font-bold">Treatments</h1>
                         <hr class = "animate-showHide w-20 green-line mx-auto">
                     </header>
                 </div>
                 <%- include('../partials/treatmentForm.partial.ejs', {
-                    treatmentID: 1,
-                    type: "Irrigation",
-                    date: "2024-05-20",
-                    recurrence: 30,
+                    treatmentID: null,
+                    type: "",
+                    date: "",
+                    recurrence: null,
                     isDisabled: true,
                     separator: true
                 }) %>
-                <%- include('../partials/treatmentForm.partial.ejs', {
-                    treatmentID: 2,
-                    type: "Pruning",
-                    date: "2024-05-30",
-                    recurrence: 120,
-                    isDisabled: true,
-                    separator: true
-                }) %>
-                <!-- TODO: Add new treatment modal -->
                 <div class = "btn btn-primary rounded-full w-1/2 py-2 px-3" id = "newTreatment" role = "button"><p>New treatment</p></div>
             </div>
         </dialog>
@@ -126,7 +129,7 @@
                     cardBg: "bg-defaultPlant",
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
-                        '<li onclick = "document.querySelector(\'#treatments\').showModal()"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>',
+                        '<li onclick = "getPlantTreatments(1)"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>',
                         '<li class = "textToRight" onclick = "confirmRemoval(1, \'plant\')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
                         '<li class = "textToRight" onclick = "showPlantInformation(1)"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>'
                     ],
