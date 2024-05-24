@@ -60,8 +60,57 @@
             </div>
             <section id = "forecast">
                 <p>Forecast for this <span class = "text-primary">area</span></p>
-                <div class = "w-full p-4 rounded-xl shadow-xl">
-                    <!-- TODO: Use GlideJS carousel to display forecast => https://glidejs.com/docs/ -->
+                <div class = "glide w-full p-4 rounded-xl shadow-xl" id = "weatherSlider">
+                    <div class = "glide__track" data-glide-el = "track">
+                        <ul class = "glide__slides">
+                            <li class = "glide__slide">
+                                <%- include('../partials/weather.partial.ejs', {
+                                    date: "20/05",
+                                    image: "/assets/icons/thunderstorm.svg",
+                                    avgTemperature: "15°C"
+                                }) %>
+                            </li>
+                            <li class = "glide__slide">
+                                <%- include('../partials/weather.partial.ejs', {
+                                    date: "21/05",
+                                    image: "/assets/icons/sun.svg",
+                                    avgTemperature: "24°C"
+                                }) %>
+                            </li>
+                            <li class = "glide__slide">
+                                <%- include('../partials/weather.partial.ejs', {
+                                    date: "22/05",
+                                    image: "/assets/icons/sun.svg",
+                                    avgTemperature: "22°C"
+                                }) %>
+                            </li>
+                            <li class = "glide__slide">
+                                <%- include('../partials/weather.partial.ejs', {
+                                    date: "23/05",
+                                    image: "/assets/icons/rain.svg",
+                                    avgTemperature: "18°C"
+                                }) %>
+                            </li>
+                            <li class = "glide__slide">
+                                <%- include('../partials/weather.partial.ejs', {
+                                    date: "24/05",
+                                    image: "/assets/icons/rain.svg",
+                                    avgTemperature: "18°C"
+                                }) %>
+                            </li>
+                            <li class = "glide__slide">
+                                <%- include('../partials/weather.partial.ejs', {
+                                    date: "25/05",
+                                    image: "/assets/icons/sun.svg",
+                                    avgTemperature: "20°C"
+                                }) %>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class = "glide__arrows" data-glide-el = "controls">
+                        <button class = "glide__arrow glide__arrow--left" data-glide-dir = "<"><img src = "/assets/icons/arrow.svg"></button>
+                        <button class = "glide__arrow glide__arrow--right" data-glide-dir = ">"><img class = "rotate-180" src = "/assets/icons/arrow.svg"></button>
+                    </div>
                 </div>
             </section>
             <h1 class = "font-bold">Your <span class = "text-secondary">Plants</span></h1>
@@ -102,5 +151,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src = "/script/utilities.js"></script>
         <script src = "/script/treatmentsManagement.js"></script>
+        <script src = "/script/weatherSlider.js"></script>
     </body>
 </html>

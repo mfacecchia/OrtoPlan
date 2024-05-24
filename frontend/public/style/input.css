@@ -143,6 +143,12 @@
     .plantationsPlantsList{
         @apply grid justify-start grid-cols-1;
     }
+    .weather{
+        @apply flex flex-col items-center justify-center;
+    }
+    .weather img{
+        @apply h-11;
+    }
 }
 
 @layer components{
@@ -191,5 +197,17 @@
     }
     .alert{
         @apply max-w-56 text-right;
+    }
+    .glide__arrow{
+        @apply absolute top-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent to-base-100 to-30% h-full box-border px-1;
+    }
+    .glide__arrow img{
+        @apply h-7;
+    }
+    .glide__arrow--left{
+        @apply left-3 bg-gradient-to-l;
+    }
+    .glide__arrow--right{
+        @apply right-3;
     }
 }
