@@ -125,13 +125,6 @@ function newTreatment(){
 }
 
 async function makeTreatmentsRequest(plantID){
-    return[{
-        treatmentID: 11,
-        treatmentType: 'Irrigation',
-        treatmentDate: '2024-10-10',
-        treatmentRecurrence: '0',
-        notes: ''
-    }];
     try{
         const res = await fetch();
         return await res.json();
