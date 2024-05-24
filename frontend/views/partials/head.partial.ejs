@@ -5,6 +5,8 @@
     <link rel = "stylesheet" href = "/style/style.css">
     <link rel = "icon" href = "/assets/icons/favicon.webp">
 
+    <% if(typeof stylesheets !== 'undefined'){ stylesheets.forEach(stylesheet => { %> <link rel = "stylesheet" href = <%= stylesheet %>> <% })} %>
+
     <title>
         OrtoPlan<% if(typeof title !== 'undefined'){ %>
             - <%= title %>

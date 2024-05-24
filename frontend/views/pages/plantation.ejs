@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 
 <html lang="en">
-    <%- include('../partials/head.partial.ejs', {title: "Plantations"}) %>
+    <%- include('../partials/head.partial.ejs', {
+        title: "Plantations",
+        stylesheets: ["https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css"]
+    }) %>
     <body>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
         <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
@@ -96,6 +99,7 @@
         </div>
         <%- include('../partials/footer.partial.ejs') %>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src = "/script/utilities.js"></script>
         <script src = "/script/treatmentsManagement.js"></script>
     </body>
