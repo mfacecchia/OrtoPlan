@@ -121,6 +121,7 @@ function newTreatment(plantID){
     newTreatmentDialog.querySelector('input[type="date"]').setAttribute('value', moment.utc().format('YYYY-MM-DD'));
     
     newTreatmentDialog.onclose = e => {
+        newTreatmentForm.onsubmit = undefined;
         newTreatmentForm.reset();
     };
     newTreatmentForm.onsubmit = async e => {

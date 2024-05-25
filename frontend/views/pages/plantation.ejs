@@ -9,6 +9,7 @@
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
         <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
         <%- include('../partials/addPlantPlantation.partial.ejs', {
+            plantationID: 1,
             customHeader: "New plant",
             customTitle: "Add a new plant",
             formFields: [
@@ -130,22 +131,23 @@
                     and then with a `forEach()` EJS loop, output all the plants based on the cards partial (still needs to be updated, read note below)
                 -->
                 <%- include('../partials/card.partial.ejs', {
-                    cardData: ['data-plant-id', '1'],
+                    cardData: ['data-plant-id', '0'],
                     cardBg: "bg-defaultPlant",
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
                         '<li onclick = "getPlantTreatments(1)"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>',
-                        '<li class = "textToRight" onclick = "confirmRemoval(1, \'plant\')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
+                        '<li class = "textToRight" onclick = "confirmRemoval(0, \'plant\')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
                         '<li class = "textToRight" onclick = "showPlantInformation(1)"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>'
                     ],
                     cardSubtitle: "Plant family",
                     cardTitle: "Plant 1"
                 }) %>
-                <div class = "customCard" onclick = "document.querySelector('#newPlantPlantation').showModal();">
+                <div class = "customCard" onclick = "newPlant()">
                     <figure class = "!shadow-none !h-36">
                         <img src = "/assets/icons/new_plant.svg">
                     </figure>
                     <div class = "cardContent">
+                        <p class = "hidden">Plant family</p>
                         <h2 class = "text-center">New <span class = "text-primary">Plant</span></h2>
                     </div>
                 </div>
@@ -159,6 +161,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
         <script src = "/script/utilities.js"></script>
+        <script src = "/script/plantsManagement.js"></script>
         <script src = "/script/treatmentsManagement.js"></script>
         <script src = "/script/weatherSlider.js"></script>
     </body>
