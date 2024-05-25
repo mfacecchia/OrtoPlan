@@ -19,7 +19,7 @@ function addTreatmentButtonEvents(form){
     form.querySelector('button[data-btn-action="Edit"]').addEventListener('click', e => {
         editButtonClicksCount++;
         const treatmentID = form.getAttribute('data-treatment-id');
-        const formFields = form.querySelectorAll('input, textarea');
+        const formFields = form.querySelectorAll('input, textarea, select');
         const resetTreatmentButton = form.querySelector('button[data-btn-action="Remove"]');
         // Giving the user the possibility of editing the selected treatment
         formFields.forEach(field => {
@@ -35,7 +35,6 @@ function addTreatmentButtonEvents(form){
         });
         document.querySelector('#newTreatment').setAttribute('disabled', undefined);
 
-        formFields[0].focus();
         editButtonClicksCount >= 2? updateTreatmentInfo(e, form): editButtonClicksCount++;
     });
 }
@@ -55,7 +54,7 @@ function resetTreatmentsList(form){
     resetTreatmentButton.childNodes[0].src = "/assets/icons/erase.svg";
     submitTreatmentButton.setAttribute('type', 'button');
     submitTreatmentButton.childNodes[0].src = "/assets/icons/edit.svg";
-    const formFields = form.querySelectorAll('input, textarea');
+    const formFields = form.querySelectorAll('input, textarea, select');
     // Disabling all fields and re-enabling edit and remove buttons
     formFields.forEach(field => {
         field.setAttribute('disabled', undefined);
@@ -102,7 +101,8 @@ async function getPlantTreatments(plantID){
         treatmentsData.forEach(treatment => {
             let treatmentForm = treatmentFormTempate.cloneNode(true);
             treatmentForm.setAttribute('data-treatment-id', treatment.treatmentID);
-            ["treatmentType", "treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
+            treatmentForm.querySelector(`select[name="treatmentType"] [value="${treatment.treatmentType}"]`).setAttribute('selected', undefined);
+            ["treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
                 treatmentForm.querySelector(`[name="${field}"]`).setAttribute('value', treatment[field]);
             });
             // Inserting form's data as well as the divider before the new treatment button
@@ -119,7 +119,7 @@ async function getPlantTreatments(plantID){
     treatmentsModal.showModal();
 }
 
-function newTreatment(){
+function newTreatment(plantID){
     document.querySelector('#newTreatment').showModal();
     // TODO: Remove the no treatments notice before adding the form
 }

@@ -21,9 +21,15 @@
         <%- include('../partials/addPlantPlantation.partial.ejs', {
             modalID: 'newTreatment',
             customHeader: "New treatment",
-            customTitle: "Add a new treatment for \"<span></span>\"",
+            customTitle: "Plan a treatment for \"<span></span>\"",
             formFields: [
-                '<input type = "text" name = "treatmentType" placeholder = "Treatment Type*" required>',
+                '<select name = "treatmentType" required role = "definition">\
+                    <option value = "">Treatment Type*</option>\
+                    <option value = "Pruning">Pruning</option>\
+                    <option value = "Irrigation">Irrigation</option>\
+                    <option value = "Fertilization">Fertilization</option>\
+                    <option value = "Sowing">Sowing</option>\
+                </select>',
                 '<input type = "date" name = "treatmentDate" required>',
                 '<input type = "number" name = "treatmentDate" placeholder = "Recurrence*" required>',
                 '<textarea name = "notes" placeholder = "Notes for this treatment"></textarea>',
@@ -43,7 +49,6 @@
                 </div>
                 <%- include('../partials/treatmentForm.partial.ejs', {
                     treatmentID: null,
-                    type: "",
                     date: "",
                     recurrence: null,
                     isDisabled: true,
@@ -152,6 +157,7 @@
         <%- include('../partials/footer.partial.ejs') %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
         <script src = "/script/utilities.js"></script>
         <script src = "/script/treatmentsManagement.js"></script>
         <script src = "/script/weatherSlider.js"></script>

@@ -56,25 +56,25 @@
     form{
         @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden box-border p-2;
     }
-    form :is(input, textarea){
+    form :is(input, textarea, select, option){
         @apply bg-base-100;
     }
-    form :is(input, textarea), .inputStyleContainer{
+    form :is(input, textarea, select, option), .inputStyleContainer{
         @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2 outline-none;
     }
-    form :is(input, textarea):user-invalid, form .inputStyleContainer:has(:is(input, textarea):user-invalid){
+    form :is(input, textarea, select, option):user-invalid, form .inputStyleContainer:has(:is(input, textarea, select, option):user-invalid){
         @apply border-error text-error;
     }
-    :is(input, textarea)::placeholder{
+    :is(input, textarea, select, option)::placeholder{
         @apply text-neutral;
     }
-    :is(input, textarea):disabled[name="treatmentType"]{
+    :is(input, textarea, select, option):disabled[name="treatmentType"]{
         @apply font-bold
     }
-    :is(input, textarea):disabled{
+    :is(input, textarea, select, option):disabled{
         @apply text-black opacity-90 input-disabled;
     }
-    .inputStyleContainer :is(input, textarea){
+    .inputStyleContainer :is(input, textarea, select, option){
         @apply border-none p-0;
     }
     form button[type="submit"]{
