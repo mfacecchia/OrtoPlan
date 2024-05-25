@@ -2564,6 +2564,9 @@ form[method="dialog"] .btn-square {
 .flex {
   display: flex;
 }
+.hidden {
+  display: none;
+}
 .size-full {
   width: 100%;
   height: 100%;

@@ -79,7 +79,7 @@ async function getPlantTreatments(plantID){
     const separatorsList = formParentNode.querySelectorAll('hr');
 
     treatmentsModal.querySelector('#newTreatment').onclick = e => newTreatment(plantID);
-    treatmentsModal.querySelector('.treatmentForm').remove();
+    treatmentFormTempate.classList.remove('hidden');
     
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
     treatmentsModal.onclose = (e) => {
@@ -99,14 +99,9 @@ async function getPlantTreatments(plantID){
     separatorsList[1].remove();
     if(treatmentsData.length){
         treatmentsData.forEach(treatment => {
-            let treatmentForm = treatmentFormTempate.cloneNode(true);
-            treatmentForm.setAttribute('data-treatment-id', treatment.treatmentID);
-            treatmentForm.querySelector(`select[name="treatmentType"] [value="${treatment.treatmentType}"]`).setAttribute('selected', undefined);
-            ["treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
-                treatmentForm.querySelector(`[name="${field}"]`).setAttribute('value', treatment[field]);
-            });
+            const finalFormData = setFormData(treatmentFormTempate.cloneNode(true), treatment);
             // Inserting form's data as well as the divider before the new treatment button
-            treatmentForm = insertTreatmentInList(formParentNode, treatmentForm);
+            const treatmentForm = insertTreatmentInList(formParentNode, finalFormData);
             addTreatmentButtonEvents(treatmentForm[0]);
         });
     }
@@ -120,8 +115,26 @@ async function getPlantTreatments(plantID){
 }
 
 function newTreatment(plantID){
-    document.querySelector('#newTreatment').showModal();
-    // TODO: Remove the no treatments notice before adding the form
+    const newTreatmentDialog = document.querySelector('#newTreatment');
+    const newTreatmentForm = document.querySelector('#newTreatmentForm');
+    newTreatmentDialog.querySelector('header span').textContent = document.querySelector(`[data-plant-id="${plantID}"] [role="definition"]`).textContent;
+    newTreatmentDialog.querySelector('input[type="date"]').setAttribute('value', moment.utc().format('YYYY-MM-DD'));
+    
+    newTreatmentDialog.onclose = e => {
+        newTreatmentForm.reset();
+    };
+    newTreatmentForm.onsubmit = async e => {
+        e.preventDefault();
+        try{
+            const response = await fetch();
+            const jsonResponse = await response.json();
+            addToList(jsonResponse);
+        }catch(err){
+            displayError('Unknown error while planning the treatment. Please try again.');
+        }
+        newTreatmentDialog.close();
+    }
+    newTreatmentDialog.showModal();
 }
 
 async function makeTreatmentsRequest(plantID){
@@ -138,4 +151,34 @@ function insertTreatmentInList(formParentNode, treatmentForm){
     elementsAdded.push(formParentNode.insertBefore(treatmentForm, formParentNode.querySelector('[role="definition"]').nextSibling));
     elementsAdded.push(formParentNode.insertBefore(document.createElement('hr'), elementsAdded[0].nextSibling));
     return elementsAdded;
+}
+
+function setFormData(form, treatmentData){
+    form.setAttribute('data-treatment-id', treatmentData.treatmentID);
+    form.querySelector(`select[name="treatmentType"] [value="${treatmentData.treatmentType}"]`).setAttribute('selected', undefined);
+    ["treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
+        form.querySelector(`[name="${field}"]`).setAttribute('value', treatmentData[field]);
+    });
+    return form;
+}
+
+function addToList(treatmentData){
+    /*
+        * Takes all the necessary treatment's data and creates a new element to append to the treatments's list
+    */
+    const treatmentForm = document.querySelector('.treatmentForm');
+    const treatmentFormParentNode = treatmentForm.parentNode;
+    const newTreatmentForm = setFormData(treatmentForm.cloneNode(true), treatmentData);
+    newTreatmentForm.classList.remove('hidden');
+    addTreatmentButtonEvents(newTreatmentForm);
+    removeNotice(treatmentFormParentNode);
+    insertTreatmentInList(treatmentFormParentNode, newTreatmentForm);
+}
+
+function removeNotice(parentNode){
+    try{
+        const noTreatmentsNotice = parentNode.querySelector('.noTreatmentsNotice');
+        parentNode.querySelector('.noTreatmentsNotice + hr').remove();
+        noTreatmentsNotice.remove();
+    }catch(err){};
 }

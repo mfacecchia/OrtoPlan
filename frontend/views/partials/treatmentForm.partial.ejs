@@ -1,4 +1,4 @@
-<form class = "items-start treatmentForm" data-treatment-id = "<%= treatmentID %>">
+<form class = "items-start treatmentForm hidden" data-treatment-id = "<%= treatmentID %>">
     <div class = "flex w-full items-center gap-5">
         <select name = "treatmentType" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %> role = "definition">
             <option value = "">Treatment Type*</option>
