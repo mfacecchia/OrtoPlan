@@ -17,7 +17,7 @@
                     </div>\
                 </div>',
                 '<input type = "number" name = "plantationLocation" placeholder = "Location postcode (CAP)" minlength = "5" maxlength = "5">',
-                '<button tabindex = "0" type = "submit">Submit</button>'
+                '<button type = "submit">Submit</button>'
             ]
         }) %>
         <section>
@@ -33,8 +33,8 @@
                         cardBg: plantation.imageURL,
                         dropdownTitle: "Plantation settings",
                         dropdownOptions: [
-                            `<li class = "textToRight" onclick = "modify(${plantation.plantationID}, 'plantation')" role = "Modify" tabindex = "0"><a><span class = "text-primary">Modify</span> Plantation</a></li>`,
-                            `<li class = "textToRight" onclick = "confirmRemoval(${plantation.plantationID}, 'plantation')" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plantation</a></li>`
+                            `<li class = "textToRight" onclick = "modify(${plantation.plantationID}, 'plantation')" role = "Modify"><a><span class = "text-primary">Modify</span> Plantation</a></li>`,
+                            `<li class = "textToRight" onclick = "confirmRemoval(${plantation.plantationID}, 'plantation')" role = "Remove"><a><span class = "text-error">Remove</span> Plantation</a></li>`
                         ],
                         link: `./${plantation.plantationID}`,
                         cardSubtitle: plantation.location,
@@ -47,8 +47,8 @@
                     cardBg: "/assets/icons/plantation.webp",
                     dropdownTitle: "Plantation settings",
                     dropdownOptions: [
-                        `<li class = "textToRight" role = "Modify"><a tabindex = "0"><span class = "text-primary">Modify</span> Plantation</a></li>`,
-                        '<li class = "textToRight" role = "Remove"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>'
+                        `<li class = "textToRight" role = "Modify"><a><span class = "text-primary">Modify</span> Plantation</a></li>`,
+                        '<li class = "textToRight" role = "Remove"><a><span class = "text-error">Remove</span> Plantation</a></li>'
                     ],
                     cardSubtitle: "Location",
                     cardTitle: "Plantation Name"

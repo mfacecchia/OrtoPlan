@@ -15,7 +15,7 @@
                 '<input type = "text" name = "name" placeholder = "Plant name*" required maxlength = "191">',
                 '<input type = "text" name = "family" placeholder = "Plant family" maxlength = "191">',
                 '<input type = "text" name = "scientificName" placeholder = "Plant scientific name" maxlength = "191">',
-                '<button tabindex = "0" type = "submit">Submit</button>'
+                '<button type = "submit">Submit</button>'
             ]
         }) %>
         <%- include('../partials/addPlantPlantation.partial.ejs', {
@@ -33,7 +33,7 @@
                 '<input type = "date" name = "treatmentDate" required>',
                 '<input type = "number" name = "treatmentDate" placeholder = "Recurrence*" required>',
                 '<textarea name = "notes" placeholder = "Notes for this treatment"></textarea>',
-                '<button tabindex = "0" type = "submit">Submit</button>'
+                '<button type = "submit">Submit</button>'
             ]
         }) %>
         <dialog class = "modal" id = "treatments">
@@ -132,10 +132,9 @@
                         dropdownTitle: "Plant settings",
                         dropdownOptions: [
                             // TODO: Update onclick listeners to pass `this` instead of plantID (redundancy)
-                            // TODO: Move `tabindex` from `a` to `li`
-                            `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>`,
-                            `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>`,
-                            `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>`
+                            `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
+                            `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove"><a><span class = "text-error">Remove</span> Plant</a></li>`,
+                            `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
                         ],
                         cardSubtitle: plant.plantFamily,
                         cardTitle: plant.plantName
@@ -147,9 +146,9 @@
                     cardBg: '/assets/icons/plant.webp',
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
-                        `<li class = "textToRight" role = "Plan"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>`,
-                        `<li class = "textToRight" role = "Remove"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>`,
-                        `<li class = "textToRight" role = "Information"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>`
+                        `<li class = "textToRight" role = "Plan"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
+                        `<li class = "textToRight" role = "Remove"><a><span class = "text-error">Remove</span> Plant</a></li>`,
+                        `<li class = "textToRight" role = "Information"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
                     ],
                     cardSubtitle: "Plant family",
                     cardTitle: "Plant name"
