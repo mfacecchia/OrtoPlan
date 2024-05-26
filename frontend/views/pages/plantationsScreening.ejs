@@ -13,10 +13,10 @@
                 '<div class = "flex inputStyleContainer">\
                     <input type = "text" name = "plantationLocation" placeholder = "Location name" maxlength = "191" required>\
                     <div class = "tooltip tooltip-left tooltip-info flex items-center" data-tip=\'We use location data to enhance your experience by giving you relevant weather information about your new plantation.\'>\
-                        <img class = "w-4" src = "/assets/icons/info.svg" alt = "Information about giving location data" title = "About location data" tabindex = "0">\
+                        <img class = "w-4" src = "/assets/icons/info.svg" alt = "Information about giving location data" title = "About location data">\
                     </div>\
                 </div>',
-                '<input type = "number" name = "plantationLocation" placeholder = "Location postcode (CAP)" maxlength = "5">',
+                '<input type = "number" name = "plantationLocation" placeholder = "Location postcode (CAP)" minlength = "5" maxlength = "5">',
                 '<button tabindex = "0" type = "submit">Submit</button>'
             ]
         }) %>
@@ -30,11 +30,11 @@
                     <%- include('../partials/card.partial.ejs', {
                         isTemplate: false,
                         cardData: ['data-plantation-id', plantation.plantationID],
-                        cardBg: '/assets/icons/plantation.webp',
+                        cardBg: plantation.imageURL,
                         dropdownTitle: "Plantation settings",
                         dropdownOptions: [
-                            `<li class = "textToRight" onclick = "modify(${plantation.plantationID}, 'plantation')"><a tabindex = "0"><span class = "text-primary">Modify</span> Plantation</a></li>`,
-                            `<li class = "textToRight" onclick = "confirmRemoval(${plantation.plantationID}, 'plantation')"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>`
+                            `<li class = "textToRight" onclick = "modify(${plantation.plantationID}, 'plantation')" role = "Modify" tabindex = "0"><a><span class = "text-primary">Modify</span> Plantation</a></li>`,
+                            `<li class = "textToRight" onclick = "confirmRemoval(${plantation.plantationID}, 'plantation')" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plantation</a></li>`
                         ],
                         link: `./${plantation.plantationID}`,
                         cardSubtitle: plantation.location,
@@ -47,13 +47,13 @@
                     cardBg: "/assets/icons/plantation.webp",
                     dropdownTitle: "Plantation settings",
                     dropdownOptions: [
-                        `<li class = "textToRight"><a tabindex = "0"><span class = "text-primary">Modify</span> Plantation</a></li>`,
-                        '<li class = "textToRight"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>'
+                        `<li class = "textToRight" role = "Modify"><a tabindex = "0"><span class = "text-primary">Modify</span> Plantation</a></li>`,
+                        '<li class = "textToRight" role = "Remove"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>'
                     ],
                     cardSubtitle: "Location",
                     cardTitle: "Plantation Name"
                 }) %>
-                <div class = "customCard" onclick = "document.querySelector('#newPlantPlantation').showModal();">
+                <div class = "customCard" onclick = "newElement('plantation')">
                     <figure class = "!shadow-none !h-36">
                         <img src = "/assets/icons/new_plantation.svg">
                     </figure>
@@ -70,5 +70,6 @@
 
         <!-- NOTE: Script declaration -->
         <script src = "/script/utilities.js"></script>
+        <script src = "/script/plantPlantationsManagement.js"></script>
     </body>
 </html>

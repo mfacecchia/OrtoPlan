@@ -132,6 +132,7 @@
                         dropdownTitle: "Plant settings",
                         dropdownOptions: [
                             // TODO: Update onclick listeners to pass `this` instead of plantID (redundancy)
+                            // TODO: Move `tabindex` from `a` to `li`
                             `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>`,
                             `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>`,
                             `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>`
@@ -153,7 +154,7 @@
                     cardSubtitle: "Plant family",
                     cardTitle: "Plant name"
                 }) %>
-                <div class = "customCard" onclick = "newPlant(<%=plantationID%>)">
+                <div class = "customCard" onclick = "newElement('plant', <%=plantationID%>)">
                     <figure class = "!shadow-none !h-36">
                         <img src = "/assets/icons/new_plant.svg">
                     </figure>
@@ -172,7 +173,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
         <script src = "/script/utilities.js"></script>
-        <script src = "/script/plantsManagement.js"></script>
+        <script src = "/script/plantPlantationsManagement.js"></script>
         <script src = "/script/treatmentsManagement.js"></script>
         <script src = "/script/weatherSlider.js"></script>
     </body>
