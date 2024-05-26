@@ -35,26 +35,37 @@ function confirmRemoval(id, elementType, printError = true){
     const dialog = document.querySelector('#confirmRemoval');
     let elementName = undefined
     try{
-        elementName = document.querySelector(`${elementSelector} [role="definition"]`).textContent || document.querySelector(`${elementSelector} [role="definition"]`).value;
+        elementName = document.querySelector(`${elementSelector} [role="definition"] [selected]`).value || document.querySelector(`${elementSelector} [role="definition"]`).textContent || document.querySelector(`${elementSelector} [role="definition"]`).value;
     }catch(err){
         if(printError) displayError("Element not found.");
         return;
     }
     dialog.querySelector('p span').textContent = elementName;
     dialog.showModal();
-    dialog.querySelector('form').onsubmit = e => {
+    dialog.querySelector('form').onsubmit = async e => {
         try{
-            document.querySelector(elementSelector).remove();
+            if(await fetch()){
+                document.querySelector(elementSelector).remove();
+            }
         }catch(err){
             // Outputting an error message in case the plant is not found from the provided ID
-            if(printError) displayError("Couldn't remove the selected element, please try again.");
+            if(printError) displayError("Couldn't remove the selected element, please reload the page and try again.");
         }
         if(elementType === 'treatment'){
             // Removing the excessive dividers in case the element to be removed is a plant's treatment
             try{
+                // TODO: Check if there are other treatments and show a "no treatments" notice if there aren't any.
                 document.querySelector('#treatments .modal-box > hr').remove();
                 document.querySelector('#treatments .modal-box hr + hr').remove();
             }catch(err){}
+            finally{
+                if(!document.querySelectorAll('[data-treatment-id]:not(.hidden)').length){
+                    const noTreatmentsNotice = document.createElement('p');
+                    noTreatmentsNotice.textContent = 'No treatments for this plant.';
+                    noTreatmentsNotice.classList.add('noTreatmentsNotice');
+                    insertTreatmentInList(document.querySelector('.treatmentForm').parentNode, noTreatmentsNotice);
+                }
+            }
         }
     }
 }
