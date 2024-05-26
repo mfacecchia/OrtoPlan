@@ -103,12 +103,7 @@ async function getPlantTreatments(plantID){
             addTreatmentButtonEvents(treatmentForm[0]);
         });
     }
-    else{
-        const noTreatmentsNotice = document.createElement('p');
-        noTreatmentsNotice.textContent = 'No treatments for this plant.';
-        noTreatmentsNotice.classList.add('noTreatmentsNotice');
-        insertTreatmentInList(formParentNode, noTreatmentsNotice);
-    }
+    else showNotice();
     treatmentsModal.showModal();
 }
 
@@ -180,4 +175,15 @@ function removeNotice(parentNode){
         parentNode.querySelector('.noTreatmentsNotice + hr').remove();
         noTreatmentsNotice.remove();
     }catch(err){};
+}
+
+function showNotice(){
+    /*
+        * Shows a notice in case there are no treatments for the selected plant
+    */
+    const formParentNode = document.querySelector('.treatmentForm').parentNode;
+    const noTreatmentsNotice = document.createElement('p');
+    noTreatmentsNotice.textContent = 'No treatments for this plant.';
+    noTreatmentsNotice.classList.add('noTreatmentsNotice');
+    insertTreatmentInList(formParentNode, noTreatmentsNotice);
 }

@@ -50,6 +50,7 @@ function confirmRemoval(id, elementType, printError = true){
         }catch(err){
             // Outputting an error message in case the plant is not found from the provided ID
             if(printError) displayError("Couldn't remove the selected element, please reload the page and try again.");
+            return;
         }
         if(elementType === 'treatment'){
             // Removing the excessive dividers in case the element to be removed is a plant's treatment
@@ -59,12 +60,7 @@ function confirmRemoval(id, elementType, printError = true){
                 document.querySelector('#treatments .modal-box hr + hr').remove();
             }catch(err){}
             finally{
-                if(!document.querySelectorAll('[data-treatment-id]:not(.hidden)').length){
-                    const noTreatmentsNotice = document.createElement('p');
-                    noTreatmentsNotice.textContent = 'No treatments for this plant.';
-                    noTreatmentsNotice.classList.add('noTreatmentsNotice');
-                    insertTreatmentInList(document.querySelector('.treatmentForm').parentNode, noTreatmentsNotice);
-                }
+                if(!document.querySelectorAll('[data-treatment-id]:not(.hidden)').length) showNotice();
             }
         }
     }
