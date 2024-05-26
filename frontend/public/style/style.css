@@ -2796,11 +2796,11 @@ form[method="dialog"] .btn-square {
 .bg-\[url\(\"\$\{plantData\.imageURL\}\"\)\] {
   background-image: url("${plantData.imageURL}");
 }
-.bg-defaultPlantation {
-  background-image: url("../assets/icons/plantation.webp");
-}
 .bg-defaultPlant {
   background-image: url("../assets/icons/plant.webp");
+}
+.bg-defaultPlantation {
+  background-image: url("../assets/icons/plantation.webp");
 }
 .bg-cover {
   background-size: cover;
@@ -2849,6 +2849,10 @@ form[method="dialog"] .btn-square {
   --tw-text-opacity: 1;
   color: var(--fallback-er,oklch(var(--er)/var(--tw-text-opacity)));
 }
+.text-info {
+  --tw-text-opacity: 1;
+  color: var(--fallback-in,oklch(var(--in)/var(--tw-text-opacity)));
+}
 .text-primary {
   --tw-text-opacity: 1;
   color: var(--fallback-p,oklch(var(--p)/var(--tw-text-opacity)));
@@ -2856,10 +2860,6 @@ form[method="dialog"] .btn-square {
 .text-secondary {
   --tw-text-opacity: 1;
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
-}
-.text-info {
-  --tw-text-opacity: 1;
-  color: var(--fallback-in,oklch(var(--in)/var(--tw-text-opacity)));
 }
 .opacity-30 {
   opacity: 0.3;

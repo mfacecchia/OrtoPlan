@@ -26,7 +26,8 @@ app.get('/user/plantations/:plantationID', (req, res) => {
         * TODO: validate the plantation id by making a requesto to the backend
         * before rendering the actual page 
     */
-    res.render('pages/plantation');
+    // NOTE: Place in `plantsList` option all the query returned plants
+    res.render('pages/plantation', {plantsList: []});
 });
 
 app.listen(5500, () => {

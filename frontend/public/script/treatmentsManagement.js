@@ -86,14 +86,12 @@ async function getPlantTreatments(plantID){
         try{
             formParentNode.querySelector('.noTreatmentsNotice').remove();
         }catch(err){};
-        formParentNode.querySelectorAll('.treatmentForm').forEach(form => {
+        formParentNode.querySelectorAll('.treatmentForm:not(.hidden)').forEach(form => {
             form.remove();
         });
         for(let i = 1; i < separatorsList.length; i++){
             separatorsList[i].remove();
         }
-        const elementsAdded = insertTreatmentInList(formParentNode, treatmentFormTempate);
-        elementsAdded[1].remove();
     }
 
     separatorsList[1].remove();

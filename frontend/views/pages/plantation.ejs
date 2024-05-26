@@ -125,22 +125,33 @@
             <h1 class = "font-bold">Your <span class = "text-secondary">Plants</span></h1>
             <hr class = "animate-showHide w-24 green-line origin-left">
             <div class = "cardsContainer mt-5">
-                <!--
-                    NOTE: HOW TO PRINTOUT ALL PLANTS ON PAGE LOAD 
-                    The  endpoint makes a GET request to the server, which returns the whole list of plants related to that plantation
-                    and then with a `forEach()` EJS loop, output all the plants based on the cards partial (still needs to be updated, read note below)
-                -->
+                <% plantsList.forEach(plant => { %>
+                    <%- include('../partials/card.partial.ejs', {
+                        isTemplate: false,
+                        cardData: ['data-plant-id', plant.plantID],
+                        cardBg: plant.imageURL,
+                        dropdownTitle: "Plant settings",
+                        dropdownOptions: [
+                            `<li onclick = "getPlantTreatments(${plant.plantID})"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>`,
+                            `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>`,
+                            `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>`
+                        ],
+                        cardSubtitle: plant.plantFamily,
+                        cardTitle: plant.plantName
+                    }) %>
+                <% }) %>
                 <%- include('../partials/card.partial.ejs', {
+                    isTemplate: true,
                     cardData: ['data-plant-id', '0'],
-                    cardBg: "bg-defaultPlant",
+                    cardBg: '/assets/icons/plant.webp',
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
-                        '<li onclick = "getPlantTreatments(1)"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>',
-                        '<li class = "textToRight" onclick = "confirmRemoval(0, \'plant\')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>',
-                        '<li class = "textToRight" onclick = "showPlantInformation(1)"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>'
+                        `<li onclick = "getPlantTreatments(0)"><a tabindex = "0"><span class = "text-primary">Plan</span> Treatments</a></li>`,
+                        `<li class = "textToRight" onclick = "confirmRemoval(0, 'plant')"><a tabindex = "0"><span class = "text-error">Remove</span> Plant</a></li>`,
+                        `<li class = "textToRight" onclick = "showPlantInformation(0)"><a tabindex = "0"><span class = "text-info">Plant\'s</span> Information</a></li>`
                     ],
                     cardSubtitle: "Plant family",
-                    cardTitle: "Plant 1"
+                    cardTitle: "Plant name"
                 }) %>
                 <div class = "customCard" onclick = "newPlant()">
                     <figure class = "!shadow-none !h-36">
