@@ -18,7 +18,7 @@ app.get('/signup', (req, res) => {
 });
 
 app.get('/user/plantations', (req, res) => {
-    res.render('pages/plantationsScreening');
+    res.render('pages/plantationsScreening', {plantationsList: []});
 });
 
 app.get('/user/plantations/:plantationID', (req, res) => {

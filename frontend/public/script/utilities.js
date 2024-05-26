@@ -35,7 +35,7 @@ function confirmRemoval(id, elementType, printError = true){
     const dialog = document.querySelector('#confirmRemoval');
     let elementName = undefined
     try{
-        elementName = document.querySelector(`${elementSelector} [role="definition"] [selected]`).value || document.querySelector(`${elementSelector} [role="definition"]`).textContent || document.querySelector(`${elementSelector} [role="definition"]`).value;
+        elementName = document.querySelector(`${elementSelector} [role="definition"] [selected]`)?.value || document.querySelector(`${elementSelector} [role="definition"]`).textContent || document.querySelector(`${elementSelector} [role="definition"]`).value;
     }catch(err){
         if(printError) displayError("Element not found.");
         return;
@@ -55,7 +55,6 @@ function confirmRemoval(id, elementType, printError = true){
         if(elementType === 'treatment'){
             // Removing the excessive dividers in case the element to be removed is a plant's treatment
             try{
-                // TODO: Check if there are other treatments and show a "no treatments" notice if there aren't any.
                 document.querySelector('#treatments .modal-box > hr').remove();
                 document.querySelector('#treatments .modal-box hr + hr').remove();
             }catch(err){}
