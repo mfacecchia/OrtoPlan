@@ -10,8 +10,8 @@
             </ul>
         </div>
     </figure>
-    <div class = "cardContent">
+    <a class = "cardContent" <%if(typeof link !== 'undefined'){%>href = "<%=link%>"<%}%>>
         <p class = "text-primary"><%= cardSubtitle %></p>
         <h2 role = "definition"><%= cardTitle %></h2>
-    </div>
+    </a>
 </div>

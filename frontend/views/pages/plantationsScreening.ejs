@@ -4,7 +4,7 @@
     <%- include('../partials/head.partial.ejs', {title: "Plantations"}) %>
     <body>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
-        <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
+        <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?<br>All the linked plants will be removed as well.</p>"}) %>
         <%- include('../partials/addPlantPlantation.partial.ejs', {
             customHeader: "New plantation",
             customTitle: "Add a new plantation",
@@ -26,15 +26,32 @@
                 <hr class = "animate-showHide w-32 green-line origin-left">
             </div>
             <div class = "cardsContainer">
+                <% plantationsList.forEach(plantation => { %>
+                    <%- include('../partials/card.partial.ejs', {
+                        isTemplate: false,
+                        cardData: ['data-plantation-id', plantation.plantationID],
+                        cardBg: '/assets/icons/plantation.webp',
+                        dropdownTitle: "Plantation settings",
+                        dropdownOptions: [
+                            `<li class = "textToRight" onclick = "modify(${plantation.plantationID}, 'plantation')"><a tabindex = "0"><span class = "text-primary">Modify</span> Plantation</a></li>`,
+                            `<li class = "textToRight" onclick = "confirmRemoval(${plantation.plantationID}, 'plantation')"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>`
+                        ],
+                        link: `./${plantation.plantationID}`,
+                        cardSubtitle: plantation.location,
+                        cardTitle: plantation.plantationName
+                    }) %>
+                <% }) %>
                 <%- include('../partials/card.partial.ejs', {
-                    cardData: ['data-plantation-id', '1'],
-                    cardBg: "bg-defaultPlantation",
+                    isTemplate: true,
+                    cardData: ['data-plantation-id', ''],
+                    cardBg: "/assets/icons/plantation.webp",
                     dropdownTitle: "Plantation settings",
                     dropdownOptions: [
-                        '<li class = "textToRight" onclick = "confirmRemoval(1, "plantation")"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>'
+                        `<li class = "textToRight"><a tabindex = "0"><span class = "text-primary">Modify</span> Plantation</a></li>`,
+                        '<li class = "textToRight"><a tabindex = "0"><span class = "text-error">Remove</span> Plantation</a></li>'
                     ],
-                    cardSubtitle: "Pescara, IT",
-                    cardTitle: "Plantation 1"
+                    cardSubtitle: "Location",
+                    cardTitle: "Plantation Name"
                 }) %>
                 <div class = "customCard" onclick = "document.querySelector('#newPlantPlantation').showModal();">
                     <figure class = "!shadow-none !h-36">
