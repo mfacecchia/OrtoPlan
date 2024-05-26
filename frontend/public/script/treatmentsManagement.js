@@ -154,7 +154,7 @@ function insertTreatmentInList(formParentNode, treatmentForm){
 
 function setFormData(form, treatmentData){
     form.setAttribute('data-treatment-id', treatmentData.treatmentID);
-    form.querySelector(`select[name="treatmentType"] [value="${treatmentData.treatmentType}"]`).setAttribute('selected', undefined);
+    form.querySelector(`select[name="treatmentType"] [value="${treatmentData.treatmentType}"]`).setAttribute('selected', '');
     ["treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
         form.querySelector(`[name="${field}"]`).setAttribute('value', treatmentData[field]);
     });
