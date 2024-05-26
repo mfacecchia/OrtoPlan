@@ -9,14 +9,9 @@ function newPlant(plantationID){
     newPlantForm.onsubmit = async e => {
         e.preventDefault();
         try{
-            // const response = await fetch();
-            // const jsonResponse = await response.json();
-            addPlantToList({
-                plantID: 3,
-                imageURL: '/assets/icons/plant.webp',
-                plantFamily: 'Family',
-                plantName: 'Plant 3'
-            });
+            const response = await fetch();
+            const jsonResponse = await response.json();
+            addPlantToList(jsonResponse);
         }catch(err){
             console.log(err);
             displayError('Unknown error while adding the plant. Please try again.');
@@ -41,9 +36,13 @@ function insertPlantInList(parentNode, plantCard){
 }
 
 function setCardData(card, plantData){
+    const dropdownOptions = card.querySelector('.dropdown-content');
     card.setAttribute('data-plant-id', plantData.plantID);
-    card.querySelector(`figure`).classList.replace('bg-*', `bg-[url("${plantData.imageURL}")]`);
+    card.querySelector(`figure`).style.backgroundImage = `url(${plantData.imageURL})`;
     card.querySelector(`.cardContent p`).textContent = plantData.plantFamily;
     card.querySelector(`.cardContent h2`).textContent = plantData.plantName;
+    dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${plantData.plantID})`);
+    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${plantData.plantID}, 'plant')`);
+    dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${plantData.plantID})`);
     return card;
 }

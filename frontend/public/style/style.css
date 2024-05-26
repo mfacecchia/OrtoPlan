@@ -2793,12 +2793,6 @@ form[method="dialog"] .btn-square {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
-.bg-\[url\(\"\$\{plantData\.imageURL\}\"\)\] {
-  background-image: url("${plantData.imageURL}");
-}
-.bg-defaultPlant {
-  background-image: url("../assets/icons/plant.webp");
-}
 .bg-defaultPlantation {
   background-image: url("../assets/icons/plantation.webp");
 }
