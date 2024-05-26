@@ -69,6 +69,9 @@ function displayError(message){
     const errorMessageContainer = createElement('div', null, ['alert', 'alert-error', 'animate-disappear', 'text-base-100']);
     const errorMessage = createElement('span')
     errorMessage.textContent = message;
+    errorMessageContainer.onanimationend = e => {
+        e.target.remove();
+    }
     errorMessageContainer.appendChild(errorMessage);
     document.querySelector('.toast').appendChild(errorMessageContainer);
 }

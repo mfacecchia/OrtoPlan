@@ -56,11 +56,10 @@ module.exports = {
         },
         'disappearAnim': {
           '90%': {
-            opacity: 100
+            opacity: 1
           },
           '100%': {
             opacity: 0,
-            visibility: 'hidden'
           }
         }
       },
