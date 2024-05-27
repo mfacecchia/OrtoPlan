@@ -23,11 +23,11 @@ app.get('/user/plantations', (req, res) => {
 
 app.get('/user/plantations/:plantationID', (req, res) => {
     /* 
-        * TODO: validate the plantation id by making a requesto to the backend
+        * TODO: validate the plantation id by making a request to the backend
         * before rendering the actual page 
     */
     // NOTE: Place in `plantsList` option all the query returned plants
-    res.render('pages/plantation', {plantationID: req.params.plantationID, plantsList: []});
+    res.render('pages/plantation', {plantationID: req.params.plantationID, plantationName: plantationName, plantsList: []});
 });
 
 app.listen(5500, () => {
