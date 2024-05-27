@@ -40,7 +40,7 @@ function setCardData(card, elementData, type){
     card.querySelector(`figure`).style.backgroundImage = `url(${elementData.imageURL})`;
     card.querySelector(`.cardContent p`).textContent = type === 'plant'? elementData.plantFamily: elementData.location;
     card.querySelector(`.cardContent h2`).textContent = type === 'plant'? elementData.plantName: elementData.plantationName;
-    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`);
+    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', confirmRemoval(type === 'plant'? elementData.plantID: elementData.plantationID, type))
     if(type === 'plant'){
         card.setAttribute('data-plant-id', elementData.plantID);
         dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantID})`);

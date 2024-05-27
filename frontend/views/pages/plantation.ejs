@@ -132,9 +132,9 @@
                         dropdownTitle: "Plant settings",
                         dropdownOptions: [
                             // TODO: Update onclick listeners to pass `this` instead of plantID (redundancy)
-                            `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
-                            `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove"><a><span class = "text-error">Remove</span> Plant</a></li>`,
-                            `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
+                            `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan" tabindex = "0"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
+                            `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plant</a></li>`,
+                            `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information" tabindex = "0"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
                         ],
                         cardSubtitle: plant.plantFamily,
                         cardTitle: plant.plantName
@@ -146,9 +146,9 @@
                     cardBg: '/assets/icons/plant.webp',
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
-                        `<li class = "textToRight" role = "Plan"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
-                        `<li class = "textToRight" role = "Remove"><a><span class = "text-error">Remove</span> Plant</a></li>`,
-                        `<li class = "textToRight" role = "Information"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
+                        `<li class = "textToRight" role = "Plan" tabindex = "0"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
+                        `<li class = "textToRight" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plant</a></li>`,
+                        `<li class = "textToRight" role = "Information" tabindex = "0"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
                     ],
                     cardSubtitle: "Plant family",
                     cardTitle: "Plant name"

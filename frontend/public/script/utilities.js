@@ -59,7 +59,7 @@ function confirmRemoval(id, elementType, printError = true){
                 document.querySelector('#treatments .modal-box hr + hr').remove();
             }catch(err){}
             finally{
-                if(!document.querySelectorAll('[data-treatment-id]:not(.hidden)').length) showNotice();
+                if(printError && !document.querySelectorAll('[data-treatment-id]:not(.hidden)').length) showNotice();
             }
         }
     }
