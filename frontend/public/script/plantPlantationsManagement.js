@@ -1,3 +1,4 @@
+// TODO: Update dialog title/subtitle
 function newElement(type, plantationID = undefined){
     const newElementDialog = document.querySelector('#newPlantPlantation');
     const newElementForm = document.querySelector('#newPlantPlantationForm');
@@ -35,12 +36,13 @@ function insertElementInList(parentNode, elementCard){
     return elementsAdded;
 }
 
+// TODO: Change `onclick` attribute to `.onclick` event
 function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
     card.querySelector(`figure`).style.backgroundImage = `url(${elementData.imageURL})`;
     card.querySelector(`.cardContent p`).textContent = type === 'plant'? elementData.plantFamily: elementData.location;
     card.querySelector(`.cardContent h2`).textContent = type === 'plant'? elementData.plantName: elementData.plantationName;
-    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', confirmRemoval(type === 'plant'? elementData.plantID: elementData.plantationID, type))
+    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
     if(type === 'plant'){
         card.setAttribute('data-plant-id', elementData.plantID);
         dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantID})`);
@@ -52,4 +54,53 @@ function setCardData(card, elementData, type){
         dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${elementData.plantationID}, 'plantation')`);
     }
     return card;
+}
+
+function modify(elementID, type){
+    const updateElementDialog = document.querySelector('#newPlantPlantation');
+    const updateElementForm = document.querySelector('#newPlantPlantationForm');
+    const element = document.querySelector(`[data-${type}-id="${elementID}"]`);
+    const elementName = element.querySelector('h2').textContent;
+    const elementFamilyLocation = element.querySelector('p').textContent;
+
+    updateElementForm.querySelector('header b').textContent = `Update ${type}`;
+    updateElementForm.querySelector('header h1').textContent = `Update ${elementName}`;
+    if(type === 'plant'){
+
+    }
+    else{
+        updateElementForm.querySelector('[name="plantationName"]').value = elementName;
+        updateElementForm.querySelector('[name="plantationLocation"]').value = elementFamilyLocation;
+    }
+    updateElementDialog.onclose = e => {
+        updateElementForm.reset();
+        updateElementForm.onsubmit = undefined;
+    }
+    updateElementForm.onsubmit = async e => {
+        e.preventDefault();
+        const newElementInfo = new FormData(updateElementForm);
+        try{
+            if(await fetch()){
+                modifyCardData(newElementInfo, element, type);
+            }
+        }
+        catch(err){
+            console.log(err);
+            displayError(`Could not update ${type} information. Please reload the page and try again.`);
+            updateElementDialog.close();
+            return;
+        }
+        elementName.textContent = newElementInfo.get(type === 'plantation'? newElementInfo.get('plantationName'):newElementInfo.get('plantName'));
+        elementFamilyLocation.textContent = newElementInfo.get(type === 'plantation'? newElementInfo.get('plantationLocation'):newElementInfo.get('plantFamily'));
+        updateElementDialog.close();
+    }
+    updateElementDialog.showModal();
+}
+
+function modifyCardData(newCardData, cardElement, type){
+    const cardFamilyLocation = newCardData.get(type === 'plant'? 'plantFamily': 'plantationLocation');
+    const cardName = newCardData.get(type === 'plant'? 'plantName': 'plantationName');
+
+    cardElement.querySelector('.cardContent p').textContent = cardFamilyLocation;
+    cardElement.querySelector('.cardContent h2').textContent = cardName;
 }
