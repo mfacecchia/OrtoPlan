@@ -21,6 +21,8 @@ model User {
   // NOTE: Foreign key "links"
   credential Credentials[]
   plantation Plantation[]
+  notification Notification[]
+  treatment PlannedTreatment[]
 }
 
 model Credentials {
@@ -33,13 +35,44 @@ model Credentials {
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
 
+model Notification{
+  notificationID Int @id @default(autoincrement())
+  message String
+  notificationType String
+  notificationIcon String @default("warning_green.svg")
+  userID String @db.Char(26)
+
+  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
+}
+
 model Plantation {
   plantationID Int @id @default(autoincrement())
   location String?
+  locationCAP String? @db.Char(5)
   userID String @db.Char(26)
+  
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 
   plantation_plant Plantation_Plant[]
+  weather Weather[]
+}
+
+model Weather {
+  forecastID Int @id @default(autoincrement())
+  description String
+  date Unsupported("date")
+  rainMm Float
+  rainProbability Float
+  maxTemp Float
+  minTemp Float
+  windSpeed Float
+  windDirection String
+  sunrise Unsupported("time")
+  sundown Unsupported("time")
+  weatherIcon String
+  plantationID Int
+
+  plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
 }
 
 model Plant {
@@ -47,41 +80,31 @@ model Plant {
   plantName String
   plantFamily String?
   plantDescription String?
-  suggestedTemperature Int?
   scientificName String
+  imageURL String @default("plant.webp")
 
-  plant_treatment Plant_Treatment[]
   plantation_plant Plantation_Plant[]
+  treatment PlannedTreatment[]
 }
 
-model Treatment {
-  treatmentID Int @id @default(autoincrement())
-  treatmentType String
-
-  plant_treatment Plant_Treatment[]
-}
-
-model Plant_Treatment {
-  plantTreatmentID Int @id @default(autoincrement())
-  treatmentNotes String?
-  treatmentDate DateTime
-  // NOTE: `treatmentTimesRecurrence` and `treatmentDaysRecurrence` have value checks to be higher than 0
-  treatmentTimesRecurrence Int @default(dbgenerated("1"))
-  treatmentDaysRecurrence Int?
-  treatmentID Int
+model PlannedTreatment {
+  userID String @db.Char(26)
   plantID Int
+  treatmentType String
+  notes String @db.VarChar(300)
+  treatmentDate Unsupported("date")
+  treatmentRecurrence Int @default(0)
 
-  treatment Treatment @relation(fields: [treatmentID], references: [treatmentID], onDelete: Cascade)
+  @@id([userID, plantID])
+  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
   plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
 }
 
 model Plantation_Plant {
-  plantationPlantID Int @id @default(autoincrement())
   plantationID Int
   plantID Int
 
+  @@id([plantationID, plantID])
   plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
   plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
 }
-
-// TODO: Add notifications model
