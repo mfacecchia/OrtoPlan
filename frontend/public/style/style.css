@@ -2854,6 +2854,10 @@ form[method="dialog"] .btn-square {
   --tw-text-opacity: 1;
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
 }
+.text-warning {
+  --tw-text-opacity: 1;
+  color: var(--fallback-wa,oklch(var(--wa)/var(--tw-text-opacity)));
+}
 .opacity-30 {
   opacity: 0.3;
 }

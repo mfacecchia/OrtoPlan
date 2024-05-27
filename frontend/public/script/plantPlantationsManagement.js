@@ -36,13 +36,13 @@ function insertElementInList(parentNode, elementCard){
     return elementsAdded;
 }
 
-// TODO: Change `onclick` attribute to `.onclick` event
 function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
     card.querySelector(`figure`).style.backgroundImage = `url(${elementData.imageURL})`;
     card.querySelector(`.cardContent p`).textContent = type === 'plant'? elementData.plantFamily: elementData.location;
     card.querySelector(`.cardContent h2`).textContent = type === 'plant'? elementData.plantName: elementData.plantationName;
     dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
+    dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
     if(type === 'plant'){
         card.setAttribute('data-plant-id', elementData.plantID);
         dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantID})`);

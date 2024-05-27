@@ -2,7 +2,8 @@
 
 <html lang="en">
     <%- include('../partials/head.partial.ejs', {
-        title: plantationName,
+        // TODO: Change plantationName string to variable name
+        title: 'plantationName',
         stylesheets: ["https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css"]
     }) %>
     <body>
@@ -12,8 +13,8 @@
             customHeader: "New plant",
             customTitle: "Add a new plant",
             formFields: [
-                '<input type = "text" name = "name" placeholder = "Plant name*" required maxlength = "191">',
-                '<input type = "text" name = "family" placeholder = "Plant family" maxlength = "191">',
+                '<input type = "text" name = "plantName" placeholder = "Plant name*" required maxlength = "191">',
+                '<input type = "text" name = "plantFamily" placeholder = "Plant family" maxlength = "191">',
                 '<input type = "text" name = "scientificName" placeholder = "Plant scientific name" maxlength = "191">',
                 '<button type = "submit">Submit</button>'
             ]
@@ -134,6 +135,7 @@
                             // TODO: Update onclick listeners to pass `this` instead of plantID (redundancy)
                             `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan" tabindex = "0"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
                             `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plant</a></li>`,
+                            `<li class = "textToRight" onclick = "modify(${plant.plantID}, 'plant')" role = "Modify" tabindex = "0"><a><span class = "text-warning">Modify</span> Plant</a></li>`,
                             `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information" tabindex = "0"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
                         ],
                         cardSubtitle: plant.plantFamily,
@@ -148,6 +150,7 @@
                     dropdownOptions: [
                         `<li class = "textToRight" role = "Plan" tabindex = "0"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
                         `<li class = "textToRight" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plant</a></li>`,
+                        `<li class = "textToRight" role = "Modify" tabindex = "0"><a><span class = "text-warning">Modify</span> Plant</a></li>`,
                         `<li class = "textToRight" role = "Information" tabindex = "0"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
                     ],
                     cardSubtitle: "Plant family",
