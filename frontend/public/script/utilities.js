@@ -18,12 +18,6 @@ function createElement(elementName, attributes = null, classes = null){
     return element;
 }
 
-function resetModalForm(modal, index = 1){
-    try{
-        modal.querySelectorAll('form')[index].reset();
-    } catch(err){ }
-}
-
 function confirmRemoval(id, elementType, printError = true){
     /*
         * Manages the plant/plantation removal based on the modal selection
