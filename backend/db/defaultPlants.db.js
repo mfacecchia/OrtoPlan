@@ -14,22 +14,23 @@ async function getPlantsInfo(){
                 'X-RapidAPI-Host': 'house-plants2.p.rapidapi.com'
             }
         });
-        if(!allPlants.ok) throw new Error(`Server responded with a status code of ${allPlants.status}`);
+        if(!allPlants.ok) throw new Error(`Plants API's server responded with a status code of ${allPlants.status}`);
         const allPlantsJson = await allPlants.json();
         console.log("Done.");
+        console.log("Filtering plants");
         const filteredPlants = await filterPlants(allPlantsJson);
+        console.log("Done.");
         console.log(`${filteredPlants.length} plants successfully filtered.`);
         console.log("Adding plants to DB");
-        // TODO: Add all plants to DB
+        await addToDB(filteredPlants);
         console.log("Done.");
     }catch(err){
-        console.log(err);
+        console.log(`Error raised => ${err}`);
     }
 }
 
 async function filterPlants(plantsList){
     const filteredPlants = [];
-    console.log("Filtering plants");
     for(const plant of plantsList){
         const plantName = plant['Common name'];
         // Skipping if the plant has no name
@@ -49,7 +50,6 @@ async function filterPlants(plantsList){
             imageURL: plantImg
         });
     }
-    console.log("Done.");
     return filteredPlants;
 }
 
@@ -74,6 +74,20 @@ function getPlantImage(plantName){
             resolve(imageJSON.results[0].urls.regular);
         }catch(err){
             reject(err);
+        }
+    });
+}
+
+function addToDB(plantsList){
+    return new Promise(async (resolve, reject) => {
+        try{
+            await prisma.plant.createMany({
+                data: [...plantsList]
+            });
+            resolve(true);
+        }catch(err){
+            console.log(`Error raised => ${err}`);
+            reject(false);
         }
     });
 }
