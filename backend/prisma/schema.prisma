@@ -81,7 +81,7 @@ model Plant {
   plantFamily String?
   plantDescription String?
   scientificName String
-  imageURL String @default("plant.webp")
+  imageURL String @db.VarChar(500) @default("plant.webp")
 
   plantation_plant Plantation_Plant[]
   treatment PlannedTreatment[]
