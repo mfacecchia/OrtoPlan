@@ -1,22 +1,13 @@
 import prisma from '../../db/prisma.db.js';
-import argon2, { hash } from 'argon2';
+import argon2 from 'argon2';
 
 export default function userAuth(app){
     app.post('/user/register', async (req, res) => {
         let userExists = undefined;
         try{
-            userExists = await prisma.credentials.findUnique({
-                where: {
-                    email: req.body.email
-                }
-            });
+            userExists = await findUser(req.body.email, true);
         }catch(err){
-            res.status(400).json({
-                status: 400,
-                message: "Unknown error. Please try again later."
-            });
-        }
-        if(userExists){
+            console.log(err);
             res.status(403).json({
                 status: 403,
                 message: "Could not complete the request. User already exists."
@@ -27,8 +18,8 @@ export default function userAuth(app){
             const hashedPass = await hashPassword(req.body.password);
             await newUser(req.body, hashedPass);
             // TODO: Change to 201
-            res.status(200).json({
-                status: 200,
+            res.status(201).json({
+                status: 201,
                 message: "User created successfully"
             });
         }catch(err){
@@ -97,8 +88,9 @@ async function findUser(userEmail, throwOnFound = false){
         * Returns a `Promise` that `reject`s if the `throwOnFound` is set to `true`, otherwise `resolve`s
     */
     return new Promise(async (resolve, reject) => {
+        let userExists = undefined;
         try{
-            const userExists = await prisma.credentials.findUniqueOrThrow({
+            userExists = await prisma.credentials.findUniqueOrThrow({
                 where: {
                     email: userEmail
                 }
