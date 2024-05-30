@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import userAuth from './routes/auth.routing.js'
 
 const app = express();
 app.use(cors(
@@ -22,3 +23,5 @@ app.get('/ping', (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log("Listening");
 });
+
+userAuth(app);
