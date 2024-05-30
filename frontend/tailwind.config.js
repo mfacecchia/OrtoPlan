@@ -5,6 +5,12 @@ module.exports = {
     'src/*.js',
     'public/script/*.js'
   ],
+  // List of pre-declared classes to add in the output stylesheet
+  safelist: [
+    {
+      pattern: /alert-(info|error|success|primary)/
+    }
+  ],
   daisyui: {
     themes: [
       {

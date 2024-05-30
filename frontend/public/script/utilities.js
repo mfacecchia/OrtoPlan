@@ -31,7 +31,7 @@ function confirmRemoval(id, elementType, printError = true){
     try{
         elementName = document.querySelector(`${elementSelector} [role="definition"] [selected]`)?.value || document.querySelector(`${elementSelector} [role="definition"]`).textContent || document.querySelector(`${elementSelector} [role="definition"]`).value;
     }catch(err){
-        if(printError) displayError("Element not found.");
+        if(printError) displayMessage("Element not found.", "error");
         return;
     }
     dialog.querySelector('p span').textContent = elementName;
@@ -43,7 +43,7 @@ function confirmRemoval(id, elementType, printError = true){
             }
         }catch(err){
             // Outputting an error message in case the plant is not found from the provided ID
-            if(printError) displayError("Couldn't remove the selected element, please reload the page and try again.");
+            if(printError) displayMessage("Couldn't remove the selected element, please reload the page and try again.", "error");
             return;
         }
         if(elementType === 'treatment'){
@@ -59,8 +59,9 @@ function confirmRemoval(id, elementType, printError = true){
     }
 }
 
-function displayError(message){
-    const errorMessageContainer = createElement('div', null, ['alert', 'alert-error', 'animate-disappear', 'text-base-100']);
+// TODO: Add option to display either error, success or information
+function displayMessage(message, type){
+    const errorMessageContainer = createElement('div', null, ['alert', `alert-${type}`, 'animate-disappear', 'text-base-100']);
     const errorMessage = createElement('span')
     errorMessage.textContent = message;
     errorMessageContainer.onanimationend = e => {

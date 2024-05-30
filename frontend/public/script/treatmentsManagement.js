@@ -69,7 +69,7 @@ async function getPlantTreatments(plantID){
     // Obtaining data from the API
     const treatmentsData = await makeTreatmentsRequest(plantID);
     if(!treatmentsData || !Array.isArray(treatmentsData)){
-        displayError('Could not retrieve treatments data.');
+        displayMessage('Could not retrieve treatments data.', 'error');
         return;
     }
 
@@ -124,7 +124,7 @@ function newTreatment(plantID){
             const jsonResponse = await response.json();
             addToList(jsonResponse);
         }catch(err){
-            displayError('Unknown error while planning the treatment. Please try again.');
+            displayMessage('Unknown error while planning the treatment. Please try again.', 'error');
         }
         newTreatmentDialog.close();
     }

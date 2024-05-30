@@ -15,7 +15,7 @@ function newElement(type, plantationID = undefined){
             const jsonResponse = await response.json();
             addElementToList(jsonResponse, type);
         }catch(err){
-            displayError(`Unknown error while adding the ${type}. Please try again.`);
+            displayMessage(`Unknown error while adding the ${type}. Please try again.`, 'error');
         }
         newElementDialog.close();
     }
@@ -86,7 +86,7 @@ function modify(elementID, type){
         }
         catch(err){
             console.log(err);
-            displayError(`Could not update ${type} information. Please reload the page and try again.`);
+            displayMessage(`Could not update ${type} information. Please reload the page and try again.`, 'error');
             updateElementDialog.close();
             return;
         }

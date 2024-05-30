@@ -15,13 +15,13 @@ document.querySelector('#userLogin').onsubmit = async e => {
             })
         });
         if(res.status === 404){
-            displayError('Email/password combination is not correct. Please try again.');
+            displayMessage('Email/password combination is not correct. Please try again.', 'error');
             return;
         }
         const jsonRes = await res.json();
         localStorage.setItem('OPToken', jsonRes.token);
         window.location.href = '/user/plantations';
     }catch(err){
-        displayError('Unknown error. Please try again.');
+        displayMessage('Unknown error. Please try again.', 'error');
     }
 }
