@@ -17,14 +17,17 @@
                 </div>
                 <input type = "email" name = "email" placeholder = "Email*" required>
                 <input type = "password" name = "password" placeholder = "Password*" required>
+                <!-- TODO: Add verify password field -->
                 <button type = "submit">Join us</button>
             </form>
         </section>
         <div class = "toast"></div>
         <%- include('../partials/footer.partial.ejs') %>
 
+        <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
         <script src = "/script/constants.js"></script>
         <script src = "/script/utilities.js"></script>
+        <script src = "/script/validation/user.validation.js"></script>
         <script src = "/script/auth/signup.auth.js"></script>
         <script src = "/script/auth/jwt.auth.js"></script>
     </body>

@@ -1,6 +1,12 @@
 document.querySelector('#userLogin').onsubmit = async e => {
     e.preventDefault();
     const user = new FormData(e.target);
+    const userData = {};
+    // TODO: Improve this by placing it in an external function
+    ['email', 'password'].forEach(field => {
+        userData[field] = user.get(field);
+    });
+    if(!await validateForm(userData, true)) return;
 
     try{
         const res = await fetch(`${BACKEND_ADDRESS}/user/login`, {
@@ -9,10 +15,7 @@ document.querySelector('#userLogin').onsubmit = async e => {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({
-                email: user.get('email'),
-                password: user.get('password')
-            })
+            body: JSON.stringify(userData)
         });
         if(res.status === 404){
             displayMessage('Email/password combination is not correct. Please try again.', 'error');
