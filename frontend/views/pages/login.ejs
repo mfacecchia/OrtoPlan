@@ -2,7 +2,7 @@
 
 <html lang = "en">
     <%- include('../partials/head.partial.ejs', {title: 'Log-in'}) %>
-    <body>
+    <body onload = "validateJWT()">
         <%- include('../partials/nav.partial.ejs', {isLoginPage: true}) %>
         <section class = "m-auto flex flex-col justify-center items-center">
             <b>Welcome back</b>
@@ -16,6 +16,12 @@
                 <button type = "submit">Log-in</button>
             </form>
         </section>
+        <div class = "toast"></div>
         <%- include('../partials/footer.partial.ejs') %>
+
+        <script src = "/script/constants.js"></script>
+        <script src = "/script/utilities.js"></script>
+        <script src = "/script/auth/login.auth.js"></script>
+        <script src = "/script/auth/jwt.auth.js"></script>
     </body>
 </html>
