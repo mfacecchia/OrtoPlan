@@ -113,7 +113,7 @@ async function isLoggedIn(req, res, next){
     try{
         const token = req.headers.authorization;
         if(token){
-            const isLoggedIn = await validateJWT(token.replace('Bearer ', ''));
+            await validateJWT(token.replace('Bearer ', ''));
             // TODO: Check if the user still exists in the database before returning 200 OK status code
             res.status(200).json({
                 status: 200,
