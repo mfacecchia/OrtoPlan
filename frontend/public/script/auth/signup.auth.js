@@ -1,10 +1,7 @@
 document.querySelector('#userSignup').onsubmit = async e => {
     e.preventDefault();
     const newUser = new FormData(e.target);
-    const newUserData = {};
-    ['firstName', 'lastName', 'email', 'password'].forEach(field => {
-        newUserData[field] = newUser.get(field);
-    });
+    const newUserData = formDataToObject(['firstName', 'lastName', 'email', 'password'], newUser);
     if(!await validateForm(newUserData, false)) return;
     try{
         const res = await fetch(`${BACKEND_ADDRESS}/user/signup`, {

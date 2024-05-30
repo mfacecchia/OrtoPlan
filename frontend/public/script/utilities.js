@@ -70,3 +70,11 @@ function displayMessage(message, type){
     errorMessageContainer.appendChild(errorMessage);
     document.querySelector('.toast').appendChild(errorMessageContainer);
 }
+
+function formDataToObject(fieldsArr, formDataElement){
+    const obj = {}
+    fieldsArr.forEach(field => {
+        obj[field] = formDataElement.get(field);
+    });
+    return obj;
+}
