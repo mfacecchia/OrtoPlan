@@ -7,15 +7,15 @@ async function validateForm(formData, isLogin = true){
             email: true
         },
         password: {
-            ...defaultPresenceValidator,
-            length: {
-                minimum: 15,
-                tooShort: '^Too short (minimum length is %{count} characters).'
-            }
+            ...defaultPresenceValidator
         }
     };
     // Additional validators in case of user sign-up
     if(!isLogin){
+        fieldsValidations.password.length = {
+            minimum: 15,
+            tooShort: '^Too short (minimum length is %{count} characters).'
+        }
         fieldsValidations.firstName = {
             ...defaultPresenceValidator,
             length: {
