@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  userID String @id @db.Char(26)
+  userID Int @id @default(autoincrement())
   name String
   surname String
 
@@ -30,7 +30,7 @@ model Credentials {
   password String
   githubID String?
   googleID String?
-  userID String @unique @db.Char(26)
+  userID Int @unique
   // NOTE: Foreign key (1:N relation with `User` table)
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
@@ -40,7 +40,7 @@ model Notification{
   message String
   notificationType String
   notificationIcon String @default("warning_green.svg")
-  userID String @db.Char(26)
+  userID Int
 
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
@@ -49,7 +49,7 @@ model Plantation {
   plantationID Int @id @default(autoincrement())
   location String?
   locationCAP String? @db.Char(5)
-  userID String @db.Char(26)
+  userID Int
   
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 
@@ -88,7 +88,7 @@ model Plant {
 }
 
 model PlannedTreatment {
-  userID String @db.Char(26)
+  userID Int
   plantID Int
   treatmentType String
   notes String @db.VarChar(300)
