@@ -1,5 +1,6 @@
 import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
+import { generateJWT } from '../auth/jwt.auth.js';
 
 export default function userAuth(app){
     app.post('/user/register', async (req, res) => {
@@ -17,7 +18,6 @@ export default function userAuth(app){
         try{
             const hashedPass = await hashPassword(req.body.password);
             await newUser(req.body, hashedPass);
-            // TODO: Change to 201
             res.status(201).json({
                 status: 201,
                 message: "User created successfully"
@@ -33,12 +33,15 @@ export default function userAuth(app){
     app.post('/user/login', async (req, res) => {
         try{
             const userExists = await findUser(req.body.email);
-            const verified = await argon2.verify(userExists.password, req.body.password);
-            if(!verified) throw new Error(false);
-            // TODO: Generate JWT
+            const isValid = await argon2.verify(userExists.password, req.body.password);
+            if(!isValid) throw new Error(false);
+            const token = await generateJWT({
+                userID: userExists.userID
+            }, req.body.rememberMe);
             res.status(200).json({
                 status: 200,
                 message: "Logged in successfully.",
+                token: token
             });
         }catch(err){
             res.status(404).json({
