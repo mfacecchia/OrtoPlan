@@ -3,7 +3,7 @@ import argon2 from 'argon2';
 import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
 
 export default function userAuth(app){
-    app.post('/user/register', isLoggedIn, async (req, res) => {
+    app.post('/user/signup', isLoggedIn, async (req, res) => {
         let userExists = undefined;
         try{
             userExists = await findUser(req.body.email, true);
@@ -57,8 +57,8 @@ async function newUser(userInfo, hashedPass){
         try{
             const user = prisma.user.create({
                 data: {
-                    name: userInfo.firstName,
-                    surname: userInfo.lastName,
+                    firstName: userInfo.firstName,
+                    lastName: userInfo.lastName,
                     credential: {
                         create: {
                             email: userInfo.email,

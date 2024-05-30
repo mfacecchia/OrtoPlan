@@ -15,8 +15,8 @@ datasource db {
 
 model User {
   userID Int @id @default(autoincrement())
-  name String
-  surname String
+  firstName String
+  lastName String
 
   // NOTE: Foreign key "links"
   credential Credentials[]
