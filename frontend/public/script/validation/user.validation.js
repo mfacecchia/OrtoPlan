@@ -23,7 +23,14 @@ async function validateForm(formData, isLogin = true){
                 tooLong: '^Too long (max length is %{count} characters).'
             },
         };
-        fieldsValidations.lastName = fieldsValidations.firstName
+        fieldsValidations.lastName = fieldsValidations.firstName;
+        fieldsValidations.passwordVerify = {
+            ...defaultPresenceValidator,
+            equality: {
+                attribute: 'password',
+                message: '^Passwords do not match'
+            }
+        };
     }
     validate.validators.email.message = '^Not a valid email';    
     try{

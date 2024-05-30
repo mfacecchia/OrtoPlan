@@ -71,6 +71,7 @@ function displayMessage(message, type){
     document.querySelector('.toast').appendChild(errorMessageContainer);
 }
 
+// TODO: Improve by iterating through all `FormData` Object entries
 function formDataToObject(fieldsArr, formDataElement){
     const obj = {}
     fieldsArr.forEach(field => {
