@@ -1,9 +1,9 @@
 import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
-import { generateJWT } from '../auth/jwt.auth.js';
+import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
 
 export default function userAuth(app){
-    app.post('/user/register', async (req, res) => {
+    app.post('/user/register', isLoggedIn, async (req, res) => {
         let userExists = undefined;
         try{
             userExists = await findUser(req.body.email, true);
@@ -30,7 +30,7 @@ export default function userAuth(app){
         }
     });
 
-    app.post('/user/login', async (req, res) => {
+    app.post('/user/login', isLoggedIn, async (req, res) => {
         try{
             const userExists = await findUser(req.body.email);
             const isValid = await argon2.verify(userExists.password, req.body.password);
@@ -85,6 +85,7 @@ function hashPassword(clearPass){
     });
 }
 
+// TODO: Change `userEmail` to `userEmailOrID` and check for user id first and user id then
 async function findUser(userEmail, throwOnFound = false){
     /*
         * Finds a user from the database by a given valid `userEmail`
@@ -103,4 +104,29 @@ async function findUser(userEmail, throwOnFound = false){
             throwOnFound? resolve(userExists): reject(false);
         }
     });
+}
+
+async function isLoggedIn(req, res, next){
+    /*
+        Checks if the user is logged in by checking for token presence in the Authorization header and eventual validity
+    */
+    try{
+        const token = req.headers.authorization;
+        if(token){
+            const isLoggedIn = await validateJWT(token.replace('Bearer ', ''));
+            // TODO: Check if the user still exists in the database before returning 200 OK status code
+            res.status(200).json({
+                status: 200,
+                message: "Logged in successfully."
+            });
+            return;
+        }
+    }catch(err){
+        res.status(401).json({
+            status: 401,
+            message: err.message || err
+        });
+        return;
+    }
+    next();
 }
