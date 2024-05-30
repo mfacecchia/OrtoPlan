@@ -8,7 +8,6 @@ export default function userAuth(app){
         try{
             userExists = await findUser(req.body.email, true);
         }catch(err){
-            console.log(err);
             res.status(403).json({
                 status: 403,
                 message: "Could not complete the request. User already exists."
