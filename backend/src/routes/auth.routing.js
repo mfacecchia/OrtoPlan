@@ -1,19 +1,12 @@
 import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
 import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
+import findUser from '../middlewares/findUser.middleware.js';
+import { validateForm } from '../validation/user.validation.js';
+
 
 export default function userAuth(app){
-    app.post('/user/signup', isLoggedIn, async (req, res) => {
-        let userExists = undefined;
-        try{
-            userExists = await findUser(req.body.email, true);
-        }catch(err){
-            res.status(403).json({
-                status: 403,
-                message: "Could not complete the request. User already exists."
-            });
-            return;
-        }
+    app.post('/user/signup', isLoggedIn, validateForm(false), async (req, res) => {
         try{
             const hashedPass = await hashPassword(req.body.password);
             await newUser(req.body, hashedPass);
@@ -84,27 +77,7 @@ function hashPassword(clearPass){
     });
 }
 
-// TODO: Change `userEmail` to `userEmailOrID` and check for user id first and user id then
-async function findUser(userEmail, throwOnFound = false){
-    /*
-        * Finds a user from the database by a given valid `userEmail`
-        * Returns a `Promise` that `reject`s if the `throwOnFound` is set to `true`, otherwise `resolve`s
-    */
-    return new Promise(async (resolve, reject) => {
-        let userExists = undefined;
-        try{
-            userExists = await prisma.credentials.findUniqueOrThrow({
-                where: {
-                    email: userEmail
-                }
-            });
-            throwOnFound? reject(false): resolve(userExists);
-        }catch(err){
-            throwOnFound? resolve(userExists): reject(false);
-        }
-    });
-}
-
+// TODO: Move this to middlewares directory
 async function isLoggedIn(req, res, next){
     /*
         Checks if the user is logged in by checking for token presence in the Authorization header and eventual validity
