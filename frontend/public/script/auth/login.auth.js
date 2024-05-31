@@ -1,7 +1,7 @@
 document.querySelector('#userLogin').onsubmit = async e => {
     e.preventDefault();
     const user = new FormData(e.target);
-    const userData = formDataToObject(['email', 'password'], user);
+    const userData = formDataToObject(user);
     if(!await validateForm(userData, true)) return;
 
     try{

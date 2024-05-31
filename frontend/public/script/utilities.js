@@ -59,7 +59,6 @@ function confirmRemoval(id, elementType, printError = true){
     }
 }
 
-// TODO: Add option to display either error, success or information
 function displayMessage(message, type){
     const errorMessageContainer = createElement('div', null, ['alert', `alert-${type}`, 'animate-disappear', 'text-base-100']);
     const errorMessage = createElement('span')
@@ -71,11 +70,17 @@ function displayMessage(message, type){
     document.querySelector('.toast').appendChild(errorMessageContainer);
 }
 
-// TODO: Improve by iterating through all `FormData` Object entries
-function formDataToObject(fieldsArr, formDataElement){
+function formDataToObject(formDataElement, fieldsFilterArr = undefined){
     const obj = {}
-    fieldsArr.forEach(field => {
-        obj[field] = formDataElement.get(field);
-    });
+    if(Array.isArray(fieldsFilterArr)){
+        fieldsFilterArr.forEach(field => {
+            obj[field] = formDataElement.get(field);
+        });
+    }
+    else{
+        formDataElement.keys().forEach(field => {
+            obj[field] = formDataElement.get(field);
+        });
+    }
     return obj;
 }
