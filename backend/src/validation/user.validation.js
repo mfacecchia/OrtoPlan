@@ -1,4 +1,4 @@
-import findUser from '../middlewares/findUser.middleware.js';
+import { findUserByEmail } from '../middlewares/findUser.middleware.js';
 import validate from 'validate.js'
 
 export const validateForm = (isLogin = true) => {
@@ -20,7 +20,7 @@ export const validateForm = (isLogin = true) => {
             validate.validators.emailExists = async (value) => {
                 return new Promise(async (resolve, reject) => {
                     try{
-                        await findUser(value, true);
+                        await findUserByEmail(value, true);
                         resolve();
                     }catch(err){ resolve('^Email already in use.'); }
                 });

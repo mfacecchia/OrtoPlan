@@ -1,7 +1,7 @@
 import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
 import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
-import findUser from '../middlewares/findUser.middleware.js';
+import { findUserByEmail } from '../middlewares/findUser.middleware.js';
 import { validateForm } from '../validation/user.validation.js';
 
 
@@ -22,9 +22,9 @@ export default function userAuth(app){
         }
     });
 
-    app.post('/user/login', isLoggedIn, async (req, res) => {
+    app.post('/user/login', async (req, res) => {
         try{
-            const userExists = await findUser(req.body.email);
+            const userExists = await findUserByEmail(req.body.email);
             const isValid = await argon2.verify(userExists.password, req.body.password);
             if(!isValid) throw new Error(false);
             const token = await generateJWT({
