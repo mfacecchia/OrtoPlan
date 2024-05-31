@@ -3,7 +3,12 @@ import { findUser } from "./findUser.middleware.js";
 import jwt from 'jsonwebtoken'
 
 
-export const isLoggedIn = () => {
+export const isLoggedIn = (strict = false) => {
+    /*
+        * Checks if the user is already logged in by validating the Bearer tokn passed in the request header
+        * Returns a 401 Unauthorized response status if the token is nto valid, otherwise calls the `next()` middleware
+        * The `strict` parameter can be set to `true` in case you want to send 401 status code if the token does not exist as well
+    */
     return async (req, res, next) => {
         /*
             * Checks if the user is logged in by checking for token presence in the Authorization header and eventual validity
