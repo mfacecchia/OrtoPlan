@@ -1,3 +1,5 @@
+import * as constants from '../constants.js'
+
 document.querySelector('#userLogin').onsubmit = async e => {
     e.preventDefault();
     const user = new FormData(e.target);
@@ -5,7 +7,7 @@ document.querySelector('#userLogin').onsubmit = async e => {
     if(!await validateForm(userData, true)) return;
 
     try{
-        const res = await fetch(`${BACKEND_ADDRESS}/user/login`, {
+        const res = await fetch(`${constants.BACKEND_ADDRESS}/user/login`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
