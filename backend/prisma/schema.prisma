@@ -45,12 +45,22 @@ model Notification{
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
 
+model Location{
+  locationID Int @id @default(autoincrement())
+  locationName String?
+  locationCAP String? @db.Char(5)
+  locationLat Float
+  locationLong Float
+
+  plantation Plantation[]
+}
+
 model Plantation {
   plantationID Int @id @default(autoincrement())
-  location String?
-  locationCAP String? @db.Char(5)
   userID Int
-  
+  locationID Int?
+
+  location Location? @relation(fields: [locationID], references: [locationID], onDelete: SetNull)
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 
   plantation_plant Plantation_Plant[]
