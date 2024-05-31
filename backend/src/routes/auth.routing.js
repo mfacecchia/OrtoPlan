@@ -3,10 +3,11 @@ import argon2 from 'argon2';
 import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
 import { findUserByEmail } from '../middlewares/findUser.middleware.js';
 import { validateForm } from '../validation/user.validation.js';
+import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 
 
 export default function userAuth(app){
-    app.post('/user/signup', isLoggedIn, validateForm(false), async (req, res) => {
+    app.post('/user/signup', isLoggedIn(), validateForm(false), async (req, res) => {
         try{
             const hashedPass = await hashPassword(req.body.password);
             await newUser(req.body, hashedPass);
@@ -22,7 +23,7 @@ export default function userAuth(app){
         }
     });
 
-    app.post('/user/login', async (req, res) => {
+    app.post('/user/login', isLoggedIn(), validateForm(true), async (req, res) => {
         try{
             const userExists = await findUserByEmail(req.body.email);
             const isValid = await argon2.verify(userExists.password, req.body.password);
@@ -75,30 +76,4 @@ function hashPassword(clearPass){
             reject('Could not hash password.');
         }
     });
-}
-
-// TODO: Move this to middlewares directory
-async function isLoggedIn(req, res, next){
-    /*
-        Checks if the user is logged in by checking for token presence in the Authorization header and eventual validity
-    */
-    try{
-        const token = req.headers.authorization;
-        if(token){
-            await validateJWT(token.replace('Bearer ', ''));
-            // TODO: Check if the user still exists in the database before returning 200 OK status code
-            res.status(200).json({
-                status: 200,
-                message: "Logged in successfully."
-            });
-            return;
-        }
-    }catch(err){
-        res.status(401).json({
-            status: 401,
-            message: err.message || err
-        });
-        return;
-    }
-    next();
 }
