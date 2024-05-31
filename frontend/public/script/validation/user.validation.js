@@ -38,6 +38,7 @@ async function validateForm(formData, isLogin = true){
         return true;
     }catch(validationErrors){
         console.log(validationErrors);
+        // TODO: Display error messages below the corresponding form's textbox
         displayMessage('Error while validating form. Please try again.', 'error');
         return false;
     }

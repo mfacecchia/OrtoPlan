@@ -36,7 +36,7 @@ export default function userAuth(app){
             if(!isValid) throw new Error(false);
             const token = await generateJWT({
                 userID: userExists.userID
-            }, req.body.rememberMe);
+            }, Boolean(req.body.rememberMe));
             res.status(200).json({
                 status: 200,
                 message: "Logged in successfully.",

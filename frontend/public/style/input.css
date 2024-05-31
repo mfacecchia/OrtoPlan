@@ -77,6 +77,9 @@
     .inputStyleContainer :is(input, textarea, select, option){
         @apply border-none p-0;
     }
+    input[type="checkbox"]{
+        @apply scale-110 w-auto;
+    }
     form button[type="submit"]{
         @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3;
     }
