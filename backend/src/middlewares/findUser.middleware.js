@@ -1,18 +1,17 @@
 import prisma from '../../db/prisma.db.js'
 
 
-export async function findUserByEmail(userEmail, throwOnFound = false){
+export async function findUser(userField, isID = false, throwOnFound = false){
     /*
-        * Finds a user from the database by a given valid `userEmail`
+        * Finds a user from the database by a given valid `userField`
+        * The field to check must be either an ID (defined by a number) or an email (string type), defined by `isID` boolean parameter
         * Returns a `Promise` that `reject`s if the `throwOnFound` param is set to `true`, otherwise `resolve`s
     */
     return new Promise(async (resolve, reject) => {
         let userExists = undefined;
         try{
             userExists = await prisma.credentials.findUniqueOrThrow({
-                where: {
-                    email: userEmail
-                }
+                where: isID? { userID: userField }: { email: userField }
             });
             throwOnFound? reject(false): resolve(userExists);
         }catch(err){
