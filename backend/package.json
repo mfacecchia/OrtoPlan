@@ -6,6 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "setupDBPlantsTable": "node db/defaultPlants.db.js",
+    "setupDBLocationsTable": "node db/defaultLocations.db.js",
+    "setupDB": "node db/defaultLocations.db.js && node db/defaultPlants.db.js",
     "dev": "nodemon src/index.js",
     "production": "node src/index.js"
   },

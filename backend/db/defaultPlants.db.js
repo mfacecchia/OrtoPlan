@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import fetch from "node-fetch";
 import "dotenv/config";
 import prisma from './prisma.db.js'
