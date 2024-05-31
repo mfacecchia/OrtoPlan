@@ -67,6 +67,7 @@ model Plantation {
   weather Weather[]
 }
 
+// TODO: Remove this and all relations
 model Weather {
   forecastID Int @id @default(autoincrement())
   description String

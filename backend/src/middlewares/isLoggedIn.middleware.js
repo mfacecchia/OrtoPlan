@@ -3,6 +3,7 @@ import { findUser } from "./findUser.middleware.js";
 import jwt from 'jsonwebtoken'
 
 
+// TODO: Add parameter `strict` to throw in case the token is not passed in the authentication header
 export const isLoggedIn = () => {
     return async (req, res, next) => {
         /*
