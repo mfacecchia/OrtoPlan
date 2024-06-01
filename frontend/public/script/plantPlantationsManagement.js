@@ -50,7 +50,7 @@ function setCardData(card, elementData, type){
     }
     else{
         card.setAttribute('data-plantation-id', elementData.plantationID);
-        card.querySelector('.cardContent').href = `./${elementData.plantationID}`;
+        card.querySelector('.cardContent').href = `/user/plantations/${elementData.plantationID}`;
         dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${elementData.plantationID}, 'plantation')`);
     }
     return card;
@@ -109,7 +109,9 @@ async function getUserList(type){
     /*
         * Gets the list of `type` category from the backend and adds all element as cards in the UI
     */
-    const res = await fetch(`${BACKEND_ADDRESS}/api/${type}/all`, {
+    // NOTE: Backend endpoints use `type` but in plural
+    const pluralType = type + 's';
+    const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}/all`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
@@ -117,10 +119,10 @@ async function getUserList(type){
         }
     });
     const jsonRes = await res.json();
-    const plantationsList = jsonRes.plantations;
-    if(plantationsList.length){
-        plantationsList.forEach(plantation => {
-            addElementToList(plantation, 'plantation');
+    const list = jsonRes[pluralType];
+    if(list.length){
+        list.forEach(listElement => {
+            addElementToList(listElement, type);
         });
     }
 }
