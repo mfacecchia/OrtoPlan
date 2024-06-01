@@ -18,14 +18,10 @@ app.get('/signup', (req, res) => {
 });
 
 app.get('/user/plantations', (req, res) => {
-    res.render('pages/plantationsScreening', {plantationsList: []});
+    res.render('pages/plantationsScreening');
 });
 
 app.get('/user/plantations/:plantationID', (req, res) => {
-    /* 
-        * TODO: validate the plantation id by making a request to the backend
-        * before rendering the actual page 
-    */
     // NOTE: Place in `plantsList` option all the query returned plants
     res.render('pages/plantation', {plantationID: req.params.plantationID, plantationName: plantationName, plantsList: []});
 });

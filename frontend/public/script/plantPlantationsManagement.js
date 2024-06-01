@@ -39,7 +39,7 @@ function insertElementInList(parentNode, elementCard){
 function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
     card.querySelector(`figure`).style.backgroundImage = `url(${elementData.imageURL})`;
-    card.querySelector(`.cardContent p`).textContent = type === 'plant'? elementData.plantFamily: elementData.location;
+    card.querySelector(`.cardContent p`).textContent = type === 'plant'? elementData.plantFamily: elementData.location.locationName;
     card.querySelector(`.cardContent h2`).textContent = type === 'plant'? elementData.plantName: elementData.plantationName;
     dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
     dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
@@ -103,4 +103,24 @@ function modifyCardData(newCardData, cardElement, type){
 
     cardElement.querySelector('.cardContent p').textContent = cardFamilyLocation;
     cardElement.querySelector('.cardContent h2').textContent = cardName;
+}
+
+async function getUserList(type){
+    /*
+        * Gets the list of `type` category from the backend and adds all element as cards in the UI
+    */
+    const res = await fetch(`${BACKEND_ADDRESS}/api/${type}/all`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
+            "Accept": 'application/json'
+        }
+    });
+    const jsonRes = await res.json();
+    const plantationsList = jsonRes.plantations;
+    if(plantationsList.length){
+        plantationsList.forEach(plantation => {
+            addElementToList(plantation, 'plantation');
+        });
+    }
 }
