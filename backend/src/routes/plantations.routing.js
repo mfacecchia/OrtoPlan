@@ -12,14 +12,27 @@ export default function plantations(app){
             res.status(200).json({
                 status: 200,
                 message: "Plantation found",
-                plantation: plantation
+                plantations: plantation
             });
         }catch(err){
             res.status(404).json({
                 status: 404,
-                message: "Plantation not found"
+                message: "No plantations found"
             });
         }
+    });
+    
+    app.get('/api/plantations/all', async (req, res) => {
+        /*
+            * Gets all plantations from a given userID (in JWT payload)
+        */
+        const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+        const plantationsList = await getPlantationsList(decodedToken.userID);
+        res.status(200).json({
+            status: 200,
+            message: "Plantations found",
+            plantations: plantationsList
+        });
     });
 }
 
@@ -33,14 +46,30 @@ function getPlantation(plantationID, userID){
                     location: true
                 },
                 where: {
-                    plantationID: plantationID,
-                    userID: userID
+                    userID: userID,
+                    plantationID: plantationID
                 }
             });
             resolve(plantation);
         }catch(err){
             console.log(err);
-            reject('Plantation not found.');
+            reject('No plantations found.');
         }
+    });
+}
+
+function getPlantationsList(userID){
+    return new Promise(async (resolve, reject) => {
+        const plantation = await prisma.plantation.findMany({
+            select: {
+                plantationName: true,
+                imageURL: true,
+                location: true
+            },
+            where: {
+                userID: userID
+            }
+        });
+        resolve(plantation);
     });
 }
