@@ -40,10 +40,15 @@ function getPlantation(plantationID, userID){
     return new Promise(async (resolve, reject) => {
         try{
             const plantation = await prisma.plantation.findUniqueOrThrow({
-                select: {
-                    plantationName: true,
-                    imageURL: true,
-                    location: true
+                include: {
+                    location: {
+                        select: {
+                            locationName: true,
+                            locationCAP: true,
+                            locationLat: true,
+                            locationLong: true
+                        }
+                    }
                 },
                 where: {
                     userID: userID,
@@ -61,10 +66,15 @@ function getPlantation(plantationID, userID){
 function getPlantationsList(userID){
     return new Promise(async (resolve, reject) => {
         const plantation = await prisma.plantation.findMany({
-            select: {
-                plantationName: true,
-                imageURL: true,
-                location: true
+            include: {
+                location: {
+                    select: {
+                        locationName: true,
+                        locationCAP: true,
+                        locationLat: true,
+                        locationLong: true
+                    }
+                }
             },
             where: {
                 userID: userID
