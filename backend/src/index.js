@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import userAuth from './routes/auth.routing.js'
-import forecast from './routes/weather.routing.js'
+import userAuth from './routes/auth.routing.js';
+import forecast from './routes/weather.routing.js';
+import plantations from './routes/plantations.routing.js';
 
 const app = express();
 app.use(cors(
@@ -27,3 +28,4 @@ app.listen(process.env.PORT, () => {
 
 userAuth(app);
 forecast(app);
+plantations(app);
