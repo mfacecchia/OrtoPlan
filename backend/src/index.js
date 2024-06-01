@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import { isLoggedIn } from './middlewares/isLoggedIn.middleware.js';
 import userAuth from './routes/auth.routing.js';
 import forecast from './routes/weather.routing.js';
 import plantations from './routes/plantations.routing.js';
@@ -14,6 +15,9 @@ app.use(cors(
 ));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use('/api/*', isLoggedIn(true, false), (req, res, next) => {
+    next();
+})
 
 app.get('/ping', (req, res) => {
     res.status(200).json({
