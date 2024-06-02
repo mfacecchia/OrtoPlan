@@ -64,25 +64,6 @@ model Plantation {
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 
   plantation_plant Plantation_Plant[]
-  weather Weather[]
-}
-
-model Weather {
-  forecastID Int @id @default(autoincrement())
-  description String
-  date Unsupported("date")
-  rainMm Float
-  rainProbability Float
-  maxTemp Float
-  minTemp Float
-  windSpeed Float
-  windDirection String
-  sunrise Unsupported("time")
-  sundown Unsupported("time")
-  weatherIcon String
-  plantationID Int
-
-  plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
 }
 
 model Plant {
@@ -102,7 +83,7 @@ model PlannedTreatment {
   plantID Int
   treatmentType String
   notes String @db.VarChar(300)
-  treatmentDate Unsupported("date")
+  treatmentDate DateTime
   treatmentRecurrence Int @default(0)
 
   @@id([userID, plantID])
