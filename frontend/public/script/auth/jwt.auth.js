@@ -1,9 +1,7 @@
-import * as constants from '../constants.js'
-
 async function validateJWT(){
     if(localStorage.getItem('OPToken')){
         try{
-            const isTokenValid = await fetch(`${constants.BACKEND_ADDRESS}/user/login`, {
+            const isTokenValid = await fetch(`${BACKEND_ADDRESS}/user/login`, {
                 method: 'POST',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('OPToken')}`

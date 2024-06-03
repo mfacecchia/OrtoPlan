@@ -29,7 +29,7 @@ export const isLoggedIn = (strict = false, setHeaderOnValid = true) => {
         }catch(err){
             res.status(401).json({
                 status: 401,
-                message: err.message || err
+                message: "Token not found or invalid."
             });
             return;
         }

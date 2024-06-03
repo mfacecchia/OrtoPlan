@@ -38,20 +38,29 @@ function insertElementInList(parentNode, elementCard){
 
 function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
-    card.querySelector(`figure`).style.backgroundImage = `url(${elementData.imageURL})`;
-    card.querySelector(`.cardContent p`).textContent = type === 'plant'? elementData.plantFamily: elementData.location;
-    card.querySelector(`.cardContent h2`).textContent = type === 'plant'? elementData.plantName: elementData.plantationName;
+    
     dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
     dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
     if(type === 'plant'){
         card.setAttribute('data-plant-id', elementData.plantID);
         dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantID})`);
         dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${elementData.plantID})`);
+        card.querySelector(`.cardContent p`).textContent = elementData.plant.plantName;
+        card.querySelector(`.cardContent h2`).textContent = elementData.plant.plantFamily;
+        if(elementData.plant.imageURL.includes('https://'))
+            card.querySelector(`figure`).style.backgroundImage = `url(${elementData.plant.imageURL})`;
+        else
+            card.querySelector(`figure`).style.backgroundImage = `url(/assets/icons/${elementData.plant.imageURL})`;
     }
     else{
         card.setAttribute('data-plantation-id', elementData.plantationID);
-        card.querySelector('.cardContent').href = `./${elementData.plantationID}`;
-        dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${elementData.plantationID}, 'plantation')`);
+        card.querySelector('.cardContent').href = `/user/plantations/${elementData.plantationID}`;
+        card.querySelector(`.cardContent p`).textContent = elementData.location.locationName;
+        card.querySelector(`.cardContent h2`).textContent = elementData.plantationName;
+        if(elementData.imageURL.includes('https://'))
+            card.querySelector(`figure`).style.backgroundImage = `url(${elementData.imageURL})`;
+        else
+            card.querySelector(`figure`).style.backgroundImage = `url(/assets/icons/${elementData.imageURL})`;
     }
     return card;
 }
@@ -103,4 +112,26 @@ function modifyCardData(newCardData, cardElement, type){
 
     cardElement.querySelector('.cardContent p').textContent = cardFamilyLocation;
     cardElement.querySelector('.cardContent h2').textContent = cardName;
+}
+
+async function getUserList(type, plantationID = undefined){
+    /*
+        * Gets the list of `type` category from the backend and adds all element as cards in the UI
+    */
+    // NOTE: Backend endpoints use `type` but in plural
+    const pluralType = type + 's';
+    const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}/all?plantationID=${plantationID}`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
+            "Accept": 'application/json'
+        }
+    });
+    const jsonRes = await res.json();
+    const list = jsonRes[pluralType];
+    if(list.length){
+        list.forEach(listElement => {
+            addElementToList(listElement, type);
+        });
+    }
 }

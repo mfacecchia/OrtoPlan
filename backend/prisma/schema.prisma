@@ -57,6 +57,8 @@ model Location{
 
 model Plantation {
   plantationID Int @id @default(autoincrement())
+  plantationName String
+  imageURL String @db.VarChar(500) @default("plantation.webp")
   userID Int
   locationID Int?
 

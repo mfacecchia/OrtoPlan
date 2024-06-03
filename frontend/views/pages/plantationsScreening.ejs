@@ -26,21 +26,6 @@
                 <hr class = "animate-showHide w-32 green-line origin-left">
             </div>
             <div class = "cardsContainer">
-                <% plantationsList.forEach(plantation => { %>
-                    <%- include('../partials/card.partial.ejs', {
-                        isTemplate: false,
-                        cardData: ['data-plantation-id', plantation.plantationID],
-                        cardBg: plantation.imageURL,
-                        dropdownTitle: "Plantation settings",
-                        dropdownOptions: [
-                            `<li class = "textToRight" onclick = "modify(${plantation.plantationID}, 'plantation')" role = "Modify" tabindex = "0"><a><span class = "text-warning">Modify</span> Plantation</a></li>`,
-                            `<li class = "textToRight" onclick = "confirmRemoval(${plantation.plantationID}, 'plantation')" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plantation</a></li>`
-                        ],
-                        link: `./${plantation.plantationID}`,
-                        cardSubtitle: plantation.location,
-                        cardTitle: plantation.plantationName
-                    }) %>
-                <% }) %>
                 <%- include('../partials/card.partial.ejs', {
                     isTemplate: true,
                     cardData: ['data-plantation-id', ''],
@@ -68,8 +53,10 @@
         </div>
         <%- include('../partials/footer.partial.ejs') %>
 
+        <script src = "/script/constants.js"></script>
         <script src = "/script/utilities.js"></script>
-        <script src = "/script/auth/jwt.auth.js" type = "module"></script>
+        <script src = "/script/auth/jwt.auth.js"></script>
         <script src = "/script/plantPlantationsManagement.js"></script>
+        <script>getUserList('plantation')</script>
     </body>
 </html>

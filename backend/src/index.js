@@ -2,7 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import { isLoggedIn } from './middlewares/isLoggedIn.middleware.js';
-import userAuth from './routes/auth.routing.js'
+import userAuth from './routes/auth.routing.js';
+import forecast from './routes/weather.routing.js';
+import plantations from './routes/plantations.routing.js';
+import plants from './routes/plants.routing.js';
 
 const app = express();
 app.use(cors(
@@ -29,3 +32,6 @@ app.listen(process.env.PORT, () => {
 });
 
 userAuth(app);
+forecast(app);
+plantations(app);
+plants(app);
