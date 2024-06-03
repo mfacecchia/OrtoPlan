@@ -125,23 +125,6 @@
             <h1 class = "font-bold">Your <span class = "text-secondary">Plants</span></h1>
             <hr class = "animate-showHide w-24 green-line origin-left">
             <div class = "cardsContainer mt-5">
-                <% plantsList.forEach(plant => { %>
-                    <%- include('../partials/card.partial.ejs', {
-                        isTemplate: false,
-                        cardData: ['data-plant-id', plant.plantID],
-                        cardBg: plant.imageURL,
-                        dropdownTitle: "Plant settings",
-                        dropdownOptions: [
-                            // TODO: Update onclick listeners to pass `this` instead of plantID (redundancy)
-                            `<li class = "textToRight" onclick = "getPlantTreatments(${plant.plantID})" role = "Plan" tabindex = "0"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
-                            `<li class = "textToRight" onclick = "confirmRemoval(${plant.plantID}, 'plant')" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plant</a></li>`,
-                            `<li class = "textToRight" onclick = "modify(${plant.plantID}, 'plant')" role = "Modify" tabindex = "0"><a><span class = "text-warning">Modify</span> Plant</a></li>`,
-                            `<li class = "textToRight" onclick = "showPlantInformation(${plant.plantID})" role = "Information" tabindex = "0"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
-                        ],
-                        cardSubtitle: plant.plantFamily,
-                        cardTitle: plant.plantName
-                    }) %>
-                <% }) %>
                 <%- include('../partials/card.partial.ejs', {
                     isTemplate: true,
                     cardData: ['data-plant-id', '0'],
@@ -174,9 +157,12 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js" integrity="sha512-2sI5N95oT62ughlApCe/8zL9bQAXKsPPtZZI2KE3dznuZ8HpE2gTMHYzyVN7OoSPJCM1k9ZkhcCo3FvOirIr2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+        <script src = "/script/constants.js"></script>
         <script src = "/script/utilities.js"></script>
         <script src = "/script/plantPlantationsManagement.js"></script>
         <script src = "/script/treatmentsManagement.js"></script>
         <script src = "/script/weatherSlider.js"></script>
+        <script src = "/script/plantPlantationsManagement.js"></script>
+        <script>getUserList('plant', <%=plantationID%>)</script>
     </body>
 </html>
