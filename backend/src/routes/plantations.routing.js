@@ -57,7 +57,6 @@ function getPlantation(plantationID, userID){
             });
             resolve(plantation);
         }catch(err){
-            console.log(err);
             reject('No plantations found.');
         }
     });

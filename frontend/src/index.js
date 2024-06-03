@@ -23,7 +23,7 @@ app.get('/user/plantations', (req, res) => {
 
 app.get('/user/plantations/:plantationID', (req, res) => {
     // NOTE: Place in `plantsList` option all the query returned plants
-    res.render('pages/plantation', {plantationID: req.params.plantationID, plantationName: plantationName, plantsList: []});
+    res.render('pages/plantation', {plantationID: req.params.plantationID});
 });
 
 app.listen(5500, () => {

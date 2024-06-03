@@ -81,6 +81,7 @@ model Plant {
 }
 
 model PlannedTreatment {
+  treatmentID Int @id @default(autoincrement())
   userID Int
   plantID Int
   treatmentType String
@@ -88,7 +89,6 @@ model PlannedTreatment {
   treatmentDate DateTime
   treatmentRecurrence Int @default(0)
 
-  @@id([userID, plantID])
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
   plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
 }
