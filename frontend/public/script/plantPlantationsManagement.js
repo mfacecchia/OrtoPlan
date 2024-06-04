@@ -147,6 +147,14 @@ async function updatePageData(plantationID){
     const plantation = plantationData.plantations;
     document.title = document.title.replace('plantationName', plantation.plantationName);
     const plantationMainData = document.querySelector('#plantationLocationAndName');
+    const plantationBG = document.querySelector('#plantationBG');
+    plantationBG.classList.remove('bg-defaultPlantation');
+    if(plantation.imageURL.includes('https://')){
+        plantationBG.style.backgroundImage = `url('${plantation.imageURL}')`;
+    }
+    else{
+        plantationBG.style.backgroundImage = `url('/assets/icons/${plantation.imageURL}')`;
+    }
     plantationMainData.querySelector('h1').textContent = plantation.plantationName;
     plantationMainData.querySelector('b').textContent = plantation.location.locationName;
 }
