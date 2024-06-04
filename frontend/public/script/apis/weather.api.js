@@ -6,19 +6,12 @@ async function getWeatherInfo(plantationID){
     }
     const weatherData = plantationData.plantations.location;
     
-    const res = await fetch(`${BACKEND_ADDRESS}/api/weather`, {
-        method: 'POST',
+    const res = await fetch(`${BACKEND_ADDRESS}/api/weather?lat=${weatherData.locationLat}&long=${weatherData.locationLong}`, {
+        method: 'GET',
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
-            "Content-Type": "application/json",
             "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            location: {
-                lat: weatherData.locationLat,
-                long: weatherData.locationLong
-            }
-        })
+        }
     });
     if(!res.ok){
         return false;
