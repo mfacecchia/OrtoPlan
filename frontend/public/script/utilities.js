@@ -78,9 +78,9 @@ function formDataToObject(formDataElement, fieldsFilterArr = undefined){
         });
     }
     else{
-        formDataElement.keys().forEach(field => {
+        for(const field of formDataElement.keys()){
             obj[field] = formDataElement.get(field);
-        });
+        }
     }
     return obj;
 }
