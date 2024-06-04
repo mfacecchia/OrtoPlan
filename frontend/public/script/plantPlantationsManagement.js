@@ -1,4 +1,3 @@
-// TODO: Update dialog title/subtitle
 function newElement(type, plantationID = undefined){
     const newElementDialog = document.querySelector('#newPlantPlantation');
     const newElementForm = document.querySelector('#newPlantPlantationForm');
@@ -9,15 +8,31 @@ function newElement(type, plantationID = undefined){
     };
     newElementForm.onsubmit = async e => {
         e.preventDefault();
+        const newElementData = formDataToObject(new FormData(newElementForm));
+        if(type === 'plant') newElementData.plantationID = plantationID;
+        // NOTE: Backend endpoints use `type` but in plural
+        const pluralType = type + 's';
         try{
-            // NOTE: Set fetch endpoint based on `type` parameter content
-            const response = await fetch();
-            const jsonResponse = await response.json();
-            addElementToList(jsonResponse, type);
+            const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                },
+                body: JSON.stringify(newElementData)
+            });
+            const jsonResponse = await res.json();
+            if(jsonResponse.status !== 201) throw new Error(jsonResponse.message);
+            addElementToList(jsonResponse[type], type);
         }catch(err){
-            displayMessage(`Unknown error while adding the ${type}. Please try again.`, 'error');
+            displayMessage(err instanceof Error? `Could not add ${type}. ${err.message}`: `Unknown error while adding the ${type}. Please try again.`, 'error');
+            return;
         }
-        newElementDialog.close();
+        finally{
+            newElementDialog.close();
+        }
+        displayMessage(`${type} added successfully`, 'success');
     }
     newElementDialog.showModal();
 }
