@@ -2,13 +2,13 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 
 export default function plants(app){
-    app.post('/api/plants', async (req, res) => {
+    app.get('/api/plants', async (req, res) => {
         /*
             * Gets a single plant from a given `plantID` (in request body) and userID (in JWT payload)
         */
         try{
             const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-            const plant = await getPlant(parseInt(req.body.plantID) || 0, decodedToken.userID);
+            const plant = await getPlant(parseInt(req.query.plantID) || 0, decodedToken.userID);
             res.status(200).json({
                 status: 200,
                 message: "Plant found",
