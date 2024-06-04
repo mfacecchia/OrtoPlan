@@ -135,3 +135,18 @@ async function getUserList(type, plantationID = undefined){
         });
     }
 }
+
+async function updatePageData(plantationID){
+    const plantationData = await getPlantationInfo(plantationID);
+    if(!plantationData){
+        displayMessage('Could not retrieve plantation data. You\'re getting redirected to the plantations screening page.', 'error');
+        setTimeout(() => {
+            window.location.pathname = '/user/plantations';
+        }, 3000);
+    }
+    const plantation = plantationData.plantations;
+    document.title = document.title.replace('plantationName', plantation.plantationName);
+    const plantationMainData = document.querySelector('#plantationLocationAndName');
+    plantationMainData.querySelector('h1').textContent = plantation.plantationName;
+    plantationMainData.querySelector('b').textContent = plantation.location.locationName;
+}
