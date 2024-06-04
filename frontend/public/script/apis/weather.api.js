@@ -1,22 +1,12 @@
 async function getWeatherInfo(plantationID){
-    const res = await fetch(`${BACKEND_ADDRESS}/api/plantations`, {
-        method: 'POST',
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            "plantationID": plantationID
-        })
-    });
-    if(!res.ok){
-        return false;
+    const plantationData = await getPlantationInfo(plantationID);
+    if(!plantationData){
+        displayError('Could not retrieve data for this plantation.', 'error');
+        return;
     }
-    const plantationData = await res.json();
     const weatherData = plantationData.plantations.location;
     
-    const forecastRes = await fetch(`${BACKEND_ADDRESS}/api/weather`, {
+    const res = await fetch(`${BACKEND_ADDRESS}/api/weather`, {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
@@ -30,9 +20,9 @@ async function getWeatherInfo(plantationID){
             }
         })
     });
-    if(!forecastRes.ok){
+    if(!res.ok){
         return false;
     }
-    const forecast = await forecastRes.json();
+    const forecast = await res.json();
     return forecast.forecast;
 }
