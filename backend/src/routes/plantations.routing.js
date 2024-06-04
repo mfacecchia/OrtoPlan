@@ -1,5 +1,6 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
+import getLocation from '../apis/getLocation.api.js';
 
 export default function plantations(app){
     app.get('/api/plantations', async (req, res) => {
@@ -33,6 +34,45 @@ export default function plantations(app){
             message: "Plantations found",
             plantations: plantationsList
         });
+    });
+
+    app.post('/api/plantations', async(req, res) => {
+        // Data to pass to the function
+        const plantationData = {
+            plantationName: req.body.plantationName
+        }
+        try{
+            const location = await getLocation(req.body.locationName, req.body.locationCAP);
+            plantationData.locationID = location.locationID;
+        }catch(err){
+            res.status(404).json({
+                status: 404,
+                message: "Location not found"
+            });
+            return;
+        }
+        try{
+            const plantationImage = await getRandomImage();
+            plantationData.imageURL = plantationImage;
+        }catch(err){
+            plantationData.imageURL = 'plantation.webp';
+        }
+        const decodedToken = decodeToken(req.headers.authorization, false);
+        plantationData.userID = decodedToken.userID;
+        try{
+            const newPlantation = await createPlantation(plantationData);
+            res.status(201).json({
+                status: 201,
+                message: "Plantation successfully created",
+                plantation: newPlantation
+            });
+        }catch(err){
+            res.status(400).json({
+                status: 400,
+                message: "Unknown error while creating the plantation. Please try again."
+            });
+            return;
+        }
     });
 }
 
@@ -80,5 +120,38 @@ function getPlantationsList(userID){
             }
         });
         resolve(plantation);
+    });
+}
+
+function createPlantation(plantationData){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const newPlantation = await prisma.plantation.create({
+                data: plantationData
+            });
+            resolve(newPlantation);
+        }catch(err){
+            reject(false);
+        }
+    });
+}
+
+function getRandomImage(){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const res = await fetch('https://api.unsplash.com/search/photos?query=Plantation&per_page=30', {
+                method: 'GET',
+                headers: {
+                    "Authorization": `Client-ID ${process.env.UNSPLASHAPI_KEY}`,
+                    "Accept-Version": "v1"
+                }
+            });
+            if(!res.ok) reject(res.status);
+            const imageJSON = await res.json();
+            const randomImageIndex = Math.floor(Math.random() * imageJSON.results.length);
+            resolve(imageJSON.results[randomImageIndex].urls.regular);
+        }catch(err){
+            reject(err);
+        }
     });
 }
