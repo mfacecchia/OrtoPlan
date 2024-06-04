@@ -23,7 +23,7 @@ function newElement(type, plantationID = undefined){
                 body: JSON.stringify(newElementData)
             });
             const jsonResponse = await res.json();
-            if(jsonResponse.status !== 201) throw new Error(jsonResponse.message);
+            if(res.status !== 201) throw new Error(jsonResponse.message);
             addElementToList(jsonResponse[type], type);
         }catch(err){
             displayMessage(err instanceof Error? `Could not add ${type}. ${err.message}`: `Unknown error while adding the ${type}. Please try again.`, 'error');

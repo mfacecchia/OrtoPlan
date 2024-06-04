@@ -37,15 +37,29 @@ function confirmRemoval(id, elementType, printError = true){
     dialog.querySelector('p span').textContent = elementName;
     dialog.showModal();
     dialog.querySelector('form').onsubmit = async e => {
+        // NOTE: Backend endpoints use `type` but in plural
+        const pluralType = elementType + 's';
         try{
-            if(await fetch()){
-                document.querySelector(elementSelector).remove();
-            }
+            const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                },
+                body: JSON.stringify({
+                    plantationID: id
+                })
+            });
+            const jsonRes = await res.json();
+            if(!res.ok) throw new Error(jsonRes.message);
+            else displayMessage(jsonRes.message, 'success');
         }catch(err){
             // Outputting an error message in case the plant is not found from the provided ID
-            if(printError) displayMessage("Couldn't remove the selected element, please reload the page and try again.", "error");
+            if(printError) displayMessage(err instanceof Error? `Could not remove the ${type}. ${err.message}`: "Couldn't remove the selected element, please reload the page and try again.", "error");
             return;
         }
+        document.querySelector(elementSelector).remove();
         if(elementType === 'treatment'){
             // Removing the excessive dividers in case the element to be removed is a plant's treatment
             try{

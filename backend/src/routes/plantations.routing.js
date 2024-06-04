@@ -74,6 +74,23 @@ export default function plantations(app){
             return;
         }
     });
+
+    app.delete('/api/plantations', async(req, res) => {
+        try{
+            const decodedToken = decodeToken(req.headers.authorization, false);
+            const userID = decodedToken.userID;
+            await removePlantation(req.body.plantationID, userID);
+            res.status(200).json({
+                status: 200,
+                message: "Plantation successfully removed"
+            });
+        }catch(err){
+            res.status(404).json({
+                status: 404,
+                message: err
+            });
+        }
+    });
 }
 
 function getPlantation(plantationID, userID){
@@ -159,6 +176,22 @@ function getRandomImage(){
             resolve(imageJSON.results[randomImageIndex].urls.regular);
         }catch(err){
             reject(err);
+        }
+    });
+}
+
+function removePlantation(plantationID, userID){
+    return new Promise(async (resolve, reject) => {
+        try{
+            await prisma.plantation.delete({
+                where: {
+                    plantationID: plantationID,
+                    userID: userID
+                }
+            });
+            resolve(true);
+        }catch(err){
+            reject(err.code === 'P2025'? 'Plantation not found.': 'Unknown error.');
         }
     });
 }
