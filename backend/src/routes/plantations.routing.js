@@ -127,7 +127,14 @@ function createPlantation(plantationData){
     return new Promise(async (resolve, reject) => {
         try{
             const newPlantation = await prisma.plantation.create({
-                data: plantationData
+                data: plantationData,
+                include: {
+                    location: {
+                        select: {
+                            locationName: true
+                        }
+                    }
+                }
             });
             resolve(newPlantation);
         }catch(err){
