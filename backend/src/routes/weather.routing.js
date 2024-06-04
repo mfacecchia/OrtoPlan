@@ -2,13 +2,13 @@ import { isLoggedIn } from "../middlewares/isLoggedIn.middleware.js";
 import getWeatherInfo from "../apis/getWeather.api.js";
 
 export default function getWeather(app){
-    app.post('/api/weather', isLoggedIn(true, false), async (req, res) => {
-        if(typeof req.body.location === undefined) res.status(400).json({
+    app.get('/api/weather', isLoggedIn(true, false), async (req, res) => {
+        if(typeof req.query.lat === undefined || typeof req.query.long === undefined) res.status(400).json({
             status: "400",
             message: "Unable to process the request. Location not provided."
         });
         try{
-            const forecast = await getWeatherInfo(req.body.location);
+            const forecast = await getWeatherInfo(req.query.lat, req.query.long);
             res.status(200).json({
                 status: "200",
                 message: "Forecast obtained successfully",

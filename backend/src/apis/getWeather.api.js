@@ -1,13 +1,13 @@
 import fetch from 'node-fetch'
 
-export default function getWeatherInfo(location){
+export default function getWeatherInfo(locationLat, locationLong){
     /*
         * Obtains forecast for the next 14 days for the selected location
         * Location is defined through `location.lat` and `location.long` Object's fields
     */
     return new Promise(async (resolve, reject) => {
         try{
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.long}&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&forecast_days=14`, {
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${locationLat}&longitude=${locationLong}&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&forecast_days=14`, {
                 method: 'GET'
             });
             if(res.status === 400){
