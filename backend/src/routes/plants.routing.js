@@ -133,11 +133,13 @@ function createPlant(plantData){
                 data: {
                     plantationID: plantData.plantationID,
                     plantID: plantData.plantID
+                },
+                include: {
+                    plant: true
                 }
             });
             resolve(newPlant);
         }catch(err){
-            console.log(err);
             reject(false);
         }
     });
