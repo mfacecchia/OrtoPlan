@@ -13,9 +13,15 @@ export default function getPlant(plantName = undefined, family = undefined, scie
                     }
                 },
                 where: {
-                    plantName: plantName,
-                    plantFamily: family,
-                    scientificName: scientificName
+                    plantName: {
+                        contains: plantName
+                    },
+                    plantFamily: {
+                        contains: family
+                    },
+                    scientificName: {
+                        contains: scientificName
+                    }
                 }
             });
             resolve(plant);
