@@ -22,7 +22,6 @@ model User {
   credential Credentials[]
   plantation Plantation[]
   notification Notification[]
-  treatment PlannedTreatment[]
 }
 
 model Credentials {
@@ -77,27 +76,26 @@ model Plant {
   imageURL String @db.VarChar(500) @default("plant.webp")
 
   plantation_plant Plantation_Plant[]
-  treatment PlannedTreatment[]
 }
 
 model PlannedTreatment {
   treatmentID Int @id @default(autoincrement())
-  userID Int
-  plantID Int
   treatmentType String
   notes String @db.VarChar(300)
   treatmentDate DateTime
   treatmentRecurrence Int @default(0)
+  plantationPlantID Int
 
-  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
-  plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
+  plantationPlant Plantation_Plant @relation(fields: [plantationPlantID], references: [plantationPlantID], onDelete: Cascade)
 }
 
 model Plantation_Plant {
+  plantationPlantID Int @id @default(autoincrement())
   plantationID Int
   plantID Int
+  
+  plannedTreatment PlannedTreatment[]
 
-  @@id([plantationID, plantID])
   plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
   plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
 }
