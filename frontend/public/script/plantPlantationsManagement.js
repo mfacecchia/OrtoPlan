@@ -60,8 +60,8 @@ function setCardData(card, elementData, type){
         card.setAttribute('data-plant-id', elementData.plantID);
         dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantID})`);
         dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${elementData.plantID})`);
-        card.querySelector(`.cardContent p`).textContent = elementData.plant.plantName;
-        card.querySelector(`.cardContent h2`).textContent = elementData.plant.plantFamily;
+        card.querySelector(`.cardContent p`).textContent = elementData.plant.plantFamily;
+        card.querySelector(`.cardContent h2`).textContent = elementData.plant.plantName;
         if(elementData.plant.imageURL.includes('https://'))
             card.querySelector(`figure`).style.backgroundImage = `url(${elementData.plant.imageURL})`;
         else
@@ -122,7 +122,6 @@ function modify(elementID, type){
             modifyCardData(jsonRes[type], element, type);
         }
         catch(err){
-            console.log(err);
             displayMessage(`Could not update ${type} information. ${err}`, 'error');
             updateElementDialog.close();
             return;
