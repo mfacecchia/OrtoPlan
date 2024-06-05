@@ -75,20 +75,77 @@ export default function plantations(app){
         }
     });
 
-    app.delete('/api/plantations', async(req, res) => {
+    app.route('/api/plantations')
+        .delete(deleteUpdatePlantation)
+        .put(deleteUpdatePlantation);
+}
+
+function getRandomImage(){
+    return new Promise(async (resolve, reject) => {
         try{
-            const decodedToken = decodeToken(req.headers.authorization, false);
-            const userID = decodedToken.userID;
-            await removePlantation(req.body.plantationID, userID);
-            res.status(200).json({
-                status: 200,
-                message: "Plantation successfully removed"
+            const res = await fetch('https://api.unsplash.com/search/photos?query=Plantation&per_page=30', {
+                method: 'GET',
+                headers: {
+                    "Authorization": `Client-ID ${process.env.UNSPLASHAPI_KEY}`,
+                    "Accept-Version": "v1"
+                }
             });
+            if(!res.ok) reject(res.status);
+            const imageJSON = await res.json();
+            const randomImageIndex = Math.floor(Math.random() * imageJSON.results.length);
+            resolve(imageJSON.results[randomImageIndex].urls.regular);
         }catch(err){
-            res.status(404).json({
-                status: 404,
-                message: err
+            reject(err);
+        }
+    });
+}
+
+async function deleteUpdatePlantation(req, res){
+    try{
+        let plantation = undefined;
+        const decodedToken = decodeToken(req.headers.authorization, false);
+        const userID = decodedToken.userID;
+        if(req.method === 'DELETE') plantation = await removePlantation(req.body.plantationID, userID);
+        else if(req.method === 'PUT') plantation = await updatePlantation(req.body, userID);
+        res.status(200).json({
+            status: 200,
+            message: req.method === 'DELETE'? "Plantation successfully removed": "Plantation data successfully updated",
+            plantation: plantation
+        });
+    }catch(err){
+        res.status(404).json({
+            status: 404,
+            message: err
+        });
+    }
+}
+
+function updatePlantation(dataObj, userID){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const location = await getLocation(dataObj.locationName, dataObj.locationCAP)
+            const updatedPlantation = await prisma.plantation.update({
+                data: {
+                    plantationName: dataObj.plantationName,
+                    locationID: location.locationID
+                },
+                include: {
+                    location: {
+                        select: {
+                            locationName: true
+                        }
+                    }
+                },
+                where: {
+                    plantationID: parseInt(dataObj.plantationID) || 0,
+                    userID: userID
+                }
             });
+            resolve(updatedPlantation);
+        }catch(err){
+            if(err.name === 'PrismaClientValidationError') reject('Invalid values');
+            else if(err.code === 'P2025') reject('Plantation not found or invalid update values.');
+            else reject('Unknown error.');
         }
     });
 }
@@ -160,36 +217,23 @@ function createPlantation(plantationData){
     });
 }
 
-function getRandomImage(){
-    return new Promise(async (resolve, reject) => {
-        try{
-            const res = await fetch('https://api.unsplash.com/search/photos?query=Plantation&per_page=30', {
-                method: 'GET',
-                headers: {
-                    "Authorization": `Client-ID ${process.env.UNSPLASHAPI_KEY}`,
-                    "Accept-Version": "v1"
-                }
-            });
-            if(!res.ok) reject(res.status);
-            const imageJSON = await res.json();
-            const randomImageIndex = Math.floor(Math.random() * imageJSON.results.length);
-            resolve(imageJSON.results[randomImageIndex].urls.regular);
-        }catch(err){
-            reject(err);
-        }
-    });
-}
-
 function removePlantation(plantationID, userID){
     return new Promise(async (resolve, reject) => {
         try{
-            await prisma.plantation.delete({
+            const removedPlantation = await prisma.plantation.delete({
+                include: {
+                    location: {
+                        select: {
+                            locationName: true
+                        }
+                    }
+                },
                 where: {
                     plantationID: plantationID,
                     userID: userID
                 }
             });
-            resolve(true);
+            resolve(removedPlantation);
         }catch(err){
             reject(err.code === 'P2025'? 'Plantation not found.': 'Unknown error.');
         }

@@ -11,7 +11,7 @@ export default function getLocation(locationName, locationCAP = undefined){
             });
             resolve(location);
         }catch(err){
-            reject('Location not found');
+            reject('Location not found.');
         }
     });
 }
