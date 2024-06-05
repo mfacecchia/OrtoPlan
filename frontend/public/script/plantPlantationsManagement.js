@@ -81,11 +81,12 @@ function setCardData(card, elementData, type){
 }
 
 function modify(elementID, type){
+    const pluralType = type + 's';
     const updateElementDialog = document.querySelector('#newPlantPlantation');
     const updateElementForm = document.querySelector('#newPlantPlantationForm');
     const element = document.querySelector(`[data-${type}-id="${elementID}"]`);
-    const elementName = element.querySelector('h2').textContent;
-    const elementFamilyLocation = element.querySelector('p').textContent;
+    const elementName = element.querySelector('.cardContent h2').textContent;
+    const elementFamilyLocation = element.querySelector('.cardContent p').textContent;
 
     updateElementForm.querySelector('header b').textContent = `Update ${type}`;
     updateElementForm.querySelector('header h1').textContent = `Update ${elementName}`;
@@ -94,7 +95,7 @@ function modify(elementID, type){
     }
     else{
         updateElementForm.querySelector('[name="plantationName"]').value = elementName;
-        updateElementForm.querySelector('[name="plantationLocation"]').value = elementFamilyLocation;
+        updateElementForm.querySelector('[name="locationName"]').value = elementFamilyLocation;
     }
     updateElementDialog.onclose = e => {
         updateElementForm.reset();
@@ -102,28 +103,41 @@ function modify(elementID, type){
     }
     updateElementForm.onsubmit = async e => {
         e.preventDefault();
-        const newElementInfo = new FormData(updateElementForm);
+        const newElementInfo = formDataToObject(new FormData(updateElementForm));
         try{
-            if(await fetch()){
-                modifyCardData(newElementInfo, element, type);
-            }
+            const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                },
+                body: JSON.stringify({
+                    plantationID: elementID,
+                    ...newElementInfo
+                })
+            });
+            const jsonRes = await res.json();
+            if(!res.ok) throw new Error(jsonRes.message);
+            modifyCardData(jsonRes[type], element, type);
         }
         catch(err){
             console.log(err);
-            displayMessage(`Could not update ${type} information. Please reload the page and try again.`, 'error');
+            displayMessage(`Could not update ${type} information. ${err}`, 'error');
             updateElementDialog.close();
             return;
         }
-        elementName.textContent = newElementInfo.get(type === 'plantation'? newElementInfo.get('plantationName'):newElementInfo.get('plantName'));
-        elementFamilyLocation.textContent = newElementInfo.get(type === 'plantation'? newElementInfo.get('plantationLocation'):newElementInfo.get('plantFamily'));
-        updateElementDialog.close();
+        finally{
+            updateElementDialog.close();
+        }
+        displayMessage(`${type} successfully updated.`, 'success');
     }
     updateElementDialog.showModal();
 }
 
 function modifyCardData(newCardData, cardElement, type){
-    const cardFamilyLocation = newCardData.get(type === 'plant'? 'plantFamily': 'plantationLocation');
-    const cardName = newCardData.get(type === 'plant'? 'plantName': 'plantationName');
+    const cardFamilyLocation = type === 'plant'? newCardData.plantFamily: newCardData.location.locationName;
+    const cardName = type === 'plant'? newCardData.plantName: newCardData.plantationName;
 
     cardElement.querySelector('.cardContent p').textContent = cardFamilyLocation;
     cardElement.querySelector('.cardContent h2').textContent = cardName;
