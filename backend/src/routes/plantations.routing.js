@@ -149,7 +149,8 @@ function updatePlantation(dataObj, userID){
     });
 }
 
-function getPlantation(plantationID, userID){
+export function getPlantation(plantationID, userID){
+    if(typeof plantationID !== 'number') plantationID = parseInt(plantationID) || 0;
     return new Promise(async (resolve, reject) => {
         try{
             const plantation = await prisma.plantation.findUniqueOrThrow({

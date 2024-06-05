@@ -1,5 +1,7 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
+import getPlant from '../apis/getPlant.api.js';
+import { getPlantation } from './plantations.routing.js';
 
 export default function plants(app){
     app.route('/api/plants')
@@ -20,6 +22,45 @@ export default function plants(app){
                     status: 404,
                     message: "No plants found"
                 });
+            }
+        })
+        .post(async (req, res) => {
+            req.body.plantationID = parseInt(req.body.plantationID) || 0;
+            // Data to pass to the function
+            const plantData = { plantationID: req.body.plantationID };
+            try{
+                const plant = await(getPlant(req.body.plantName, req.body.plantFamily, req.body.plantScientificName))
+                plantData.plantID = plant.plantID;
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: "Plant not found"
+                });
+                return;
+            }
+            try{
+                const decodedToken = decodeToken(req.headers.authorization, false);
+                await getPlantation(req.body.plantationID, decodedToken.userID);
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: "Plantation not found"
+                });
+                return;
+            }
+            try{
+                const newPlant = await createPlant(plantData);
+                res.status(201).json({
+                    status: 201,
+                    message: "Plant successfully created",
+                    plant: newPlant
+                });
+            }catch(err){
+                res.status(400).json({
+                    status: 400,
+                    message: "Unknown error while creating the plant. Please try again."
+                });
+                return;
             }
         })
     
@@ -46,15 +87,7 @@ function getUserPlant(plantID, userID){
         try{
             const plant = await prisma.plantation_Plant.findUniqueOrThrow({
                 include: {
-                    plannedTreatment: {
-                        select: {
-                            plantationPlantID: true,
-                            treatmentType: true,
-                            treatmentDate: true,
-                            treatmentRecurrence: true,
-                            notes: true
-                        }
-                    },
+                    plannedTreatment: true,
                     plant: true
                 },
                 where: {
@@ -79,15 +112,7 @@ function getUserPlantsList(plantationID, userID){
     return new Promise(async (resolve, reject) => {
         const plants = await prisma.plantation_Plant.findMany({
             include: {
-                plannedTreatment: {
-                    select: {
-                        plantationPlantID: true,
-                        treatmentType: true,
-                        treatmentDate: true,
-                        treatmentRecurrence: true,
-                        notes: true
-                    }
-                },
+                plannedTreatment: true,
                 plant: true
             },
             where: {
@@ -98,5 +123,22 @@ function getUserPlantsList(plantationID, userID){
             }
         });
         resolve(plants);
+    });
+}
+
+function createPlant(plantData){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const newPlant = await prisma.plantation_Plant.create({
+                data: {
+                    plantationID: plantData.plantationID,
+                    plantID: plantData.plantID
+                }
+            });
+            resolve(newPlant);
+        }catch(err){
+            console.log(err);
+            reject(false);
+        }
     });
 }
