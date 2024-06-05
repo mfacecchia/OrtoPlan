@@ -2,25 +2,26 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 
 export default function plants(app){
-    app.get('/api/plants', async (req, res) => {
-        /*
-            * Gets a single plant from a given `plantID` (in request body) and userID (in JWT payload)
-        */
-        try{
-            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-            const plant = await getPlant(parseInt(req.query.plantID) || 0, decodedToken.userID);
-            res.status(200).json({
-                status: 200,
-                message: "Plant found",
-                plants: plant
-            });
-        }catch(err){
-            res.status(404).json({
-                status: 404,
-                message: "No plants found"
-            });
-        }
-    });
+    app.route('/api/plants')
+        .get(async (req, res) => {
+            /*
+                * Gets a single plant from a given `plantID` (in request body) and userID (in JWT payload)
+            */
+            try{
+                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const plant = await getPlant(parseInt(req.query.plantID) || 0, decodedToken.userID);
+                res.status(200).json({
+                    status: 200,
+                    message: "Plant found",
+                    plants: plant
+                });
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: "No plants found"
+                });
+            }
+        });
     
     app.get('/api/plants/all', async (req, res) => {
         /*
