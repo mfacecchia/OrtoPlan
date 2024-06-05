@@ -9,7 +9,7 @@ export default function plants(app){
             */
             try{
                 const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-                const plant = await getPlant(parseInt(req.query.plantID) || 0, decodedToken.userID);
+                const plant = await getUserPlant(parseInt(req.query.plantID) || 0, decodedToken.userID);
                 res.status(200).json({
                     status: 200,
                     message: "Plant found",
@@ -21,14 +21,14 @@ export default function plants(app){
                     message: "No plants found"
                 });
             }
-        });
+        })
     
     app.get('/api/plants/all', async (req, res) => {
         /*
             * Gets all plants from a given userID (in JWT payload)
         */
         const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-        const plantsList = await getPlantsList(parseInt(req.query.plantationID) || 0, decodedToken.userID);
+        const plantsList = await getUserPlantsList(parseInt(req.query.plantationID) || 0, decodedToken.userID);
         res.status(200).json({
             status: 200,
             message: "Plants found",
@@ -37,26 +37,31 @@ export default function plants(app){
     });
 }
 
-function getPlant(plantID, userID){
+function getUserPlant(plantID, userID){
+    /*
+        * Obtains a specific plant owned by the user
+        * NOTE: The `plantID` and `userID` params MUST be integers
+    */
     return new Promise(async (resolve, reject) => {
         try{
             const plant = await prisma.plantation_Plant.findUniqueOrThrow({
                 include: {
-                    plant: {
-                        include: {
-                            treatment: {
-                                select: {
-                                    treatmentType: true,
-                                    treatmentRecurrence: true,
-                                    notes: true
-                                },
-                            }
+                    plannedTreatment: {
+                        select: {
+                            plantationPlantID: true,
+                            treatmentType: true,
+                            treatmentDate: true,
+                            treatmentRecurrence: true,
+                            notes: true
                         }
                     },
+                    plant: true
                 },
                 where: {
-                    plantID: plantID,
-                    userID: userID
+                    plantationPlantID: plantID,
+                    plantation: {
+                        userID: userID,
+                    }
                 }
             });
             resolve(plant);
@@ -66,29 +71,30 @@ function getPlant(plantID, userID){
     });
 }
 
-function getPlantsList(plantationID, userID){
+function getUserPlantsList(plantationID, userID){
+    /*
+        * Obtains a list with all plants in a plantation
+        * NOTE: The `plantationID` and `userID` parameters MUST be integers
+    */
     return new Promise(async (resolve, reject) => {
         const plants = await prisma.plantation_Plant.findMany({
             include: {
-                plant: {
-                    include: {
-                        treatment: {
-                            select: {
-                                treatmentID: true,
-                                treatmentType: true,
-                                treatmentDate: true,
-                                treatmentRecurrence: true,
-                                notes: true,
-                            },
-                            where: {
-                                userID: userID
-                            }
-                        }
+                plannedTreatment: {
+                    select: {
+                        plantationPlantID: true,
+                        treatmentType: true,
+                        treatmentDate: true,
+                        treatmentRecurrence: true,
+                        notes: true
                     }
                 },
+                plant: true
             },
             where: {
-                plantationID: plantationID
+                plantationID: plantationID,
+                plantation: {
+                    userID: userID
+                }
             }
         });
         resolve(plants);
