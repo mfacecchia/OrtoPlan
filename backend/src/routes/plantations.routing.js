@@ -3,25 +3,67 @@ import decodeToken from '../jwt/decode.jwt.js';
 import getLocation from '../apis/getLocation.api.js';
 
 export default function plantations(app){
-    app.get('/api/plantations', async (req, res) => {
-        /*
-            * Gets a single plantation from a given `plantationID` (in request body) and userID (in JWT payload)
-        */
-        try{
-            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-            const plantation = await getPlantation(parseInt(req.query.plantationID) || 0, decodedToken.userID);
-            res.status(200).json({
-                status: 200,
-                message: "Plantation found",
-                plantations: plantation
-            });
-        }catch(err){
-            res.status(404).json({
-                status: 404,
-                message: "No plantations found"
-            });
-        }
-    });
+
+    app.route('/api/plantations')
+        .get(async (req, res) => {
+            /*
+                * Gets a single plantation from a given `plantationID` (in request body) and userID (in JWT payload)
+            */
+            try{
+                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const plantation = await getPlantation(parseInt(req.query.plantationID) || 0, decodedToken.userID);
+                res.status(200).json({
+                    status: 200,
+                    message: "Plantation found",
+                    plantations: plantation
+                });
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: "No plantations found"
+                });
+            }
+        })
+        .post(async(req, res) => {
+            // Data to pass to the function
+            const plantationData = {
+                plantationName: req.body.plantationName
+            }
+            try{
+                const location = await getLocation(req.body.locationName, req.body.locationCAP);
+                plantationData.locationID = location.locationID;
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: "Location not found"
+                });
+                return;
+            }
+            try{
+                const plantationImage = await getRandomImage();
+                plantationData.imageURL = plantationImage;
+            }catch(err){
+                plantationData.imageURL = 'plantation.webp';
+            }
+            const decodedToken = decodeToken(req.headers.authorization, false);
+            plantationData.userID = decodedToken.userID;
+            try{
+                const newPlantation = await createPlantation(plantationData);
+                res.status(201).json({
+                    status: 201,
+                    message: "Plantation successfully created",
+                    plantation: newPlantation
+                });
+            }catch(err){
+                res.status(400).json({
+                    status: 400,
+                    message: "Unknown error while creating the plantation. Please try again."
+                });
+                return;
+            }
+        })
+        .delete(deleteUpdatePlantation)
+        .put(deleteUpdatePlantation);
     
     app.get('/api/plantations/all', async (req, res) => {
         /*
@@ -35,49 +77,6 @@ export default function plantations(app){
             plantations: plantationsList
         });
     });
-
-    app.post('/api/plantations', async(req, res) => {
-        // Data to pass to the function
-        const plantationData = {
-            plantationName: req.body.plantationName
-        }
-        try{
-            const location = await getLocation(req.body.locationName, req.body.locationCAP);
-            plantationData.locationID = location.locationID;
-        }catch(err){
-            res.status(404).json({
-                status: 404,
-                message: "Location not found"
-            });
-            return;
-        }
-        try{
-            const plantationImage = await getRandomImage();
-            plantationData.imageURL = plantationImage;
-        }catch(err){
-            plantationData.imageURL = 'plantation.webp';
-        }
-        const decodedToken = decodeToken(req.headers.authorization, false);
-        plantationData.userID = decodedToken.userID;
-        try{
-            const newPlantation = await createPlantation(plantationData);
-            res.status(201).json({
-                status: 201,
-                message: "Plantation successfully created",
-                plantation: newPlantation
-            });
-        }catch(err){
-            res.status(400).json({
-                status: 400,
-                message: "Unknown error while creating the plantation. Please try again."
-            });
-            return;
-        }
-    });
-
-    app.route('/api/plantations')
-        .delete(deleteUpdatePlantation)
-        .put(deleteUpdatePlantation);
 }
 
 function getRandomImage(){
