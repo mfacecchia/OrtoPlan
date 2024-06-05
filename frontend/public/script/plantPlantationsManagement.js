@@ -54,12 +54,12 @@ function insertElementInList(parentNode, elementCard){
 function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
     
-    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
-    dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantID: elementData.plantationID}, '${type}')`)
+    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}')`)
+    dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}')`)
     if(type === 'plant'){
-        card.setAttribute('data-plant-id', elementData.plantID);
-        dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantID})`);
-        dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${elementData.plantID})`);
+        card.setAttribute('data-plant-id', elementData.plantationPlantID);
+        dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantationPlantID})`);
+        dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${elementData.plantationPlantID})`);
         card.querySelector(`.cardContent p`).textContent = elementData.plant.plantFamily;
         card.querySelector(`.cardContent h2`).textContent = elementData.plant.plantName;
         if(elementData.plant.imageURL.includes('https://'))
@@ -165,6 +165,9 @@ async function getUserList(type, plantationID = undefined){
 }
 
 async function updatePageData(plantationID){
+    /*
+        * Updates the plantation page based on API response data
+    */
     const plantationData = await getPlantationInfo(plantationID);
     if(!plantationData){
         displayMessage('Could not retrieve plantation data. You\'re getting redirected to the plantations screening page.', 'error');
