@@ -66,17 +66,19 @@ function resetTreatmentsList(form){
 }
 
 async function getPlantTreatments(plantID){
+    const treatmentsModal = document.querySelector('#treatments');
     // Obtaining data from the API
     const treatmentsData = await makeTreatmentsRequest(plantID);
-    if(!treatmentsData || !Array.isArray(treatmentsData)){
-        displayMessage('Could not retrieve treatments data.', 'error');
+    if(!Array.isArray(treatmentsData)){
+        // In this case `treatmentsData` is a `typeof string`, and it will represent an error message received from the `fetch` operation
+        displayMessage(`Could not retrieve treatments data. ${treatmentsData}`, 'error');
+        treatmentsModal.close();
         return;
     }
-
-    const treatmentsModal = document.querySelector('#treatments');
-    const formParentNode = treatmentsModal.querySelector('.treatmentForm').parentNode;
+    // Obtaining all elements useful for treatments data management
+    const formsContainer = treatmentsModal.querySelector('.modal-box');
     const treatmentFormTempate = treatmentsModal.querySelector('.treatmentForm').cloneNode(true);
-    const separatorsList = formParentNode.querySelectorAll('hr');
+    const separatorsList = formsContainer.querySelectorAll('hr:not(.green-line)');
 
     treatmentsModal.querySelector('#newTreatment').onclick = e => newTreatment(plantID);
     treatmentFormTempate.classList.remove('hidden');
@@ -84,22 +86,21 @@ async function getPlantTreatments(plantID){
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
     treatmentsModal.onclose = (e) => {
         try{
-            formParentNode.querySelector('.noTreatmentsNotice').remove();
+            formsContainer.querySelector('.noTreatmentsNotice').remove();
         }catch(err){};
-        formParentNode.querySelectorAll('.treatmentForm:not(.hidden)').forEach(form => {
+        formsContainer.querySelectorAll('.treatmentForm:not(.hidden)').forEach(form => {
             form.remove();
         });
-        for(let i = 1; i < separatorsList.length; i++){
+        for(let i = 0; i < separatorsList.length; i++){
             separatorsList[i].remove();
         }
     }
-
-    separatorsList[1].remove();
+    // Removing the 1st separator in the list before adding all the forms to prevent separators to be one on top of the other
+    separatorsList[0].remove();
     if(treatmentsData.length){
         treatmentsData.forEach(treatment => {
             const finalFormData = setFormData(treatmentFormTempate.cloneNode(true), treatment);
-            // Inserting form's data as well as the divider before the new treatment button
-            const treatmentForm = insertTreatmentInList(formParentNode, finalFormData);
+            const treatmentForm = insertTreatmentInList(formsContainer, finalFormData);
             addTreatmentButtonEvents(treatmentForm[0]);
         });
     }
@@ -133,26 +134,41 @@ function newTreatment(plantID){
 
 async function makeTreatmentsRequest(plantID){
     try{
-        const res = await fetch();
-        return await res.json();
+        const res = await fetch(`${BACKEND_ADDRESS}/api/treatments/all?plantationPlantID=${plantID}`, {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+            }
+        });
+        const jsonRes = await res.json();
+        if(!res.ok) throw new Error(jsonRes.message);
+        return jsonRes.treatments;
     }catch(err){
-        return false;
+        return err.message || err;
     }
 }
 
-function insertTreatmentInList(formParentNode, treatmentForm){
+function insertTreatmentInList(formsContainer, treatmentForm){
+    /*
+        * Inserting the treatment form as well as a simple divider (`<hr>` element) in the forms container (`formsContainer`)
+        * Returns an Array with the newly added elements
+    */
     const elementsAdded = [];
-    elementsAdded.push(formParentNode.insertBefore(treatmentForm, formParentNode.querySelector('[role="definition"]').nextSibling));
-    elementsAdded.push(formParentNode.insertBefore(document.createElement('hr'), elementsAdded[0].nextSibling));
+    elementsAdded.push(formsContainer.insertBefore(treatmentForm, formsContainer.querySelector('[role="definition"]').nextSibling));
+    elementsAdded.push(formsContainer.insertBefore(document.createElement('hr'), elementsAdded[0].nextSibling));
     return elementsAdded;
 }
 
 function setFormData(form, treatmentData){
     form.setAttribute('data-treatment-id', treatmentData.treatmentID);
     form.querySelector(`select[name="treatmentType"] [value="${treatmentData.treatmentType}"]`).setAttribute('selected', '');
-    ["treatmentDate", "treatmentRecurrence", "notes"].forEach(field => {
+    treatmentData.treatmentDate = moment(treatmentData.treatmentDate).format("YYYY-MM-DD");
+    ["treatmentDate", "treatmentRecurrence"].forEach(field => {
         form.querySelector(`[name="${field}"]`).setAttribute('value', treatmentData[field]);
     });
+    // `notes` input field is a `textarea` so setting its `textContent` instead of `value`
+    form.querySelector('[name="notes"]').textContent = treatmentData.notes;
     return form;
 }
 
