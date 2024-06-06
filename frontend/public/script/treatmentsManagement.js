@@ -120,14 +120,30 @@ function newTreatment(plantID){
     };
     newTreatmentForm.onsubmit = async e => {
         e.preventDefault();
+        const newTreatmentFormData = formDataToObject(new FormData(newTreatmentForm));
+        newTreatmentFormData.plantationPlantID = plantID;
         try{
-            const response = await fetch();
-            const jsonResponse = await response.json();
-            addToList(jsonResponse);
+            const res = await fetch(`${BACKEND_ADDRESS}/api/treatments`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                },
+                body: JSON.stringify(newTreatmentFormData)
+            });
+            const jsonRes = await res.json();
+            if(!res.ok) throw new Error(jsonRes.message);
+            addToList(jsonRes.treatment);
         }catch(err){
-            displayMessage('Unknown error while planning the treatment. Please try again.', 'error');
+            console.log(err);
+            displayMessage(`Unknown error while planning the treatment. ${err.message}`, 'error');
+            return;
         }
-        newTreatmentDialog.close();
+        finally{
+            newTreatmentDialog.close();
+        }
+        displayMessage('Treatment successfully planned.', 'success');
     }
     newTreatmentDialog.showModal();
 }
@@ -179,18 +195,18 @@ function addToList(treatmentData){
         * Takes all the necessary treatment's data and creates a new element to append to the treatments's list
     */
     const treatmentForm = document.querySelector('.treatmentForm');
-    const treatmentFormParentNode = treatmentForm.parentNode;
+    const formsContainer = treatmentForm.parentNode;
     const newTreatmentForm = setFormData(treatmentForm.cloneNode(true), treatmentData);
     newTreatmentForm.classList.remove('hidden');
     addTreatmentButtonEvents(newTreatmentForm);
-    removeNotice(treatmentFormParentNode);
-    insertTreatmentInList(treatmentFormParentNode, newTreatmentForm);
+    removeNotice(formsContainer);
+    insertTreatmentInList(formsContainer, newTreatmentForm);
 }
 
-function removeNotice(parentNode){
+function removeNotice(formsContainer){
     try{
-        const noTreatmentsNotice = parentNode.querySelector('.noTreatmentsNotice');
-        parentNode.querySelector('.noTreatmentsNotice + hr').remove();
+        const noTreatmentsNotice = formsContainer.querySelector('.noTreatmentsNotice');
+        formsContainer.querySelector('.noTreatmentsNotice + hr').remove();
         noTreatmentsNotice.remove();
     }catch(err){};
 }
