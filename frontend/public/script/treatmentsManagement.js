@@ -168,7 +168,9 @@ function setFormData(form, treatmentData){
         form.querySelector(`[name="${field}"]`).setAttribute('value', treatmentData[field]);
     });
     // `notes` input field is a `textarea` so setting its `textContent` instead of `value`
-    form.querySelector('[name="notes"]').textContent = treatmentData.notes;
+    const notesTextarea = form.querySelector('[name="notes"]');
+    if(treatmentData.notes === '') notesTextarea.placeholder = 'No notes available'
+    else notesTextarea.textContent = treatmentData.notes;
     return form;
 }
 
