@@ -5,3 +5,12 @@
         <p>All Rights Reserved</p>
     </div>
 </footer>
+
+<%# 
+    Necessary scripts for operations like user information update & logout
+    Mostly needed in all pages (except some, that's why checking if `includeScripts` is set)
+    Not passing it means "embed the scripts at the end of the page"
+%>
+<% if (typeof includeScripts === 'undefined') { %>
+    <script src = "/script/auth/logout.auth.js"></script>
+<% } %>
