@@ -62,8 +62,8 @@ export default function plantations(app){
                 return;
             }
         })
-        .delete(deleteUpdatePlantation)
-        .put(deleteUpdatePlantation);
+        .put(deleteUpdatePlantation)
+        .delete(deleteUpdatePlantation);
     
     app.get('/api/plantations/all', async (req, res) => {
         /*
