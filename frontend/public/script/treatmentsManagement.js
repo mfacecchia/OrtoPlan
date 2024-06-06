@@ -25,25 +25,55 @@ function addTreatmentButtonEvents(form){
         formFields.forEach(field => {
             field.removeAttribute('disabled');
         });
+        // FIXME: Updating image only if target is button and not children `img` element
         // Setting buttons's icons
         e.target.src = "/assets/icons/check.svg";
         resetTreatmentButton.childNodes[0].src = "/assets/icons/cancel.svg";
         resetTreatmentButton.setAttribute('type', 'reset');
         // Getting all the other forms and disabling the buttons
-        form.parentNode.querySelectorAll(`form:not([data-treatment-id="${treatmentID}"], [method="dialog"])`).forEach(treatmentForm => {
+        form.parentNode.querySelectorAll(`form:not([data-treatment-id="${treatmentID}"], [method="dialog"], .hidden)`).forEach(treatmentForm => {
             treatmentForm.querySelectorAll('button').forEach(button => button.setAttribute('disabled', undefined));
         });
         document.querySelector('#newTreatment').setAttribute('disabled', undefined);
 
-        editButtonClicksCount >= 2? updateTreatmentInfo(e, form): editButtonClicksCount++;
+        editButtonClicksCount >= 2? updateTreatmentInfo(e, form, treatmentID): editButtonClicksCount++;
+    });
+    /*
+        * Managing form submit if the user press enter as well other than `button[data-btn-action="Edit"]` button click
+        * (same behavior as form submit in this case)
+    */
+    form.addEventListener('submit', e => {
+        updateTreatmentInfo(e, form, treatmentID)
     });
 }
 
-function updateTreatmentInfo(e, form){
+async function updateTreatmentInfo(e, form, treatmentID){
     e.preventDefault();
     editButtonClicksCount = 0;
-    // TODO: Update database information
-    // NOTE: If response from server is `200 OK`, then all the form's fields default values must be updated to the new ones
+    const updatedTreatmentFormData = formDataToObject(new FormData(form));
+    updatedTreatmentFormData.treatmentID = treatmentID;
+    try{
+        const res = await fetch(`${BACKEND_ADDRESS}/api/treatments`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+            },
+            body: JSON.stringify(updatedTreatmentFormData)
+        });
+        const jsonRes = await res.json();
+        if(!res.ok) throw new Error(jsonRes.message);
+        /*
+            * Updating form with the latest treatment updates to avoid form reset to default information
+            * in case of further form update and reset
+        */
+        setFormData(form, jsonRes.treatment);
+        displayMessage(jsonRes.message, 'success');
+    }catch(err){
+        displayMessage(`Unknown error while updating the treatment. ${err.message}`, 'error');
+        return;
+    }
     // Resetting the buttons' default attributes and icons
     resetTreatmentsList(form);
 }
@@ -85,6 +115,8 @@ async function getPlantTreatments(plantID){
     
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
     treatmentsModal.onclose = (e) => {
+        // Resetting the edit button clicks count global variable to its initial state
+        editButtonClicksCount = 0;
         try{
             formsContainer.querySelector('.noTreatmentsNotice').remove();
         }catch(err){};
@@ -136,7 +168,6 @@ function newTreatment(plantID){
             if(!res.ok) throw new Error(jsonRes.message);
             addToList(jsonRes.treatment);
         }catch(err){
-            console.log(err);
             displayMessage(`Unknown error while planning the treatment. ${err.message}`, 'error');
             return;
         }
@@ -161,7 +192,7 @@ async function makeTreatmentsRequest(plantID){
         if(!res.ok) throw new Error(jsonRes.message);
         return jsonRes.treatments;
     }catch(err){
-        return err.message || err;
+        return err.message;
     }
 }
 
