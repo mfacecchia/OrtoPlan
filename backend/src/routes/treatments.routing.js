@@ -47,11 +47,11 @@ export default function treatments(app){
                 return;
             }
             try{
-                const newPlant = await createTreatment(treatmentData);
+                const newTreatment = await createTreatment(treatmentData);
                 res.status(201).json({
                     status: 201,
                     message: "Treatment successfully planned",
-                    plant: newPlant
+                    treatment: newTreatment
                 });
             }catch(err){
                 res.status(400).json({
@@ -136,10 +136,10 @@ function getPlantTreatmentsList(plantationPlantID, userID){
 function createTreatment(treatmentData){
     return new Promise(async (resolve, reject) => {
         try{
-            const newPlant = await prisma.plannedTreatment.create({
+            const newTreatment = await prisma.plannedTreatment.create({
                 data: treatmentData
             });
-            resolve(newPlant);
+            resolve(newTreatment);
         }catch(err){
             if(err.name === 'PrismaClientValidationError') reject('Missing data or invalid values.')
             else reject('Unknown error while creating the treatment. Please try again later.');
