@@ -1,5 +1,8 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
+import { getUserPlant } from './plants.routing.js';
+import moment from 'moment'
+
 
 export default function treatments(app){
     app.route('/api/treatments')
@@ -21,6 +24,41 @@ export default function treatments(app){
                     status: 404,
                     message: err
                 });
+            }
+        })
+        .post(async (req, res) => {
+            // Parsing all values that are supposed to be integers
+            req.body.plantationPlantID = parseInt(req.body.plantationPlantID) || 0;
+            req.body.treatmentRecurrence = parseInt(req.body.treatmentRecurrence) || 0;
+            req.body.treatmentDate = moment(req.body.treatmentDate, true)
+            const treatmentData = {};
+            // Passing all required data to create a treatment in an Object that will be passed to the appropriate function later on
+            ['treatmentType', 'notes', 'treatmentDate', 'treatmentRecurrence', 'plantationPlantID'].forEach(key => {
+                treatmentData[key] = req.body[key];
+            });
+            try{
+                const decodedToken = decodeToken(req.headers.authorization, false);
+                await getUserPlant(req.body.plantationPlantID, decodedToken.userID);
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: "Plant not found"
+                });
+                return;
+            }
+            try{
+                const newPlant = await createTreatment(treatmentData);
+                res.status(201).json({
+                    status: 201,
+                    message: "Treatment successfully planned",
+                    plant: newPlant
+                });
+            }catch(err){
+                res.status(400).json({
+                    status: 400,
+                    message: err
+                });
+                return;
             }
         })
 
@@ -92,5 +130,19 @@ function getPlantTreatmentsList(plantationPlantID, userID){
             }
         });
         resolve(treatment);
+    });
+}
+
+function createTreatment(treatmentData){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const newPlant = await prisma.plannedTreatment.create({
+                data: treatmentData
+            });
+            resolve(newPlant);
+        }catch(err){
+            if(err.name === 'PrismaClientValidationError') reject('Missing data or invalid values.')
+            else reject('Unknown error while creating the treatment. Please try again later.');
+        }
     });
 }

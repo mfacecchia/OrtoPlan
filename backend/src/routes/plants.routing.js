@@ -80,7 +80,7 @@ export default function plants(app){
     });
 }
 
-function getUserPlant(plantID, userID){
+export function getUserPlant(plantID, userID){
     /*
         * Obtains a specific plant owned by the user
         * NOTE: The `plantID` and `userID` params MUST be integers
