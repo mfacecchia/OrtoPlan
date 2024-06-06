@@ -1,7 +1,7 @@
 import prisma from "../../db/prisma.db.js";
 
 
-export default function getPlant(plantName = undefined, family = undefined, scientificName = undefined){
+export default function getPlant(plantName = undefined, plantFamily = undefined, scientificName = undefined){
     return new Promise(async (resolve, reject) => {
         try{
             const plant = await prisma.plant.findFirstOrThrow({
@@ -17,7 +17,7 @@ export default function getPlant(plantName = undefined, family = undefined, scie
                         contains: plantName
                     },
                     plantFamily: {
-                        contains: family
+                        contains: plantFamily
                     },
                     scientificName: {
                         contains: scientificName

@@ -63,7 +63,8 @@ export default function plants(app){
                 return;
             }
         })
-    
+        .put(deleteUpdatePlant)
+
     app.get('/api/plants/all', async (req, res) => {
         /*
             * Gets all plants from a given userID (in JWT payload)
@@ -141,6 +142,56 @@ function createPlant(plantData){
             resolve(newPlant);
         }catch(err){
             reject(false);
+        }
+    });
+}
+
+async function deleteUpdatePlant(req, res){
+    req.body.plantationPlantID = parseInt(req.body.plantationPlantID) || 0;
+    try{
+        let plant = undefined;
+        const decodedToken = decodeToken(req.headers.authorization, false);
+        const userID = decodedToken.userID;
+        if(req.method === 'DELETE') plant = await removePlant(req.body.plantID, userID);
+        else if(req.method === 'PUT'){
+            const plantData = await getPlant(req.body.plantName, req.body.plantFamily, req.body.scientificName);
+            req.body.plantID = plantData.plantID;
+            plant = await updatePlant(req.body, userID);
+        }
+        res.status(200).json({
+            status: 200,
+            message: req.method === 'DELETE'? "Plant successfully removed": "Plant data successfully updated",
+            plant: plant
+        });
+    }catch(err){
+        console.error(err);
+        res.status(404).json({
+            status: 404,
+            message: err
+        });
+    }
+}
+
+function updatePlant(plantData){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const updatedPlant = await prisma.plantation_Plant.update({
+                data: {
+                    plantID: plantData.plantID
+                },
+                include: {
+                    plannedTreatment: true,
+                    plant: true
+                },
+                where: {
+                    plantationPlantID: plantData.plantationPlantID
+                }
+            });
+            resolve(updatedPlant);
+        }catch(err){
+            if(err.name === 'PrismaClientValidationError') reject('Invalid values');
+            else if(err.code === 'P2025') reject('Plantation not found or invalid update values.');
+            else reject('Unknown error.');
         }
     });
 }
