@@ -126,7 +126,6 @@ async function modify(elementID, type){
         // Defining the key to pass to the backend (representing the PK)
         const keyValue = type === 'plant'? {plantationPlantID: elementID}: {plantationID: elementID}
         try{
-            // NOTE: Theorically works but test before commit
             const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
                 method: 'PUT',
                 headers: {

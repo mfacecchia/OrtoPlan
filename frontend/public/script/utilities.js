@@ -18,14 +18,14 @@ function createElement(elementName, attributes = null, classes = null){
     return element;
 }
 
-function confirmRemoval(id, elementType, printError = true){
+function confirmRemoval(elementID, type, printError = true){
     /*
         * Manages the plant/plantation removal based on the modal selection
         * Takes as parameter the plant/plantation id and uses it to process all the relative removal confirmation mechanism
         * The `elementType` parameter accepts a string value and is used to determine the element to remove (the element should contain a `data-elementType-id` attribute)
         * The `printError` prameter allows to choose whetever to display an erorr message to the user or not
     */
-    const elementSelector = `[data-${elementType}-id="${id}"]`;
+    const elementSelector = `[data-${type}-id="${elementID}"]`;
     const dialog = document.querySelector('#confirmRemoval');
     let elementName = undefined
     try{
@@ -38,7 +38,12 @@ function confirmRemoval(id, elementType, printError = true){
     dialog.showModal();
     dialog.querySelector('form').onsubmit = async e => {
         // NOTE: Backend endpoints use `type` but in plural
-        const pluralType = elementType + 's';
+        const pluralType = type + 's';
+        // Defining the key to pass to the backend (representing the PK)
+        let keyValue = {};
+        if(type === 'plant') keyValue = {plantationPlantID: elementID};
+        else if(type === 'plantation') keyValue = {plantationID: elementID};
+        else keyValue = {treatmentID: elementID}
         try{
             const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
                 method: 'DELETE',
@@ -47,9 +52,7 @@ function confirmRemoval(id, elementType, printError = true){
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
-                body: JSON.stringify({
-                    plantationID: id
-                })
+                body: JSON.stringify(keyValue)
             });
             const jsonRes = await res.json();
             if(!res.ok) throw new Error(jsonRes.message);
@@ -60,7 +63,7 @@ function confirmRemoval(id, elementType, printError = true){
             return;
         }
         document.querySelector(elementSelector).remove();
-        if(elementType === 'treatment'){
+        if(type === 'treatment'){
             // Removing the excessive dividers in case the element to be removed is a plant's treatment
             try{
                 document.querySelector('#treatments .modal-box > hr').remove();
