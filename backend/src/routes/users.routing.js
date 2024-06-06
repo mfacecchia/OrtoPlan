@@ -10,7 +10,7 @@ export default function users(app){
                 res.status(200).json({
                     status: 200,
                     message: "User found",
-                    treatments: user
+                    user: user
                 });
             }catch(err){
                 res.status(404).json({
