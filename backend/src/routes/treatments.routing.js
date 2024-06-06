@@ -5,7 +5,7 @@ export default function treatments(app){
     app.route('/api/treatments')
         .get(async (req, res) => {
             /*
-                * Gets a single treatment from a given `treatmentID` (in request body) and userID (in JWT payload)
+                * Gets a single treatment from a given `treatmentID` (in request body), and userID (in JWT payload)
                 * Returns all treatment's information as well as all relative plant and plantation's treatment
             */
             try{
@@ -23,6 +23,20 @@ export default function treatments(app){
                 });
             }
         })
+
+    app.get('/api/treatments/all', async (req, res) => {
+        /*
+            * Gets all treatments from a given `plantationPlantID` (in request body), and userID (in JWT payload)
+            * Returns an Array with all treatments' information as well as all relative plant and plantation's information
+        */
+        const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+        const treatment = await getPlantTreatmentsList(parseInt(req.query.plantationPlantID) || 0, decodedToken.userID);
+        res.status(200).json({
+            status: 200,
+            message: "Treatments found",
+            treatments: treatment
+        });
+    });
 }
 
 function getPlantTreatment(treatmentID, userID){
@@ -31,7 +45,8 @@ function getPlantTreatment(treatmentID, userID){
             const treatment = await prisma.plannedTreatment.findUniqueOrThrow({
                 include: {
                     plantationPlant: {
-                        include: {
+                        select: {
+                            plantationPlantID: true,
                             plant: true,
                             plantation: true
                         }
@@ -52,5 +67,30 @@ function getPlantTreatment(treatmentID, userID){
             else if(err.code === 'P2025') reject('Treatment not found or invalid request values.');
             else reject('Unknown error.');
         }
+    });
+}
+
+function getPlantTreatmentsList(plantationPlantID, userID){
+    return new Promise(async (resolve, reject) => {
+        const treatment = await prisma.plannedTreatment.findMany({
+            include: {
+                plantationPlant: {
+                    select: {
+                        plantationPlantID: true,
+                        plant: true,
+                        plantation: true
+                    }
+                }
+            },
+            where: {
+                plantationPlantID: plantationPlantID,
+                plantationPlant: {
+                    plantation: {
+                        userID: userID
+                    }
+                }
+            }
+        });
+        resolve(treatment);
     });
 }
