@@ -80,7 +80,7 @@ function setCardData(card, elementData, type){
     return card;
 }
 
-function modify(elementID, type){
+async function modify(elementID, type){
     const pluralType = type + 's';
     const updateElementDialog = document.querySelector('#newPlantPlantation');
     const updateElementForm = document.querySelector('#newPlantPlantationForm');
@@ -91,7 +91,26 @@ function modify(elementID, type){
     updateElementForm.querySelector('header b').textContent = `Update ${type}`;
     updateElementForm.querySelector('header h1').textContent = `Update ${elementName}`;
     if(type === 'plant'){
-
+        // Updating form fields with relative plant information (obtained from the API)
+        try{
+            const res = await fetch(`${BACKEND_ADDRESS}/api/plants?plantID=${elementID}`, {
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
+                    "Accept": "application/json"
+                }
+            });
+            const jsonRes = await res.json();
+            const plantData = jsonRes.plants.plant;
+            updateElementForm.querySelector('[name="plantName"]').value = plantData.plantName;
+            ['plantFamily', 'scientificName'].forEach(field => {
+                updateElementForm.querySelector(`[name="${field}"]`).placeholder = plantData[field];
+            });
+        // Fallback in case any error fom the fetch is triggered
+        }catch(err){
+            updateElementForm.querySelector('[name="plantName"]').value = elementName;
+            updateElementForm.querySelector('[name="plantFamily"]').value = elementFamilyLocation;
+        }
     }
     else{
         updateElementForm.querySelector('[name="plantationName"]').value = elementName;
@@ -104,7 +123,10 @@ function modify(elementID, type){
     updateElementForm.onsubmit = async e => {
         e.preventDefault();
         const newElementInfo = formDataToObject(new FormData(updateElementForm));
+        // Defining the key to pass to the backend (representing the PK)
+        const keyValue = type === 'plant'? {plantationPlantID: elementID}: {plantationID: elementID}
         try{
+            // NOTE: Theorically works but test before commit
             const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
                 method: 'PUT',
                 headers: {
@@ -113,7 +135,7 @@ function modify(elementID, type){
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 body: JSON.stringify({
-                    plantationID: elementID,
+                    ...keyValue,
                     ...newElementInfo
                 })
             });
@@ -122,8 +144,7 @@ function modify(elementID, type){
             modifyCardData(jsonRes[type], element, type);
         }
         catch(err){
-            displayMessage(`Could not update ${type} information. ${err}`, 'error');
-            updateElementDialog.close();
+            displayMessage(`Could not update ${type} information. ${err.message}`, 'error');
             return;
         }
         finally{
@@ -135,11 +156,13 @@ function modify(elementID, type){
 }
 
 function modifyCardData(newCardData, cardElement, type){
-    const cardFamilyLocation = type === 'plant'? newCardData.plantFamily: newCardData.location.locationName;
-    const cardName = type === 'plant'? newCardData.plantName: newCardData.plantationName;
+    const cardFamilyLocation = type === 'plant'? newCardData.plant.plantFamily: newCardData.location.locationName;
+    const cardName = type === 'plant'? newCardData.plant.plantName: newCardData.plantationName;
 
     cardElement.querySelector('.cardContent p').textContent = cardFamilyLocation;
     cardElement.querySelector('.cardContent h2').textContent = cardName;
+    // Updating background image if the element `type` is a plant
+    if(type === 'plant') cardElement.querySelector('figure').style.backgroundImage = `url("${newCardData.plant.imageURL}")`;
 }
 
 async function getUserList(type, plantationID = undefined){
