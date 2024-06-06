@@ -12,5 +12,7 @@
     Not passing it means "embed the scripts at the end of the page"
 %>
 <% if (typeof includeScripts === 'undefined') { %>
+    <script src = "/script/constants.js"></script>
     <script src = "/script/auth/logout.auth.js"></script>
+    <script src = "/script/userManagement.js"></script>
 <% } %>
