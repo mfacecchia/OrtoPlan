@@ -108,7 +108,7 @@ async function getPlantTreatments(plantID){
     // Obtaining all elements useful for treatments data management
     const formsContainer = treatmentsModal.querySelector('.modal-box');
     const treatmentFormTempate = treatmentsModal.querySelector('.treatmentForm').cloneNode(true);
-    const separatorsList = formsContainer.querySelectorAll('hr:not(.green-line)');
+    let separatorsList = formsContainer.querySelectorAll('hr:not(.green-line)');
 
     treatmentsModal.querySelector('#newTreatment').onclick = e => newTreatment(plantID);
     treatmentFormTempate.classList.remove('hidden');
@@ -117,6 +117,8 @@ async function getPlantTreatments(plantID){
     treatmentsModal.onclose = (e) => {
         // Resetting the edit button clicks count global variable to its initial state
         editButtonClicksCount = 0;
+        // Updating the separators count to assert that all the separators get actually removed
+        separatorsList = formsContainer.querySelectorAll('hr:not(.green-line)');
         try{
             formsContainer.querySelector('.noTreatmentsNotice').remove();
         }catch(err){};
@@ -128,7 +130,9 @@ async function getPlantTreatments(plantID){
         }
     }
     // Removing the 1st separator in the list before adding all the forms to prevent separators to be one on top of the other
-    separatorsList[0].remove();
+    try{
+        separatorsList[0].remove();
+    }catch(err){};
     if(treatmentsData.length){
         treatmentsData.forEach(treatment => {
             const finalFormData = setFormData(treatmentFormTempate.cloneNode(true), treatment);
