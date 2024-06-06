@@ -64,6 +64,7 @@ export default function plants(app){
             }
         })
         .put(deleteUpdatePlant)
+        .delete(deleteUpdatePlant);
 
     app.get('/api/plants/all', async (req, res) => {
         /*
@@ -152,7 +153,7 @@ async function deleteUpdatePlant(req, res){
         let plant = undefined;
         const decodedToken = decodeToken(req.headers.authorization, false);
         const userID = decodedToken.userID;
-        if(req.method === 'DELETE') plant = await removePlant(req.body.plantID, userID);
+        if(req.method === 'DELETE') plant = await removePlant(req.body, userID);
         else if(req.method === 'PUT'){
             const plantData = await getPlant(req.body.plantName, req.body.plantFamily, req.body.scientificName);
             req.body.plantID = plantData.plantID;
@@ -172,7 +173,7 @@ async function deleteUpdatePlant(req, res){
     }
 }
 
-function updatePlant(plantData){
+function updatePlant(plantData, userID){
     return new Promise(async (resolve, reject) => {
         try{
             const updatedPlant = await prisma.plantation_Plant.update({
@@ -184,12 +185,36 @@ function updatePlant(plantData){
                     plant: true
                 },
                 where: {
-                    plantationPlantID: plantData.plantationPlantID
+                    plantationPlantID: plantData.plantationPlantID,
+                    plantation: {
+                        userID: userID
+                    }
                 }
             });
             resolve(updatedPlant);
         }catch(err){
             if(err.name === 'PrismaClientValidationError') reject('Invalid values');
+            else if(err.code === 'P2025') reject('Plantation not found or invalid update values.');
+            else reject('Unknown error.');
+        }
+    });
+}
+
+function removePlant(plantData, userID){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const deletedPlant = await prisma.plantation_Plant.delete({
+                where: {
+                    plantationPlantID: plantData.plantationPlantID,
+                    plantation: {
+                        userID: userID
+                    }
+                }
+            });
+            resolve(deletedPlant);
+        }catch(err){
+            if(err.name === 'PrismaClientValidationError') reject('Invalid values');
+            // P2025 prisma default error
             else if(err.code === 'P2025') reject('Plantation not found or invalid update values.');
             else reject('Unknown error.');
         }
