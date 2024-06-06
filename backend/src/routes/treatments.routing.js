@@ -63,6 +63,7 @@ export default function treatments(app){
             }
         })
         .put(deleteUpdateTreatment)
+        .delete(deleteUpdateTreatment)
 
     app.get('/api/treatments/all', async (req, res) => {
         /*
@@ -161,8 +162,7 @@ async function deleteUpdateTreatment(req, res){
     const decodedToken = decodeToken(req.headers.authorization, false);
     try{
         let treatment = undefined;
-        // TODO: add DELETE functionality
-        if(req.method === 'DELETE') plant = console.log("Delete endpoint")
+        if(req.method === 'DELETE') treatment = await removeTreatment(treatmentData.treatmentID, decodedToken.userID);
         else if(req.method === 'PUT') treatment = await updateTreatment(treatmentData, decodedToken.userID);
         res.status(200).json({
             status: 200,
@@ -170,7 +170,6 @@ async function deleteUpdateTreatment(req, res){
             treatment: treatment
         });
     }catch(err){
-        console.error(err);
         res.status(404).json({
             status: 404,
             message: err
@@ -197,6 +196,26 @@ function updateTreatment(treatmentData, userID){
             if(err.name === 'PrismaClientValidationError') reject('Missing data or invalid values.')
             else if(err.code === 'P2025') reject('Treatment not found or invalid update values.');
             else reject('Unknown error while updating the treatment. Please try again later.');
+        }
+    });
+}
+
+function removeTreatment(treatmentID, userID){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const removedTreatment = await prisma.plannedTreatment.delete({
+                where: {
+                    treatmentID: treatmentID,
+                    plantationPlant: {
+                        plantation: {
+                            userID: userID
+                        }
+                    }
+                }
+            });
+            resolve(removedTreatment);
+        }catch(err){
+            reject(err.code === 'P2025'? 'Treatment not found.': 'Unknown error.');
         }
     });
 }
