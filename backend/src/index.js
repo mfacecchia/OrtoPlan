@@ -6,6 +6,7 @@ import userAuth from './routes/auth.routing.js';
 import forecast from './routes/weather.routing.js';
 import plantations from './routes/plantations.routing.js';
 import plants from './routes/plants.routing.js';
+import treatments from './routes/treatments.routing.js';
 
 const app = express();
 app.use(cors(
@@ -35,3 +36,4 @@ userAuth(app);
 forecast(app);
 plantations(app);
 plants(app);
+treatments(app);
