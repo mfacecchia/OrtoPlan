@@ -7,6 +7,7 @@ import forecast from './routes/weather.routing.js';
 import plantations from './routes/plantations.routing.js';
 import plants from './routes/plants.routing.js';
 import treatments from './routes/treatments.routing.js';
+import users from './routes/users.routing.js';
 
 const app = express();
 app.use(cors(
@@ -37,3 +38,4 @@ forecast(app);
 plantations(app);
 plants(app);
 treatments(app);
+users(app);
