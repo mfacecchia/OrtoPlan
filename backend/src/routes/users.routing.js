@@ -61,7 +61,6 @@ async function deleteUpdateUser(req, res){
             user: user
         });
     }catch(err){
-        console.log(err);
         res.status(404).json({
             status: 404,
             message: err
@@ -103,7 +102,6 @@ function updateUser(userInfo, userID){
             });
             resolve(user);
         }catch(err){
-            console.log(err);
             if(err.name === 'PrismaClientValidationError') reject('Invalid values');
             else if(err.code === 'P2025') reject('User not found or invalid request values.');
             else reject('Unknown error.');

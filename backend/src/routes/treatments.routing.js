@@ -1,7 +1,7 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import { getUserPlant } from '../apis/getPlant.api.js'
-import moment from 'moment'
+import { validateTreatment } from '../validation/treatments.validation.js';
 
 
 export default function treatments(app){
@@ -26,13 +26,9 @@ export default function treatments(app){
                 });
             }
         })
-        .post(async (req, res) => {
-            // Parsing all values that are supposed to be integers
-            req.body.plantationPlantID = parseInt(req.body.plantationPlantID) || 0;
-            req.body.treatmentRecurrence = parseInt(req.body.treatmentRecurrence) || 0;
-            req.body.treatmentDate = moment(req.body.treatmentDate, true)
-            const treatmentData = {};
+        .post(validateTreatment(), async (req, res) => {
             // Passing all required data to create a treatment in an Object that will be passed to the appropriate function later on
+            const treatmentData = {};
             ['treatmentType', 'notes', 'treatmentDate', 'treatmentRecurrence', 'plantationPlantID'].forEach(key => {
                 treatmentData[key] = req.body[key];
             });
@@ -62,7 +58,7 @@ export default function treatments(app){
                 return;
             }
         })
-        .put(deleteUpdateTreatment)
+        .put(validateTreatment(), deleteUpdateTreatment)
         .delete(deleteUpdateTreatment)
 
     app.get('/api/treatments/all', async (req, res) => {
@@ -151,9 +147,6 @@ function createTreatment(treatmentData){
 }
 
 async function deleteUpdateTreatment(req, res){
-    req.body.treatmentID = parseInt(req.body.treatmentID) || 0;
-    req.body.treatmentRecurrence = parseInt(req.body.treatmentRecurrence) || 0;
-    req.body.treatmentDate = moment(req.body.treatmentDate, true)
     const treatmentData = {};
     // Passing all required data to create a treatment in an Object that will be passed to the appropriate function later on
     ['treatmentType', 'notes', 'treatmentDate', 'treatmentRecurrence', 'treatmentID'].forEach(key => {
@@ -162,7 +155,7 @@ async function deleteUpdateTreatment(req, res){
     const decodedToken = decodeToken(req.headers.authorization, false);
     try{
         let treatment = undefined;
-        if(req.method === 'DELETE') treatment = await removeTreatment(treatmentData.treatmentID, decodedToken.userID);
+        if(req.method === 'DELETE') treatment = await removeTreatment(parseInt(treatmentData.treatmentID) || 0, decodedToken.userID);
         else if(req.method === 'PUT') treatment = await updateTreatment(treatmentData, decodedToken.userID);
         res.status(200).json({
             status: 200,
