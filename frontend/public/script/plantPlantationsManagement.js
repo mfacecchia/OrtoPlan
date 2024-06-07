@@ -11,6 +11,20 @@ function newElement(type, plantationID = undefined){
         e.preventDefault();
         const newElementData = formDataToObject(new FormData(newElementForm));
         if(type === 'plant') newElementData.plantationID = plantationID;
+        try{
+            if(type === 'plant'){
+                // TODO: Add plant form validation
+            }
+            else{
+                const validationResult = await validatePlantation(newElementData);
+                // Overwriting the Object with the sanitized data version
+                newElementData = validationResult;
+            }
+        }catch(err){
+            // TODO: Display validation errors in form
+            console.error(err);
+            return;
+        }
         // NOTE: Backend endpoints use `type` but in plural
         const pluralType = type + 's';
         try{
@@ -128,6 +142,20 @@ async function modify(elementID, type){
         const newElementInfo = formDataToObject(new FormData(updateElementForm));
         // Defining the key to pass to the backend (representing the PK)
         const keyValue = type === 'plant'? {plantationPlantID: elementID}: {plantationID: elementID}
+        try{
+            if(type === 'plant'){
+                // TODO: Add plant form validation
+            }
+            else{
+                const validationResult = await validatePlantation(newElementData);
+                // Overwriting the Object with the sanitized data version
+                newElementData = validationResult;
+            }
+        }catch(err){
+            // TODO: Display validation errors in form
+            console.error(err);
+            return;
+        }
         try{
             const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}`, {
                 method: 'PUT',
