@@ -3,13 +3,13 @@ function newElement(type, plantationID = undefined){
     const newElementForm = document.querySelector('#newPlantPlantationForm');
     
     newElementDialog.onclose = e => {
+        clearFormErrorMessages(newElementForm, true);
         setTabIndexToMinusOne(newElementDialog);
-        newElementForm.reset();
         newElementForm.onsubmit = undefined;
     };
     newElementForm.onsubmit = async e => {
         e.preventDefault();
-        const newElementData = formDataToObject(new FormData(newElementForm));
+        let newElementData = formDataToObject(new FormData(newElementForm));
         if(type === 'plant') newElementData.plantationID = plantationID;
         try{
             if(type === 'plant'){
@@ -21,8 +21,12 @@ function newElement(type, plantationID = undefined){
                 newElementData = validationResult;
             }
         }catch(err){
-            // TODO: Display validation errors in form
-            console.error(err);
+            clearFormErrorMessages(newElementForm, false);
+            for(const key of Object.keys(err)){
+                // Element to display the error to can be either an input element, and an input container
+                const fieldError = newElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || newElementForm.querySelector(`input[name="${key}"]`);
+                showErrorMessage(fieldError, err[key]);
+            }
             return;
         }
         // NOTE: Backend endpoints use `type` but in plural
@@ -133,13 +137,13 @@ async function modify(elementID, type){
         updateElementForm.querySelector('[name="locationName"]').value = elementFamilyLocation;
     }
     updateElementDialog.onclose = e => {
+        clearFormErrorMessages(updateElementForm, true);
         setTabIndexToMinusOne(updateElementDialog);
-        updateElementForm.reset();
         updateElementForm.onsubmit = undefined;
     }
     updateElementForm.onsubmit = async e => {
         e.preventDefault();
-        const newElementInfo = formDataToObject(new FormData(updateElementForm));
+        let updateElementData = formDataToObject(new FormData(updateElementForm));
         // Defining the key to pass to the backend (representing the PK)
         const keyValue = type === 'plant'? {plantationPlantID: elementID}: {plantationID: elementID}
         try{
@@ -147,13 +151,17 @@ async function modify(elementID, type){
                 // TODO: Add plant form validation
             }
             else{
-                const validationResult = await validatePlantation(newElementData);
+                const validationResult = await validatePlantation(updateElementData);
                 // Overwriting the Object with the sanitized data version
-                newElementData = validationResult;
+                updateElementData = validationResult;
             }
         }catch(err){
-            // TODO: Display validation errors in form
-            console.error(err);
+            clearFormErrorMessages(updateElementForm, false);
+            for(const key of Object.keys(err)){
+                // Element to display the error to can be either an input element, and an input container
+                const fieldError = updateElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || updateElementForm.querySelector(`input[name="${key}"]`);
+                showErrorMessage(fieldError, err[key]);
+            }
             return;
         }
         try{
@@ -166,7 +174,7 @@ async function modify(elementID, type){
                 },
                 body: JSON.stringify({
                     ...keyValue,
-                    ...newElementInfo
+                    ...updateElementData
                 })
             });
             const jsonRes = await res.json();
