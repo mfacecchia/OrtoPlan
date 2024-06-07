@@ -2,6 +2,7 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import getLocation from '../apis/getLocation.api.js';
 import getPlantation from '../apis/getPlantation.api.js';
+import { validatePlantation } from '../validation/plantation.validation.js';
 
 
 export default function plantations(app){
@@ -26,7 +27,7 @@ export default function plantations(app){
                 });
             }
         })
-        .post(async(req, res) => {
+        .post(validatePlantation(), async(req, res) => {
             // Data to pass to the function
             const plantationData = {
                 plantationName: req.body.plantationName
@@ -64,7 +65,7 @@ export default function plantations(app){
                 return;
             }
         })
-        .put(deleteUpdatePlantation)
+        .put(validatePlantation(), deleteUpdatePlantation)
         .delete(deleteUpdatePlantation);
     
     app.get('/api/plantations/all', async (req, res) => {
