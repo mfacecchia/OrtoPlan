@@ -103,3 +103,21 @@ function formDataToObject(formDataElement, fieldsFilterArr = undefined){
     }
     return obj;
 }
+
+function showErrorMessage(field, messages){
+    /*
+        * Shows an error message based below the passed `field` element
+        * Supposed to work with form validation functionalities
+        * which require to display validation errors after form submission
+    */
+    field.classList.add('input-error');
+    // Iterating through each error message and adding it below the relative field
+    messages.forEach(message => {
+        // Creating the paragraph and adding message and classes
+        const p = document.createElement('p');
+        p.classList.add('text-error', 'error-message', 'self-start', 'leading-tight', 'mb-4');
+        p.textContent = message;
+        // Adding the paragraph below the input field
+        field.parentNode.insertBefore(p, field.nextSibling);
+    });
+}
