@@ -699,6 +699,11 @@ html {
     .modal-box header {
   margin-bottom: 1.25rem;
 }
+    .modal-box header img {
+  margin-left: auto;
+  margin-right: auto;
+  height: 5rem;
+}
     textarea {
   min-height: 2.75rem;
 }

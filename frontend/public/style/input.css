@@ -104,6 +104,9 @@
     .modal-box header{
         @apply mb-5;
     }
+    .modal-box header img{
+        @apply h-20 mx-auto;
+    }
     textarea{
         @apply min-h-11;
     }
