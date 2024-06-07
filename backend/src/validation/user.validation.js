@@ -9,7 +9,7 @@ export const validateLoginSignup = (isLogin = true) => {
         * The `isLogin` parameter defines if the validation should be made for login form (`isLogin = true`) or signup (`isLogin = false`)
     */
     return async(req, res, next) => {
-        const fieldsValidations = {
+        const validators = {
             email: {
                 ...defaultPresenceValidator,
                 ...defaultPrismaMaxLength,
@@ -30,17 +30,17 @@ export const validateLoginSignup = (isLogin = true) => {
                     }catch(err){ resolve('^Email already in use.'); }
                 });
             }
-            fieldsValidations.email.emailExists = {};
-            fieldsValidations.password.length = {
+            validators.email.emailExists = {};
+            validators.password.length = {
                 minimum: 15,
                 tooShort: '^Too short (minimum length is %{count} characters).'
             }
-            fieldsValidations.firstName = {
+            validators.firstName = {
                 ...defaultPresenceValidator,
                 ...defaultPrismaMaxLength
             };
-            fieldsValidations.lastName = fieldsValidations.firstName;
-            fieldsValidations.passwordVerify = {
+            validators.lastName = validators.firstName;
+            validators.passwordVerify = {
                 ...defaultPresenceValidator,
                 equality: {
                     attribute: 'password',
@@ -50,7 +50,7 @@ export const validateLoginSignup = (isLogin = true) => {
         }
         validate.validators.email.message = '^Not a valid email';    
         try{
-            await validate.async(req.body, fieldsValidations);
+            await validate.async(req.body, validators);
             req.body.email = req.body.email.toLowerCase();
             req.body.firstName = validate.capitalize(req.body.firstName.trim());
             req.body.lastName = validate.capitalize(req.body.lastName.trim());

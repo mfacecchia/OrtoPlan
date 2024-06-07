@@ -5,6 +5,31 @@ import getLocation from '../apis/getLocation.api.js';
 
 export const validatePlantation = () => {
     return async (req, res, next) => {
+        const validators = {
+            plantationName: {
+                ...defaultPresenceValidator,
+                ...defaultPrismaMaxLength
+            },
+            locationName: {
+                ...defaultPresenceValidator,
+                locationExists: {
+                    locationCAP: req.body.locationCAP
+                }
+            },
+            locationName: {
+                ...defaultPresenceValidator
+            }
+        };
+        // Adding validation for location CAP field in case it's not empty
+        if(req.body.locationCAP){
+            validators.locationCAP = {
+                numericality: true,
+                length: {
+                    is: 5,
+                    wrongLength: '^Must be 5 digits'
+                }
+            };
+        };
         // Checks if the input location actually exists
         validate.validators.locationExists = async (value, options) => {
             return new Promise(async (resolve, reject) => {
@@ -13,27 +38,9 @@ export const validatePlantation = () => {
                     resolve();
                 }catch(err){ resolve('^Location not found.'); }
             });
-        }
+        };
         try{
-            await validate.async(req.body, {
-                plantationName: {
-                    ...defaultPresenceValidator,
-                    ...defaultPrismaMaxLength
-                },
-                locationName: {
-                    ...defaultPresenceValidator,
-                    locationExists: {
-                        locationCAP: req.body.locationCAP
-                    }
-                },
-                locationCAP: {
-                    numericality: true,
-                    length: {
-                        is: 5,
-                        wrongLength: '^Must be 5 digits'
-                    }
-                },
-            });
+            await validate.async(req.body, validators);
             // Sanitizing the input and passing it to the corresponding `req.body` Object key
             req.body.plantationName = validate.capitalize(req.body.plantationName.trim());
             next();

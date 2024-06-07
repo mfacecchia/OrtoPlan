@@ -5,7 +5,15 @@ import getPlant from '../apis/getPlant.api.js';
 
 export const validatePlant = () => {
     return async (req, res, next) => {
-        console.log(req.body);
+        const validators = {
+            plantName: {
+                ...defaultPresenceValidator,
+                plantExists: {
+                    plantFamily: req.body.plantFamily,
+                    scientificName: req.body.scientificName
+                }
+            }
+        };
         // Checks if the input location actually exists
         validate.validators.plantExists = async (value, options) => {
             return new Promise(async (resolve, reject) => {
@@ -16,15 +24,7 @@ export const validatePlant = () => {
             });
         }
         try{
-            await validate.async(req.body, {
-                plantName: {
-                    ...defaultPresenceValidator,
-                    plantExists: {
-                        plantFamily: req.body.plantFamily,
-                        scientificName: req.body.scientificName
-                    }
-                }
-            });
+            await validate.async(req.body, validators);
             next();
         }catch(validationErrors){
             res.status(403).json({
