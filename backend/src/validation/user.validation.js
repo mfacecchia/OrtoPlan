@@ -1,5 +1,7 @@
 import { findUser } from '../middlewares/findUser.middleware.js';
 import validate from 'validate.js'
+import { defaultPresenceValidator } from './customDefaultValidators.validation.js';
+
 
 export const validateLoginSignup = (isLogin = true) => {
     /*
@@ -7,8 +9,6 @@ export const validateLoginSignup = (isLogin = true) => {
         * The `isLogin` parameter defines if the validation should be made for login form (`isLogin = true`) or signup (`isLogin = false`)
     */
     return async(req, res, next) => {
-        // Default validator for empty values, defined to simplify code readability
-        const defaultPresenceValidator = { presence: { allowEmpty: false } };
         const fieldsValidations = {
             email: {
                 ...defaultPresenceValidator,
