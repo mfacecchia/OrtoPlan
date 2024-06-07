@@ -1,22 +1,9 @@
-document.onload = getUserName();
+document.onload = updateDropdownUserName();
 
-async function getUserName(){
-    try{
-        const res = await fetch(`${BACKEND_ADDRESS}/api/user`, {
-            method: 'GET',
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            }
-        });
-        const jsonRes = await res.json();
-        updateDropdownUserName(jsonRes.user);
-    }catch(err){
-        console.error(err);
-    }
-}
 
-function updateDropdownUserName(userInfo){
+async function updateDropdownUserName(){
+    const userInfo = await getUserInfo();
+    if(!userInfo) return;
     const userNameSurname = document.querySelectorAll('#userManagementDropdown .dropdown-content [role="definition"] span');
     userNameSurname[0].textContent = userInfo.firstName;
     userNameSurname[1].textContent = userInfo.lastName;
