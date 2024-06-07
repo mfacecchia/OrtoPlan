@@ -41,17 +41,26 @@ function newElement(type, plantationID = undefined){
                 },
                 body: JSON.stringify(newElementData)
             });
-            const jsonResponse = await res.json();
-            if(res.status !== 201) throw new Error(jsonResponse.message);
-            addElementToList(jsonResponse[type], type);
+            const jsonRes = await res.json();
+            // Backend validation not passed
+            if(res.status === 403){
+                clearFormErrorMessages(newElementForm, false);
+                for(const key of Object.keys(jsonRes.validationErrors)){
+                    // Element to display the error to can be either an input element, and an input container
+                    const fieldError = newElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || newElementForm.querySelector(`input[name="${key}"]`);
+                    showErrorMessage(fieldError, jsonRes.validationErrors[key]);
+                }
+                return;
+            }
+            if(res.status !== 201) throw new Error(jsonRes.message);
+            addElementToList(jsonRes[type], type);
         }catch(err){
             displayMessage(err instanceof Error? `Could not add ${type}. ${err.message}`: `Unknown error while adding the ${type}. Please try again.`, 'error');
+            newElementDialog.close();
             return;
         }
-        finally{
-            newElementDialog.close();
-        }
         displayMessage(`${type} added successfully`, 'success');
+        newElementDialog.close();
     }
     newElementDialog.showModal();
     setTabIndexToZero(newElementDialog);
@@ -178,17 +187,26 @@ async function modify(elementID, type){
                 })
             });
             const jsonRes = await res.json();
+            // Backend validation not passed
+            if(res.status === 403){
+                clearFormErrorMessages(updateElementForm, false);
+                for(const key of Object.keys(jsonRes.validationErrors)){
+                    // Element to display the error to can be either an input element, and an input container
+                    const fieldError = updateElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || updateElementForm.querySelector(`input[name="${key}"]`);
+                    showErrorMessage(fieldError, jsonRes.validationErrors[key]);
+                }
+                return;
+            }
             if(!res.ok) throw new Error(jsonRes.message);
             modifyCardData(jsonRes[type], element, type);
         }
         catch(err){
             displayMessage(`Could not update ${type} information. ${err.message}`, 'error');
+            updateElementDialog.close();
             return;
         }
-        finally{
-            updateElementDialog.close();
-        }
         displayMessage(`${type} successfully updated.`, 'success');
+        updateElementDialog.close();
     }
     updateElementDialog.showModal();
     setTabIndexToZero(updateElementDialog);
