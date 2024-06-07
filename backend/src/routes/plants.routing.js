@@ -2,6 +2,7 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import getPlant, { getUserPlant } from '../apis/getPlant.api.js';
 import getPlantation from '../apis/getPlantation.api.js';
+import { validatePlant } from '../validation/plant.validation.js';
 
 
 export default function plants(app){
@@ -25,7 +26,7 @@ export default function plants(app){
                 });
             }
         })
-        .post(async (req, res) => {
+        .post(validatePlant(), async (req, res) => {
             req.body.plantationID = parseInt(req.body.plantationID) || 0;
             // Data to pass to the function
             const plantData = { plantationID: req.body.plantationID };
@@ -64,7 +65,7 @@ export default function plants(app){
                 return;
             }
         })
-        .put(deleteUpdatePlant)
+        .put(validatePlant(), deleteUpdatePlant)
         .delete(deleteUpdatePlant);
 
     app.get('/api/plants/all', async (req, res) => {

@@ -2,6 +2,7 @@ import validate from 'validate.js'
 import { defaultPresenceValidator, defaultPrismaMaxLength } from './customDefaultValidators.validation.js';
 import getLocation from '../apis/getLocation.api.js';
 
+
 export const validatePlantation = () => {
     return async (req, res, next) => {
         // Checks if the input location actually exists
