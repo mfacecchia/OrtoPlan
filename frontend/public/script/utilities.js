@@ -111,25 +111,27 @@ function showErrorMessage(field, messages){
         * which require to display validation errors after form submission
     */
     field.classList.add('input-error');
+    const errorMessagesContainer = createElement('div', null, ['space-y-1', 'mb-4', 'self-start', 'error-messages-container'])
     // Iterating through each error message and adding it below the relative field
     messages.forEach(message => {
         // Creating the paragraph and adding message and classes
         const p = document.createElement('p');
-        p.classList.add('text-error', 'error-message', 'self-start', 'leading-tight', 'mb-4');
+        p.classList.add('text-error', 'error-message', 'leading-tight');
         p.textContent = message;
-        // Adding the paragraph below the input field
-        field.parentNode.insertBefore(p, field.nextSibling);
+        errorMessagesContainer.appendChild(p);
     });
+    // Adding the paragraph below the input field
+    field.parentNode.insertBefore(errorMessagesContainer, field.nextSibling);
 }
 
 function clearFormErrorMessages(formElement, clearInputValues = false){
     /*
         * Clears all the form from error messages and input values (if `clearInputValues` is set to `true` (default `false`))
-        * NOTE: in order for this function to correctly clear the form from errors, the error messages
-        * should contain the class `error-message`
+        * NOTE: in order for this function to correctly clear the form from errors, the error messages container
+        * should contain the class `error-messages-container`
         * and the field errors the class `input-error`
     */
-    formElement.querySelectorAll(`.error-message`).forEach(element => {
+    formElement.querySelectorAll(`.error-messages-container`).forEach(element => {
         element.remove();
     });
     // Removing error classes and relative value from all input fields and possible input containers (defined by `inputStyleContainer` class)
