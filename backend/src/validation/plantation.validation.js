@@ -15,9 +15,6 @@ export const validatePlantation = () => {
                 locationExists: {
                     locationCAP: req.body.locationCAP
                 }
-            },
-            locationName: {
-                ...defaultPresenceValidator
             }
         };
         // Adding validation for location CAP field in case it's not empty
