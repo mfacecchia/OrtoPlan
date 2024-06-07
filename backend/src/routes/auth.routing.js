@@ -2,12 +2,12 @@ import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
 import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
 import { findUser } from '../middlewares/findUser.middleware.js';
-import { validateForm } from '../validation/user.validation.js';
+import { validateLoginSignup } from '../validation/user.validation.js';
 import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 
 
 export default function userAuth(app){
-    app.post('/user/signup', isLoggedIn(), validateForm(false), async (req, res) => {
+    app.post('/user/signup', isLoggedIn(), validateLoginSignup(false), async (req, res) => {
         try{
             const hashedPass = await hashPassword(req.body.password);
             await newUser(req.body, hashedPass);
@@ -23,7 +23,7 @@ export default function userAuth(app){
         }
     });
 
-    app.post('/user/login', isLoggedIn(), validateForm(true), async (req, res) => {
+    app.post('/user/login', isLoggedIn(), validateLoginSignup(true), async (req, res) => {
         try{
             const userExists = await findUser(req.body.email, false);
             const isValid = await argon2.verify(userExists.password, req.body.password);

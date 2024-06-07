@@ -1,4 +1,4 @@
-async function validateForm(formData, isLogin = true){
+async function validateLoginSignup(formData, isLogin = true){
     // Default validator for empty values, defined to simplify code readability
     const defaultPresenceValidator = { presence: { allowEmpty: false } };
     const fieldsValidations = {

@@ -1,7 +1,11 @@
 import { findUser } from '../middlewares/findUser.middleware.js';
 import validate from 'validate.js'
 
-export const validateForm = (isLogin = true) => {
+export const validateLoginSignup = (isLogin = true) => {
+    /*
+        * User login/signup form validation
+        * The `isLogin` parameter defines if the validation should be made for login form (`isLogin = true`) or signup (`isLogin = false`)
+    */
     return async(req, res, next) => {
         // Default validator for empty values, defined to simplify code readability
         const defaultPresenceValidator = { presence: { allowEmpty: false } };
@@ -16,7 +20,7 @@ export const validateForm = (isLogin = true) => {
         };
         // Additional validators in case of user sign-up
         if(!isLogin){
-            // Creating a custom valdiator to check if the email already exists and applying it to the email validators Object
+            // Creating a custom validator to check if the email already exists and applying it to the email validators Object
             validate.validators.emailExists = async (value) => {
                 return new Promise(async (resolve, reject) => {
                     try{
