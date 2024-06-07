@@ -1,7 +1,8 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
-import getPlant from '../apis/getPlant.api.js';
-import { getPlantation } from './plantations.routing.js';
+import getPlant, { getUserPlant } from '../apis/getPlant.api.js';
+import getPlantation from '../apis/getPlantation.api.js';
+
 
 export default function plants(app){
     app.route('/api/plants')
@@ -77,32 +78,6 @@ export default function plants(app){
             message: "Plants found",
             plants: plantsList
         });
-    });
-}
-
-export function getUserPlant(plantID, userID){
-    /*
-        * Obtains a specific plant owned by the user
-        * NOTE: The `plantID` and `userID` params MUST be integers
-    */
-    return new Promise(async (resolve, reject) => {
-        try{
-            const plant = await prisma.plantation_Plant.findUniqueOrThrow({
-                include: {
-                    plannedTreatment: true,
-                    plant: true
-                },
-                where: {
-                    plantationPlantID: plantID,
-                    plantation: {
-                        userID: userID,
-                    }
-                }
-            });
-            resolve(plant);
-        }catch(err){
-            reject('No plants found.');
-        }
     });
 }
 

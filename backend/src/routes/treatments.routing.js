@@ -1,6 +1,6 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
-import { getUserPlant } from './plants.routing.js';
+import { getUserPlant } from '../apis/getPlant.api.js'
 import moment from 'moment'
 
 

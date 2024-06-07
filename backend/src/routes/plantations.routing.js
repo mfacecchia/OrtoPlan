@@ -1,6 +1,8 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import getLocation from '../apis/getLocation.api.js';
+import getPlantation from '../apis/getPlantation.api.js';
+
 
 export default function plantations(app){
 
@@ -145,33 +147,6 @@ function updatePlantation(dataObj, userID){
             if(err.name === 'PrismaClientValidationError') reject('Invalid values');
             else if(err.code === 'P2025') reject('Plantation not found or invalid update values.');
             else reject('Unknown error.');
-        }
-    });
-}
-
-export function getPlantation(plantationID, userID){
-    if(typeof plantationID !== 'number') plantationID = parseInt(plantationID) || 0;
-    return new Promise(async (resolve, reject) => {
-        try{
-            const plantation = await prisma.plantation.findUniqueOrThrow({
-                include: {
-                    location: {
-                        select: {
-                            locationName: true,
-                            locationCAP: true,
-                            locationLat: true,
-                            locationLong: true
-                        }
-                    }
-                },
-                where: {
-                    userID: userID,
-                    plantationID: plantationID
-                }
-            });
-            resolve(plantation);
-        }catch(err){
-            reject('No plantations found.');
         }
     });
 }
