@@ -121,3 +121,24 @@ function showErrorMessage(field, messages){
         field.parentNode.insertBefore(p, field.nextSibling);
     });
 }
+
+function clearFormErrorMessages(formElement, clearInputValues = false){
+    /*
+        * Clears all the form from error messages and input values (if `clearInputValues` is set to `true` (default `false`))
+        * NOTE: in order for this function to correctly clear the form from errors, the error messages
+        * should contain the class `error-message`
+        * and the field errors the class `input-error`
+    */
+    formElement.querySelectorAll(`.error-message`).forEach(element => {
+        element.remove();
+    });
+    // Removing error classes and relative value from all input fields and possible input containers (defined by `inputStyleContainer` class)
+    formElement.querySelectorAll(`input`).forEach(field => {
+        field.classList.remove('input-error');
+    });
+    formElement.querySelectorAll(`.inputStyleContainer:has(input)`).forEach(field => {
+        field.classList.remove('input-error');
+    });
+    // Removing input data if `removeData` variable is set to `true`, otherwise just removing error classes
+    if(clearInputValues) formElement.reset();
+}
