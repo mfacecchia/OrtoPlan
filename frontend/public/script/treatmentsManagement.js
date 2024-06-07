@@ -115,6 +115,7 @@ async function getPlantTreatments(plantID){
     
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
     treatmentsModal.onclose = (e) => {
+        setTabIndexToMinusOne(treatmentsModal);
         // Resetting the edit button clicks count global variable to its initial state
         editButtonClicksCount = 0;
         // Updating the separators count to assert that all the separators get actually removed
@@ -142,6 +143,7 @@ async function getPlantTreatments(plantID){
     }
     else showNotice();
     treatmentsModal.showModal();
+    setTabIndexToZero(treatmentsModal);
 }
 
 function newTreatment(plantID){
@@ -151,6 +153,7 @@ function newTreatment(plantID){
     newTreatmentDialog.querySelector('input[type="date"]').setAttribute('value', moment.utc().format('YYYY-MM-DD'));
     
     newTreatmentDialog.onclose = e => {
+        setTabIndexToMinusOne(newTreatmentDialog);
         newTreatmentForm.onsubmit = undefined;
         newTreatmentForm.reset();
     };
@@ -181,6 +184,7 @@ function newTreatment(plantID){
         displayMessage('Treatment successfully planned.', 'success');
     }
     newTreatmentDialog.showModal();
+    setTabIndexToZero(newTreatmentDialog);
 }
 
 async function makeTreatmentsRequest(plantID){

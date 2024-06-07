@@ -3,6 +3,7 @@ function newElement(type, plantationID = undefined){
     const newElementForm = document.querySelector('#newPlantPlantationForm');
     
     newElementDialog.onclose = e => {
+        setTabIndexToMinusOne(newElementDialog);
         newElementForm.reset();
         newElementForm.onsubmit = undefined;
     };
@@ -35,6 +36,7 @@ function newElement(type, plantationID = undefined){
         displayMessage(`${type} added successfully`, 'success');
     }
     newElementDialog.showModal();
+    setTabIndexToZero(newElementDialog);
 }
 
 function addElementToList(elementData, type){
@@ -117,6 +119,7 @@ async function modify(elementID, type){
         updateElementForm.querySelector('[name="locationName"]').value = elementFamilyLocation;
     }
     updateElementDialog.onclose = e => {
+        setTabIndexToMinusOne(updateElementDialog);
         updateElementForm.reset();
         updateElementForm.onsubmit = undefined;
     }
@@ -152,6 +155,7 @@ async function modify(elementID, type){
         displayMessage(`${type} successfully updated.`, 'success');
     }
     updateElementDialog.showModal();
+    setTabIndexToZero(updateElementDialog);
 }
 
 function modifyCardData(newCardData, cardElement, type){

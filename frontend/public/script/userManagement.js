@@ -24,6 +24,7 @@ async function updateUser(){
     updateUserForm.querySelector('[name="lastName"]').value = userInfo.lastName;
     updateUserForm.querySelector('[name="email"]').value = userInfo.credential[0].email;
 
+    updateUserDialog.onclose = () => setTabIndexToMinusOne(updateUserDialog);
     updateUserForm.onsubmit = async e => {
         e.preventDefault();
         const newUserFormData = formDataToObject(new FormData(updateUserForm));
@@ -49,6 +50,7 @@ async function updateUser(){
         }
     }
     updateUserDialog.showModal();
+    setTabIndexToZero(updateUserDialog);
 }
 
 function confirmUserRemoval(){
@@ -57,7 +59,9 @@ function confirmUserRemoval(){
     */
     const confirmUserRemovalDialog = document.querySelector('#confirmUserRemoval');
     const confirmRemovalForm = confirmUserRemovalDialog.querySelector('form');
+    confirmUserRemovalDialog.onclose = () => setTabIndexToMinusOne(confirmUserRemovalDialog);
     confirmRemovalForm.onsubmit = async e => {
+        e.preventDefault();
         try{
             const res = await fetch(`${BACKEND_ADDRESS}/api/user`, {
                 method: 'DELETE',
@@ -77,4 +81,5 @@ function confirmUserRemoval(){
         }
     }
     confirmUserRemovalDialog.showModal();
+    setTabIndexToZero(confirmUserRemovalDialog);
 }
