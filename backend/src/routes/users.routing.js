@@ -53,7 +53,6 @@ async function deleteUpdateUser(req, res){
     const decodedToken = decodeToken(req.headers.authorization, false);
     try{
         let user = undefined;
-        // TODO: Add remove user functionality
         if(req.method === 'DELETE') user = await removeUser(decodedToken.userID)
         else if(req.method === 'PUT') user = await updateUser(req.body, decodedToken.userID);
         res.status(200).json({

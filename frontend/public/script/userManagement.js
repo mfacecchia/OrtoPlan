@@ -50,3 +50,31 @@ async function updateUser(){
     }
     updateUserDialog.showModal();
 }
+
+function confirmUserRemoval(){
+    /*
+        * Opens the dialog and checks for submit event to process the DELETE request
+    */
+    const confirmUserRemovalDialog = document.querySelector('#confirmUserRemoval');
+    const confirmRemovalForm = confirmUserRemovalDialog.querySelector('form');
+    confirmRemovalForm.onsubmit = async e => {
+        try{
+            const res = await fetch(`${BACKEND_ADDRESS}/api/user`, {
+                method: 'DELETE',
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                }
+            });
+            const jsonRes = await res.json();
+            if(!res.ok) throw new Error(jsonRes.message);
+            displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 3 seconds.`, 'success');
+            setTimeout(() => {
+                logout();
+            }, 3000);
+        }catch(err){
+            displayMessage(`Could not complete the request. ${err.message}`, 'error');
+        }
+    }
+    confirmUserRemovalDialog.showModal();
+}
