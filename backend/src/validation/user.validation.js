@@ -1,6 +1,6 @@
 import { findUser } from '../middlewares/findUser.middleware.js';
 import validate from 'validate.js'
-import { defaultPresenceValidator } from './customDefaultValidators.validation.js';
+import { defaultPresenceValidator, defaultPrismaMaxLength } from './customDefaultValidators.validation.js';
 
 
 export const validateLoginSignup = (isLogin = true) => {
@@ -12,6 +12,7 @@ export const validateLoginSignup = (isLogin = true) => {
         const fieldsValidations = {
             email: {
                 ...defaultPresenceValidator,
+                ...defaultPrismaMaxLength,
                 email: true
             },
             password: {
@@ -36,10 +37,7 @@ export const validateLoginSignup = (isLogin = true) => {
             }
             fieldsValidations.firstName = {
                 ...defaultPresenceValidator,
-                length: {
-                    maximum: 191,
-                    tooLong: '^Too long (max length is %{count} characters).'
-                },
+                ...defaultPrismaMaxLength
             };
             fieldsValidations.lastName = fieldsValidations.firstName;
             fieldsValidations.passwordVerify = {
@@ -52,7 +50,10 @@ export const validateLoginSignup = (isLogin = true) => {
         }
         validate.validators.email.message = '^Not a valid email';    
         try{
-            await validate.async({...req.body}, {...fieldsValidations});
+            await validate.async(req.body, fieldsValidations);
+            req.body.email = req.body.email.toLowerCase();
+            req.body.firstName = validate.capitalize(req.body.firstName.trim());
+            req.body.lastName = validate.capitalize(req.body.lastName.trim());
             next();
         }catch(validationErrors){
             res.status(403).json({
