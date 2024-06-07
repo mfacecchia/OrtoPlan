@@ -59,7 +59,7 @@ export const validateLoginSignup = (isLogin = true) => {
                 status: 403,
                 message: 'Invalid values. Please try again.',
                 validationErrors: validationErrors
-            })
+            });
         }
     }
 }
