@@ -22,6 +22,7 @@ export default function users(app){
             }
         })
         .put(deleteUpdateUser)
+        .delete(deleteUpdateUser)
 }
 
 function getUser(userID){
@@ -53,7 +54,7 @@ async function deleteUpdateUser(req, res){
     try{
         let user = undefined;
         // TODO: Add remove user functionality
-        if(req.method === 'DELETE') user = console.log("Remove user")
+        if(req.method === 'DELETE') user = await removeUser(decodedToken.userID)
         else if(req.method === 'PUT') user = await updateUser(req.body, decodedToken.userID);
         res.status(200).json({
             status: 200,
@@ -69,10 +70,10 @@ async function deleteUpdateUser(req, res){
     }
 }
 
-async function updateUser(userInfo, userID){
+function updateUser(userInfo, userID){
     // Hashing the password and adding it to the Object if the `password` field is passed and it's not empty
-    if(userInfo.password && userInfo.password !== '') userInfo.hashedPass = await argon2.hash(req.body.password);
     return new Promise(async (resolve, reject) => {
+        if(userInfo.password && userInfo.password !== '') userInfo.hashedPass = await argon2.hash(req.body.password);
         try{
             const user = prisma.user.update({
                 data: {
@@ -107,6 +108,21 @@ async function updateUser(userInfo, userID){
             if(err.name === 'PrismaClientValidationError') reject('Invalid values');
             else if(err.code === 'P2025') reject('User not found or invalid request values.');
             else reject('Unknown error.');
+        }
+    });
+}
+
+function removeUser(userID){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const removedUser = await prisma.user.delete({
+                where: {
+                    userID: userID
+                }
+            });
+            resolve(removedUser);
+        }catch(err){
+            reject(err.code === 'P2025'? 'User not found.': 'Unknown error.');
         }
     });
 }
