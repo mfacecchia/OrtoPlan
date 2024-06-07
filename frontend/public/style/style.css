@@ -699,6 +699,11 @@ html {
     .modal-box header {
   margin-bottom: 1.25rem;
 }
+    .modal-box header img {
+  margin-left: auto;
+  margin-right: auto;
+  height: 5rem;
+}
     textarea {
   min-height: 2.75rem;
 }
@@ -2856,14 +2861,14 @@ form[method="dialog"] .btn-square {
 .justify-center {
   justify-content: center;
 }
+.gap-2 {
+  gap: 0.5rem;
+}
 .gap-3 {
   gap: 0.75rem;
 }
 .gap-5 {
   gap: 1.25rem;
-}
-.gap-2 {
-  gap: 0.5rem;
 }
 .gap-x-2 {
   -moz-column-gap: 0.5rem;
