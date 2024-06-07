@@ -1,7 +1,7 @@
 import prisma from "../../db/prisma.db.js";
 
 
-export default function getPlant(plantName = undefined, plantFamily = undefined, scientificName = undefined){
+export default function getPlant(plantName, plantFamily = undefined, scientificName = undefined){
     /*
         * Gets a plant from the DB located in the `plant` DB table
     */
@@ -17,13 +17,13 @@ export default function getPlant(plantName = undefined, plantFamily = undefined,
                 },
                 where: {
                     plantName: {
-                        contains: plantName
+                        contains: plantName.trim()
                     },
                     plantFamily: {
-                        contains: plantFamily
+                        contains: plantFamily !== undefined && plantFamily !== ''? plantFamily: undefined
                     },
                     scientificName: {
-                        contains: scientificName
+                        contains: scientificName !== undefined && scientificName !== ''? scientificName: undefined
                     }
                 }
             });
