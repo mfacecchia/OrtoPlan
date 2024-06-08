@@ -76,6 +76,20 @@ async function updateTreatmentInfo(e, form, treatmentID){
             body: JSON.stringify(updatedTreatmentData)
         });
         const jsonRes = await res.json();
+        // Backend validation not passed
+        if(res.status === 403){
+            clearFormErrorMessages(form, false);
+            for(const key of Object.keys(jsonRes.validationErrors)){
+                /*
+                    * Element to display the error to can be either an input element, and an input container
+                    * NOTE: `.inputBoxContainer` is an alternative class used just for error displaying purposes
+                    * in order to place the item exactly below the whole input row
+                */
+                const fieldError = form.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || form.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                showErrorMessage(fieldError, jsonRes.validationErrors[key]);
+            }
+            return;
+        }
         if(!res.ok) throw new Error(jsonRes.message);
         /*
             * Updating form with the latest treatment updates to avoid form reset to default information
@@ -166,7 +180,7 @@ function newTreatment(plantID){
     newTreatmentDialog.querySelector('header span').textContent = document.querySelector(`[data-plant-id="${plantID}"] [role="definition"]`).textContent;
     newTreatmentDialog.querySelector('input[type="date"]').setAttribute('value', moment.utc().format('YYYY-MM-DD'));
     
-    newTreatmentDialog.onclose = e => {
+    newTreatmentDialog.onclose = () => {
         clearFormErrorMessages(newTreatmentForm, true);
         setTabIndexToMinusOne(newTreatmentDialog);
         newTreatmentForm.onsubmit = undefined;
@@ -209,16 +223,6 @@ function newTreatment(plantID){
                         * in order to place the item exactly below the whole input row
                     */
                     const fieldError = form.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || form.querySelector(`:is(input, select, textarea)[name="${key}"]`);
-                    showErrorMessage(fieldError, jsonRes.validationErrors[key]);
-                }
-                return;
-            }
-            // Backend validation not passed
-            if(res.status === 403){
-                clearFormErrorMessages(newTreatmentForm, false);
-                for(const key of Object.keys(jsonRes.validationErrors)){
-                    // Element to display the error to can be either an input element, and an input container
-                    const fieldError = newTreatmentForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || newTreatmentForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
                     showErrorMessage(fieldError, jsonRes.validationErrors[key]);
                 }
                 return;
