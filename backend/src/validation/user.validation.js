@@ -48,9 +48,19 @@ export const validateForm = (isLogin = true) => {
         }
         validate.validators.email.message = '^Not a valid email';    
         try{
+<<<<<<< Updated upstream
             await validate.async({...req.body}, {...fieldsValidations});
+=======
+            await validate.async(req.body, validators);
+            if(!isLogin){
+                req.body.email = req.body.email.toLowerCase();
+                req.body.firstName = validate.capitalize(req.body.firstName.trim());
+                req.body.lastName = validate.capitalize(req.body.lastName.trim());
+            }
+>>>>>>> Stashed changes
             next();
         }catch(validationErrors){
+            console.log(validationErrors);
             res.status(403).json({
                 status: 403,
                 message: 'Invalid values. Please try again.',
