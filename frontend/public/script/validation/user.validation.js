@@ -33,13 +33,13 @@ async function validateLoginSignup(formData, isLogin = true){
         };
     }
     validate.validators.email.message = '^Not a valid email';    
-    try{
-        await validate.async({...formData}, {...fieldsValidations});
-        return true;
-    }catch(validationErrors){
-        console.log(validationErrors);
-        // TODO: Display error messages below the corresponding form's textbox
-        displayMessage('Error while validating form. Please try again.', 'error');
-        return false;
-    }
+    return new Promise(async (resolve, reject) => {
+        try{
+            await validate.async({...formData}, {...fieldsValidations});
+            formData.email = formData.email.trim().toLowerCase();
+            resolve(formData);
+        }catch(validationErrors){
+            reject(validationErrors);
+        }
+    })
 }
