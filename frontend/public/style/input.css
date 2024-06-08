@@ -51,7 +51,8 @@
         @apply lg:h-9;
     }
     nav div{
-        @apply space-x-3
+        @apply space-x-3;
+        @apply lg:space-x-6;
     }
     footer{
         @apply mt-auto w-full py-7 bg-footer bg-cover bg-no-repeat flex items-center justify-start gap-5 text-base-100 shadow-t-xl;
@@ -77,6 +78,7 @@
     }
     form :is(input, textarea, select, option){
         @apply bg-base-100 appearance-none;
+        @apply lg:text-lg;
     }
     form :is(input, textarea, select, option), .inputStyleContainer{
         @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2 outline-none;
@@ -156,19 +158,27 @@
         @apply lg:grid-cols-3;
     }
     .customCard{
-        @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
+        @apply w-3/5 box-border pb-4 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
         @apply sm:w-2/3;
-        @apply md:w-3/5;
+        @apply md:w-3/5 pb-7;
         @apply lg:w-4/5;
     }
     .customCard figure{
         @apply flex justify-center h-40 shadow-md relative bg-cover bg-center;
+        @apply lg:h-52;
     }
     .customCard .cardContent{
         @apply space-y-1 box-border px-3 text-left;
     }
+    .cardContent p{
+        @apply text-base;
+        @apply md:text-lg;
+        @apply lg:text-xl;
+    }
     .cardContent h2{
-        @apply font-bold text-xl;
+        @apply font-bold text-lg;
+        @apply md:text-xl;
+        @apply lg:text-2xl;
     }
     .flex-col-container{
         @apply flex flex-col items-center gap-y-2;
@@ -201,9 +211,18 @@
     }
     .dropdown-content h1{
         @apply text-xl;
+        @apply lg:text-2xl
     }
     .dropdown-content li{
         @apply w-full my-1 text-right;
+    }
+    .dropdown-content li a{
+        @apply gap-x-4;
+        @apply lg:gap-x-6;
+    }
+    .dropdown-content li a p{
+        @apply md:text-base;
+        @apply lg:text-xl;
     }
     /* Overriding default `text color` property for `btn-primary` daisyUI class */
     .btn-primary, .btn-error{

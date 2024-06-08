@@ -34,13 +34,13 @@
                     cardBg: "/assets/icons/plantation.webp",
                     dropdownTitle: "Plantation settings",
                     dropdownOptions: [
-                        `<li class = "textToRight" role = "Modify" tabindex = "0"><a><span class = "text-warning">Modify</span> Plantation</a></li>`,
-                        `<li class = "textToRight" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plantation</a></li>`
+                        `<li class = "textToRight" role = "Modify" tabindex = "0"><a><p><span class = "text-warning">Modify</span> Plantation</p></a></li>`,
+                        `<li class = "textToRight" role = "Remove" tabindex = "0"><a><p><span class = "text-error">Remove</span> Plantation</p></a></li>`
                     ],
                     cardSubtitle: "Location",
                     cardTitle: "Plantation Name"
                 }) %>
-                <div class = "customCard sm:h-full" onclick = "newElement('plantation')">
+                <div class = "customCard sm:h-full sm:min-h-72" onclick = "newElement('plantation')">
                     <figure class = "!shadow-none !h-36 sm:!h-3/5 sm:mt-4">
                         <img src = "/assets/icons/new_plantation.svg">
                     </figure>
