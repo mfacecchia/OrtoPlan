@@ -26,6 +26,7 @@ async function addSliderElements(plantationID){
 
 function createSlider(){
     const weatherSlider = new Glide('#weatherSlider', {
+        perView: 4,
         animationDuration: 700,
         breakpoints: {
             640: {
