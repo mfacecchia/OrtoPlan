@@ -28,6 +28,7 @@
     }
     nav, footer, section{
         @apply box-border px-3;
+        @apply sm:px-5
     }
     nav{
         @apply w-full flex justify-between items-center py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
@@ -52,6 +53,7 @@
     }
     img[src*="grass.webp"]{
         @apply w-[300%];
+        @apply sm:w-[200%]
     }
     form{
         @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden box-border p-2;
@@ -130,6 +132,7 @@
     }
     .cardsContainer{
         @apply w-full grid grid-cols-1 place-items-center gap-5;
+        @apply sm:grid-cols-2;
     }
     .customCard{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
