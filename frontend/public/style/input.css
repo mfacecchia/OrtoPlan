@@ -87,7 +87,7 @@
         @apply border-none p-0;
     }
     input[type="checkbox"]{
-        @apply w-auto;
+        @apply appearance-auto w-auto;
     }
     form button[type="submit"]{
         @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3 mt-3;
@@ -147,6 +147,7 @@
     .customCard{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
         @apply sm:w-2/3;
+        @apply md:w-3/5;
     }
     .customCard figure{
         @apply flex justify-center h-40 shadow-md relative bg-cover bg-center;
@@ -199,6 +200,7 @@
     /* Overriding default max-width: 20rem (too large for most displays, leading to content overflow problems) */
     .tooltip::before{
         @apply !max-w-40;
+        @apply md:text-sm md:rounded-md;
     }
     .modal-action > :not([hidden]) ~ :not([hidden]){
         @apply ml-0;
