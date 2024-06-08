@@ -214,6 +214,11 @@
     header:has(h1) hr{
         @apply xl:mt-2;
     }
+    .error-message{
+        @apply md:text-sm;
+        @apply lg:text-base;
+        @apply xl:text-lg;
+    }
 }
 
 @layer components{

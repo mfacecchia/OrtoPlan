@@ -3155,6 +3155,27 @@ input.tab:checked + .tab-content,
     margin-top: 0.5rem;
   }
 }
+@media (min-width: 768px) {
+
+  .error-message {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+@media (min-width: 1024px) {
+
+  .error-message {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+@media (min-width: 1280px) {
+
+  .error-message {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
 .menu hr {
   margin-left: auto;
   margin-right: auto;
@@ -3678,11 +3699,9 @@ form[method="dialog"] .btn-square {
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
 .hover\:stroke-primary:hover {
   stroke: var(--fallback-p,oklch(var(--p)/1));
 }
-
 @media (min-width: 640px) {
 
   .sm\:mb-7 {
@@ -3709,14 +3728,12 @@ form[method="dialog"] .btn-square {
     width: 80%;
   }
 }
-
 @media (min-width: 768px) {
 
   .md\:w-20 {
     width: 5rem;
   }
 }
-
 @media (min-width: 1024px) {
 
   .lg\:h-11 {
@@ -3739,7 +3756,6 @@ form[method="dialog"] .btn-square {
     width: 24rem;
   }
 }
-
 @media (min-width: 1280px) {
 
   .xl\:h-96 {
@@ -3760,11 +3776,14 @@ form[method="dialog"] .btn-square {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
-
 @media (min-width: 1536px) {
 
   .\32xl\:\!h-4\/6 {
     height: 66.666667% !important;
+  }
+
+  .\32xl\:h-\[400px\] {
+    height: 400px;
   }
 
   .\32xl\:w-3\/5 {
@@ -3773,5 +3792,9 @@ form[method="dialog"] .btn-square {
 
   .\32xl\:max-w-72 {
     max-width: 18rem;
+  }
+
+  .\32xl\:p-20 {
+    padding: 5rem;
   }
 }
