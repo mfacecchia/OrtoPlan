@@ -521,6 +521,13 @@ html {
     line-height: 2.25rem;
   }
 }
+    @media (min-width: 1280px) {
+
+  h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
     p, b {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -538,6 +545,13 @@ html {
   p, b {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+}
+    @media (min-width: 1280px) {
+
+  p, b {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
     nav, footer, section {
@@ -3567,5 +3581,17 @@ form[method="dialog"] .btn-square {
 
   .lg\:w-96 {
     width: 24rem;
+  }
+}
+@media (min-width: 1280px) {
+
+  .xl\:w-56 {
+    width: 14rem;
+  }
+
+  .xl\:scale-90 {
+    --tw-scale-x: .9;
+    --tw-scale-y: .9;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }

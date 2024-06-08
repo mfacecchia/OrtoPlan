@@ -23,11 +23,13 @@
     h1{
         @apply text-2xl;
         @apply md:text-3xl;
+        @apply xl:text-4xl;
     }
     p, b{
         @apply text-base leading-tight;
         @apply md:text-lg;
         @apply lg:text-xl;
+        @apply xl:text-2xl;
     }
     nav, footer, section{
         @apply box-border px-3;
