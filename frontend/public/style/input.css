@@ -24,22 +24,31 @@
         @apply text-2xl;
         @apply md:text-3xl;
     }
-    p, nav a{
+    p, b{
         @apply text-base leading-tight;
         @apply md:text-lg;
+        @apply lg:text-xl;
     }
     nav, footer, section{
         @apply box-border px-3;
         @apply sm:px-5;
         @apply md:px-7;
+        @apply lg:px-11;
     }
     nav{
         @apply w-full flex justify-between items-center py-4 bg-navbar bg-cover bg-no-repeat shadow-xl;
         @apply md:py-6;
+        @apply lg:py-8;
+    }
+    nav a{
+        @apply text-lg leading-tight;
+        @apply md:text-xl;
+        @apply lg:text-2xl;
     }
     nav img, nav svg{
         @apply h-6 flex items-center;
         @apply sm:h-7;
+        @apply lg:h-9;
     }
     nav div{
         @apply space-x-3
@@ -60,6 +69,7 @@
         @apply w-[300%];
         @apply sm:w-[200%];
         @apply md:w-[150%];
+        @apply lg:w-full;
     }
     form{
         @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden box-border p-2;
@@ -143,11 +153,13 @@
     .cardsContainer{
         @apply w-full grid grid-cols-1 place-items-center gap-5;
         @apply sm:grid-cols-2 sm:gap-7;
+        @apply lg:grid-cols-3;
     }
     .customCard{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
         @apply sm:w-2/3;
         @apply md:w-3/5;
+        @apply lg:w-4/5;
     }
     .customCard figure{
         @apply flex justify-center h-40 shadow-md relative bg-cover bg-center;
