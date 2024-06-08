@@ -732,6 +732,12 @@ html {
     row-gap: 1rem;
   }
 }
+    @media (min-width: 1280px) {
+
+  form {
+    row-gap: 1.5rem;
+  }
+}
     form :is(input, textarea, select, option) {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -743,6 +749,13 @@ html {
 
   form :is(input, textarea, select, option) {
     font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+    @media (min-width: 1280px) {
+
+  form :is(input, textarea, select, option) {
+    font-size: 1.25rem;
     line-height: 1.75rem;
   }
 }
@@ -758,6 +771,15 @@ html {
   padding-bottom: 0.5rem;
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+    @media (min-width: 1280px) {
+
+  form :is(input, textarea, select, option), .inputStyleContainer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
 }
     form :is(input, textarea, select, option):user-invalid, form .inputStyleContainer:has(:is(input, textarea, select, option):user-invalid) {
   --tw-border-opacity: 1;
@@ -834,10 +856,19 @@ html {
     @media (min-width: 1024px) {
 
   form button[type="submit"] {
+    width: 20%;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+}
+    @media (min-width: 1280px) {
+
+  form button[type="submit"] {
+    margin-top: 1.25rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
     form button[data-btn-action] {
