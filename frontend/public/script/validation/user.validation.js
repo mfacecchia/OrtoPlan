@@ -36,7 +36,11 @@ async function validateLoginSignup(formData, isLogin = true){
     return new Promise(async (resolve, reject) => {
         try{
             await validate.async({...formData}, {...fieldsValidations});
-            formData.email = formData.email.trim().toLowerCase();
+            if(!isLogin){
+                formData.email = formData.email.toLowerCase();
+                formData.firstName = validate.capitalize(formData.firstName.trim());
+                formData.lastName = validate.capitalize(formData.lastName.trim());
+            }
             resolve(formData);
         }catch(validationErrors){
             reject(validationErrors);
