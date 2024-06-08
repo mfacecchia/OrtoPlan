@@ -51,11 +51,14 @@ export const validateLoginSignup = (isLogin = true) => {
         validate.validators.email.message = '^Not a valid email';    
         try{
             await validate.async(req.body, validators);
-            req.body.email = req.body.email.toLowerCase();
-            req.body.firstName = validate.capitalize(req.body.firstName.trim());
-            req.body.lastName = validate.capitalize(req.body.lastName.trim());
+            if(!isLogin){
+                req.body.email = req.body.email.toLowerCase();
+                req.body.firstName = validate.capitalize(req.body.firstName.trim());
+                req.body.lastName = validate.capitalize(req.body.lastName.trim());
+            }
             next();
         }catch(validationErrors){
+            console.log(validationErrors);
             res.status(403).json({
                 status: 403,
                 message: 'Invalid values. Please try again.',
