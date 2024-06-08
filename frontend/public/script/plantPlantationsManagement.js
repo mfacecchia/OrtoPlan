@@ -12,14 +12,15 @@ function newElement(type, plantationID = undefined){
         let newElementData = formDataToObject(new FormData(newElementForm));
         if(type === 'plant') newElementData.plantationID = plantationID;
         try{
+            let validationResult = undefined;
             if(type === 'plant'){
-                // TODO: Add plant form validation
+                validationResult = await validatePlant(newElementData);
             }
             else{
-                const validationResult = await validatePlantation(newElementData);
-                // Overwriting the Object with the sanitized data version
-                newElementData = validationResult;
+                validationResult = await validatePlantation(newElementData);
             }
+            // Overwriting the Object with the sanitized data version
+            newElementData = validationResult;
         }catch(err){
             clearFormErrorMessages(newElementForm, false);
             for(const key of Object.keys(err)){
@@ -156,14 +157,15 @@ async function modify(elementID, type){
         // Defining the key to pass to the backend (representing the PK)
         const keyValue = type === 'plant'? {plantationPlantID: elementID}: {plantationID: elementID}
         try{
+            let validationResult = undefined;
             if(type === 'plant'){
-                // TODO: Add plant form validation
+                validationResult = await validatePlant(updateElementData);
             }
             else{
-                const validationResult = await validatePlantation(updateElementData);
-                // Overwriting the Object with the sanitized data version
-                updateElementData = validationResult;
+                validationResult = await validatePlantation(updateElementData);
             }
+            // Overwriting the Object with the sanitized data version
+            updateElementData = validationResult;
         }catch(err){
             clearFormErrorMessages(updateElementForm, false);
             for(const key of Object.keys(err)){
