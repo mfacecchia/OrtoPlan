@@ -91,16 +91,16 @@
                     cardBg: '/assets/icons/plant.webp',
                     dropdownTitle: "Plant settings",
                     dropdownOptions: [
-                        `<li class = "textToRight" role = "Plan" tabindex = "0"><a><span class = "text-primary">Plan</span> Treatments</a></li>`,
-                        `<li class = "textToRight" role = "Remove" tabindex = "0"><a><span class = "text-error">Remove</span> Plant</a></li>`,
-                        `<li class = "textToRight" role = "Modify" tabindex = "0"><a><span class = "text-warning">Modify</span> Plant</a></li>`,
-                        `<li class = "textToRight" role = "Information" tabindex = "0"><a><span class = "text-info">Plant\'s</span> Information</a></li>`
+                        `<li class = "textToRight" role = "Plan" tabindex = "0"><a><p><span class = "text-primary">Plan</span> Treatments</p></a></li>`,
+                        `<li class = "textToRight" role = "Remove" tabindex = "0"><a><p><span class = "text-error">Remove</span> Plant</p></a></li>`,
+                        `<li class = "textToRight" role = "Modify" tabindex = "0"><a><p><span class = "text-warning">Modify</span> Plant</p></a></li>`,
+                        `<li class = "textToRight" role = "Information" tabindex = "0"><a><p><span class = "text-info">Plant\'s</span> Information</p></a></li>`
                     ],
                     cardSubtitle: "Plant family",
                     cardTitle: "Plant name"
                 }) %>
-                <div class = "customCard" onclick = "newElement('plant', <%=plantationID%>)">
-                    <figure class = "!shadow-none !h-36">
+                <div class = "customCard sm:h-full sm:min-h-72" onclick = "newElement('plant', <%=plantationID%>)">
+                    <figure class = "!shadow-none !h-36 sm:!h-3/5 sm:mt-4">
                         <img src = "/assets/icons/new_plant.svg">
                     </figure>
                     <div class = "cardContent">

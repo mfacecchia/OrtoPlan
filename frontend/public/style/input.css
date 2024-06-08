@@ -101,9 +101,11 @@
     }
     input[type="checkbox"]{
         @apply appearance-auto w-auto;
+        @apply lg:scale-110;
     }
     form button[type="submit"]{
         @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3 mt-3;
+        @apply lg:text-xl lg:py-2;
     }
     form button[data-btn-action]{
         @apply outline-offset-1 p-2;
@@ -224,6 +226,9 @@
     .dropdown-content li a p{
         @apply md:text-base;
         @apply lg:text-xl;
+    }
+    .btn{
+        @apply lg:text-base;
     }
     /* Overriding default `text color` property for `btn-primary` daisyUI class */
     .btn-primary, .btn-error{
