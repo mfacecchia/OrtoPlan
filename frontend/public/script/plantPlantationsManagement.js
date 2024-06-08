@@ -25,7 +25,7 @@ function newElement(type, plantationID = undefined){
             clearFormErrorMessages(newElementForm, false);
             for(const key of Object.keys(err)){
                 // Element to display the error to can be either an input element, and an input container
-                const fieldError = newElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || newElementForm.querySelector(`input[name="${key}"]`);
+                const fieldError = newElementForm.querySelector(`.inputStyleContainer:has(:is(input, select, textarea)[name="${key}"])`) || newElementForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
                 showErrorMessage(fieldError, err[key]);
             }
             return;
@@ -48,7 +48,7 @@ function newElement(type, plantationID = undefined){
                 clearFormErrorMessages(newElementForm, false);
                 for(const key of Object.keys(jsonRes.validationErrors)){
                     // Element to display the error to can be either an input element, and an input container
-                    const fieldError = newElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || newElementForm.querySelector(`input[name="${key}"]`);
+                    const fieldError = newElementForm.querySelector(`.inputStyleContainer:has(:is(input, select, textarea)[name="${key}"])`) || newElementForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
                     showErrorMessage(fieldError, jsonRes.validationErrors[key]);
                 }
                 return;
@@ -170,7 +170,7 @@ async function modify(elementID, type){
             clearFormErrorMessages(updateElementForm, false);
             for(const key of Object.keys(err)){
                 // Element to display the error to can be either an input element, and an input container
-                const fieldError = updateElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || updateElementForm.querySelector(`input[name="${key}"]`);
+                const fieldError = updateElementForm.querySelector(`.inputStyleContainer:has(:is(input, select, textarea)[name="${key}"])`) || updateElementForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
                 showErrorMessage(fieldError, err[key]);
             }
             return;
@@ -194,7 +194,7 @@ async function modify(elementID, type){
                 clearFormErrorMessages(updateElementForm, false);
                 for(const key of Object.keys(jsonRes.validationErrors)){
                     // Element to display the error to can be either an input element, and an input container
-                    const fieldError = updateElementForm.querySelector(`.inputStyleContainer:has(input[name="${key}"])`) || updateElementForm.querySelector(`input[name="${key}"]`);
+                    const fieldError = updateElementForm.querySelector(`.inputStyleContainer:has(:is(input, select, textarea)[name="${key}"])`) || updateElementForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
                     showErrorMessage(fieldError, jsonRes.validationErrors[key]);
                 }
                 return;
