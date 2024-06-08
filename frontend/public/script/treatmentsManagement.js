@@ -50,8 +50,21 @@ function addTreatmentButtonEvents(form){
 async function updateTreatmentInfo(e, form, treatmentID){
     e.preventDefault();
     editButtonClicksCount = 0;
-    const updatedTreatmentFormData = formDataToObject(new FormData(form));
-    updatedTreatmentFormData.treatmentID = treatmentID;
+    let updatedTreatmentData = formDataToObject(new FormData(form));
+    try{
+        const validationResult = await validateTreatment(updatedTreatmentData);
+        // Overwriting the Object with the sanitized data version
+        updatedTreatmentData = validationResult;
+    }catch(err){
+        clearFormErrorMessages(form, false);
+        for(const key of Object.keys(err)){
+            // Element to display the error to can be either an input element, and an input container
+            const fieldError = form.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || form.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+            showErrorMessage(fieldError, err[key]);
+        }
+        return;
+    }
+    updatedTreatmentData.treatmentID = treatmentID;
     try{
         const res = await fetch(`${BACKEND_ADDRESS}/api/treatments`, {
             method: 'PUT',
@@ -60,7 +73,7 @@ async function updateTreatmentInfo(e, form, treatmentID){
                 "Accept": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
             },
-            body: JSON.stringify(updatedTreatmentFormData)
+            body: JSON.stringify(updatedTreatmentData)
         });
         const jsonRes = await res.json();
         if(!res.ok) throw new Error(jsonRes.message);
@@ -114,7 +127,7 @@ async function getPlantTreatments(plantID){
     treatmentFormTempate.classList.remove('hidden');
     
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
-    treatmentsModal.onclose = (e) => {
+    treatmentsModal.onclose = () => {
         setTabIndexToMinusOne(treatmentsModal);
         // Resetting the edit button clicks count global variable to its initial state
         editButtonClicksCount = 0;
@@ -124,6 +137,7 @@ async function getPlantTreatments(plantID){
             formsContainer.querySelector('.noTreatmentsNotice').remove();
         }catch(err){};
         formsContainer.querySelectorAll('.treatmentForm:not(.hidden)').forEach(form => {
+            clearFormErrorMessages(form, true);
             form.remove();
         });
         for(let i = 0; i < separatorsList.length; i++){
@@ -153,14 +167,27 @@ function newTreatment(plantID){
     newTreatmentDialog.querySelector('input[type="date"]').setAttribute('value', moment.utc().format('YYYY-MM-DD'));
     
     newTreatmentDialog.onclose = e => {
+        clearFormErrorMessages(newTreatmentForm, true);
         setTabIndexToMinusOne(newTreatmentDialog);
         newTreatmentForm.onsubmit = undefined;
-        newTreatmentForm.reset();
     };
     newTreatmentForm.onsubmit = async e => {
         e.preventDefault();
-        const newTreatmentFormData = formDataToObject(new FormData(newTreatmentForm));
-        newTreatmentFormData.plantationPlantID = plantID;
+        let newTreatmentData = formDataToObject(new FormData(newTreatmentForm));
+        try{
+            const validationResult = await validateTreatment(newTreatmentData);
+            // Overwriting the Object with the sanitized data version
+            newTreatmentData = validationResult;
+        }catch(err){
+            clearFormErrorMessages(newTreatmentForm, false);
+            for(const key of Object.keys(err)){
+                // Element to display the error to can be either an input element, and an input container
+                const fieldError = newTreatmentForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || newTreatmentForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                showErrorMessage(fieldError, err[key]);
+            }
+            return;
+        }
+        newTreatmentData.plantationPlantID = plantID;
         try{
             const res = await fetch(`${BACKEND_ADDRESS}/api/treatments`, {
                 method: 'POST',
@@ -169,19 +196,42 @@ function newTreatment(plantID){
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
-                body: JSON.stringify(newTreatmentFormData)
+                body: JSON.stringify(newTreatmentData)
             });
             const jsonRes = await res.json();
+            // Backend validation not passed
+            if(res.status === 403){
+                clearFormErrorMessages(form, false);
+                for(const key of Object.keys(jsonRes.validationErrors)){
+                    /*
+                        * Element to display the error to can be either an input element, and an input container
+                        * NOTE: `.inputBoxContainer` is an alternative class used just for error displaying purposes
+                        * in order to place the item exactly below the whole input row
+                    */
+                    const fieldError = form.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || form.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                    showErrorMessage(fieldError, jsonRes.validationErrors[key]);
+                }
+                return;
+            }
+            // Backend validation not passed
+            if(res.status === 403){
+                clearFormErrorMessages(newTreatmentForm, false);
+                for(const key of Object.keys(jsonRes.validationErrors)){
+                    // Element to display the error to can be either an input element, and an input container
+                    const fieldError = newTreatmentForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || newTreatmentForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                    showErrorMessage(fieldError, jsonRes.validationErrors[key]);
+                }
+                return;
+            }
             if(!res.ok) throw new Error(jsonRes.message);
             addToList(jsonRes.treatment);
         }catch(err){
             displayMessage(`Unknown error while planning the treatment. ${err.message}`, 'error');
+            newTreatmentDialog.close();
             return;
         }
-        finally{
-            newTreatmentDialog.close();
-        }
         displayMessage('Treatment successfully planned.', 'success');
+        newTreatmentDialog.close();
     }
     newTreatmentDialog.showModal();
     setTabIndexToZero(newTreatmentDialog);

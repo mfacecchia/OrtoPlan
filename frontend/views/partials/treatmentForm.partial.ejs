@@ -1,5 +1,5 @@
 <form class = "items-start treatmentForm hidden" data-treatment-id = "<%= treatmentID %>">
-    <div class = "flex w-full items-center gap-5">
+    <div class = "flex w-full items-center gap-5 inputBoxContainer">
         <select name = "treatmentType" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %> role = "definition">
             <option value = "">Treatment Type*</option>
             <option value = "Pruning">Pruning</option>
@@ -13,7 +13,7 @@
         </div>
     </div>
     <input type = "date" name = "treatmentDate" value = "<%= date %>" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
-    <div class = "flex items-center gap-3">
+    <div class = "flex items-center gap-3 inputBoxContainer">
         <span>every</span>
         <input class = "max-w-[4.5rem]" type = "number" name = "treatmentRecurrence" value = "<%= recurrence %>" placeholder = "Recurrence" required <% if(typeof isDisabled !== 'undefined'){ %> disabled <% } %>>
         <span>days</span>
