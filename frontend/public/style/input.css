@@ -110,7 +110,7 @@
     }
     form button[type="submit"]{
         @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3 mt-3;
-        @apply lg:text-xl lg:py-2 lg:w-1/5;
+        @apply lg:text-xl lg:py-2;
         @apply xl:text-2xl xl:mt-5;
     }
     form button[data-btn-action]{
@@ -171,6 +171,7 @@
         @apply sm:w-2/3;
         @apply md:w-3/5 pb-7;
         @apply lg:w-4/5;
+        @apply xl:w-2/3;
     }
     .customCard figure{
         @apply flex justify-center h-40 shadow-md relative bg-cover bg-center;
@@ -200,6 +201,9 @@
     }
     .weather img{
         @apply h-11;
+    }
+    header:has(h1) hr{
+        @apply xl:mt-2;
     }
 }
 
@@ -244,6 +248,10 @@
     .tooltip::before{
         @apply !max-w-40;
         @apply md:text-sm md:rounded-md;
+        @apply xl:!max-w-52 xl:text-base xl:p-4 xl:rounded-lg;
+    }
+    .modal-box{
+        @apply xl:max-w-[40rem];
     }
     .modal-action > :not([hidden]) ~ :not([hidden]){
         @apply ml-0;
@@ -253,6 +261,7 @@
     }
     form[method="dialog"] .btn-square{
         @apply min-h-0 min-w-0 size-8;
+        @apply xl:size-11 xl:text-xl xl:rounded-xl;
     }
     .btn-primary:hover{
         @apply !text-base-100;

@@ -856,7 +856,6 @@ html {
     @media (min-width: 1024px) {
 
   form button[type="submit"] {
-    width: 20%;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     font-size: 1.25rem;
@@ -3016,6 +3015,12 @@ input.tab:checked + .tab-content,
     width: 80%;
   }
 }
+@media (min-width: 1280px) {
+
+  .customCard {
+    width: 66.666667%;
+  }
+}
 .customCard figure {
   position: relative;
   display: flex;
@@ -3097,6 +3102,12 @@ input.tab:checked + .tab-content,
 }
 .weather img {
   height: 2.75rem;
+}
+@media (min-width: 1280px) {
+
+  header:has(h1) hr {
+    margin-top: 0.5rem;
+  }
 }
 .menu hr {
   margin-left: auto;
@@ -3189,6 +3200,20 @@ input.tab:checked + .tab-content,
     line-height: 1.25rem;
   }
 }
+@media (min-width: 1280px) {
+
+  .tooltip::before {
+    max-width: 13rem !important;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .modal-box {
+    max-width: 40rem;
+  }
+}
 .modal-action > :not([hidden]) ~ :not([hidden]) {
   margin-left: 0px;
 }
@@ -3201,6 +3226,16 @@ form[method="dialog"] .btn-square {
   height: 2rem;
   min-height: 0px;
   min-width: 0px;
+}
+@media (min-width: 1280px) {
+
+  form[method="dialog"] .btn-square {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 .btn-primary:hover {
   --tw-text-opacity: 1 !important;
@@ -3602,6 +3637,10 @@ form[method="dialog"] .btn-square {
     height: 2.75rem;
   }
 
+  .lg\:\!w-1\/5 {
+    width: 20% !important;
+  }
+
   .lg\:w-1\/2 {
     width: 50%;
   }
@@ -3615,6 +3654,10 @@ form[method="dialog"] .btn-square {
   }
 }
 @media (min-width: 1280px) {
+
+  .xl\:w-5 {
+    width: 1.25rem;
+  }
 
   .xl\:w-56 {
     width: 14rem;
