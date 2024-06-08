@@ -10,7 +10,7 @@ export const validateTreatment = () => {
                 ...defaultPresenceValidator,
                 inclusion: {
                     within: ['Irrigation', 'Sowing', 'Pruning', 'Fertilization'],
-                    message: '^Must be between \'Irrigation\', \'Sowing\', \'Pruning\', and \'Fertilization\''
+                    message: '^Must be \'Irrigation\', \'Sowing\', \'Pruning\', or \'Fertilization\''
                 }
             },
             notes: {
@@ -22,7 +22,7 @@ export const validateTreatment = () => {
             treatmentDate: {
                 ...defaultPresenceValidator,
                 datetime: {
-                    earliest: moment.utc(),
+                    earliest: moment.utc().subtract(1, 'days'),
                     tooEarly: '^Planned date must be today or later'
                 }
             },
