@@ -34,7 +34,7 @@ userSignupForm.onsubmit = async e => {
                     * NOTE: `.inputBoxContainer` is an alternative class used just for error displaying purposes
                     * in order to place the item exactly below the whole input row
                 */
-                const fieldError = userSignupForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || userSignupForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                const fieldError = userSignupForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer, .join):has(:is(input, select, textarea)[name="${key}"])`) || userSignupForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
                 showErrorMessage(fieldError, jsonRes.validationErrors[key]);
             }
             return;
