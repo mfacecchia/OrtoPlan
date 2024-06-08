@@ -31,11 +31,8 @@ function createSlider(){
             640: {
                 perView: 2
             },
-            1024: {
+            1566: {
                 perView: 3
-            },
-            1280: {
-                perView: 4
             }
         }
     });
