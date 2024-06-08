@@ -33,6 +33,9 @@ function createSlider(){
             },
             1024: {
                 perView: 3
+            },
+            1280: {
+                perView: 4
             }
         }
     });
