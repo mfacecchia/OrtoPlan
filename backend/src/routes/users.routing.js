@@ -71,7 +71,7 @@ async function deleteUpdateUser(req, res){
 function updateUser(userInfo, userID){
     // Hashing the password and adding it to the Object if the `password` field is passed and it's not empty
     return new Promise(async (resolve, reject) => {
-        if(userInfo.password && userInfo.password !== '') userInfo.hashedPass = await argon2.hash(req.body.password);
+        if(userInfo.password && userInfo.password !== '') userInfo.hashedPass = await argon2.hash(userInfo.password);
         try{
             const user = prisma.user.update({
                 data: {
