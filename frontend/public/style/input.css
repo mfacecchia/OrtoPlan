@@ -61,7 +61,7 @@
         @apply sm:gap-y-4;
     }
     form :is(input, textarea, select, option){
-        @apply bg-base-100;
+        @apply bg-base-100 appearance-none;
     }
     form :is(input, textarea, select, option), .inputStyleContainer{
         @apply border-[1.5px] border-neutral rounded-lg w-full px-3 py-2 outline-none;
@@ -137,7 +137,7 @@
     }
     .cardsContainer{
         @apply w-full grid grid-cols-1 place-items-center gap-5;
-        @apply sm:grid-cols-2;
+        @apply sm:grid-cols-2 sm:gap-7;
     }
     .customCard{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;

@@ -618,6 +618,9 @@ html {
   }
 }
     form :is(input, textarea, select, option) {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
 }
@@ -2797,6 +2800,7 @@ input.tab:checked + .tab-content,
 
   .cardsContainer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem;
   }
 }
 .customCard {
@@ -3274,11 +3278,9 @@ form[method="dialog"] .btn-square {
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
 .hover\:stroke-primary:hover {
   stroke: var(--fallback-p,oklch(var(--p)/1));
 }
-
 @media (min-width: 640px) {
 
   .sm\:top-1 {
