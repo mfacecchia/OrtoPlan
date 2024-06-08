@@ -1,6 +1,6 @@
 <div class = "customCard <% if (isTemplate === true){ %>hidden<% } %>" <% if(typeof cardData !== 'undefined'){ %> <%= cardData[0] %> = "<%= cardData[1] %>" <% } %>>
     <figure style = "background-image: url('<%= cardBg %>')">
-        <div class = "absolute top-0 right-0 h-8 dropdown dropdown-end" title = "<%= dropdownTitle %>">
+        <div class = "absolute top-0 right-0 h-8 dropdown dropdown-end sm:top-1" title = "<%= dropdownTitle %>">
             <img tabindex = "0" role = "button" class = "h-full" src = "/assets/icons/menu.svg" alt = "Settings button">
             <ul class = "dropdown-content z-10 menu p-2 py-0 shadow-xl bg-base-100 rounded-xl w-40 overflow-y-scroll mr-3 textToRight">
                 <% dropdownOptions.forEach(option => { %>

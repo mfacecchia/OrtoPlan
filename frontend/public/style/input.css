@@ -35,6 +35,7 @@
     }
     nav img, nav svg{
         @apply h-6 flex items-center;
+        @apply sm:h-7;
     }
     nav div{
         @apply space-x-3
@@ -140,6 +141,7 @@
     }
     .customCard{
         @apply w-3/5 box-border pb-2 shadow-md overflow-hidden rounded-xl flex flex-col gap-5;
+        @apply sm:w-2/3;
     }
     .customCard figure{
         @apply flex justify-center h-40 shadow-md relative bg-cover bg-center;
