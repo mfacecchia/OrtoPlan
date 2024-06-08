@@ -3163,17 +3163,21 @@ input.tab:checked + .tab-content,
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
   }
+
+  .dropdown-content li a img {
+    height: 2.25rem;
+  }
 }
 @media (min-width: 768px) {
 
-  .dropdown-content li a p {
+  .dropdown-content li a :is(p, b) {
     font-size: 1rem;
     line-height: 1.5rem;
   }
 }
 @media (min-width: 1024px) {
 
-  .dropdown-content li a p {
+  .dropdown-content li a :is(p, b) {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }

@@ -233,7 +233,10 @@
         @apply gap-x-4;
         @apply lg:gap-x-6;
     }
-    .dropdown-content li a p{
+    .dropdown-content li a img{
+        @apply lg:h-9;
+    }
+    .dropdown-content li a :is(p, b){
         @apply md:text-base;
         @apply lg:text-xl;
     }
