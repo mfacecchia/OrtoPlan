@@ -115,6 +115,10 @@
     }
     form button[data-btn-action]{
         @apply outline-offset-1 p-2;
+        @apply xl:p-3;
+    }
+    form button[data-btn-action] img{
+        @apply xl:h-6
     }
     form .join{
         @apply w-full;
@@ -151,6 +155,7 @@
 @layer components{
     .green-line{
         @apply border-none h-1 rounded-full bg-primary;
+        @apply xl:h-[0.35rem];
     }
     .bigger-text{
         @apply text-4xl
@@ -242,6 +247,7 @@
     }
     .btn{
         @apply lg:text-base;
+        @apply xl:text-lg;
     }
     /* Overriding default `text color` property for `btn-primary` daisyUI class */
     .btn-primary, .btn-error{
@@ -254,7 +260,7 @@
         @apply xl:!max-w-52 xl:text-base xl:p-4 xl:rounded-lg;
     }
     .modal-box{
-        @apply xl:max-w-[40rem];
+        @apply xl:max-w-[40rem] xl:max-h-[80%] xl:py-8;
     }
     .modal-action > :not([hidden]) ~ :not([hidden]){
         @apply ml-0;
@@ -264,7 +270,7 @@
     }
     form[method="dialog"] .btn-square{
         @apply min-h-0 min-w-0 size-8;
-        @apply xl:size-11 xl:text-xl xl:rounded-xl;
+        @apply xl:size-11 xl:text-xl xl:rounded-xl xl:mr-3 xl:mt-3;
     }
     .btn-primary:hover{
         @apply !text-base-100;
@@ -272,14 +278,17 @@
     .toast{
         @apply whitespace-normal;
     }
-    .alert{
+    .alert span{
         @apply max-w-56 text-right;
+        @apply lg:text-xl;
+        @apply xl:text-2xl;
     }
     .glide__arrow{
         @apply absolute top-1/2 -translate-y-1/2 bg-gradient-to-r from-transparent to-base-100 to-30% h-full box-border px-1;
     }
     .glide__arrow img{
         @apply h-7;
+        @apply xl:h-11;
     }
     .glide__arrow--left{
         @apply left-3 bg-gradient-to-l;

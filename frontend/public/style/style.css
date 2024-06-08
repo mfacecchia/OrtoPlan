@@ -874,6 +874,16 @@ html {
   padding: 0.5rem;
   outline-offset: 1px;
 }
+    @media (min-width: 1280px) {
+
+  form button[data-btn-action] {
+    padding: 0.75rem;
+  }
+
+  form button[data-btn-action] img {
+    height: 1.5rem;
+  }
+}
     form .join {
   width: 100%;
 }
@@ -2946,6 +2956,12 @@ input.tab:checked + .tab-content,
   --tw-bg-opacity: 1;
   background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
 }
+@media (min-width: 1280px) {
+
+  .green-line {
+    height: 0.35rem;
+  }
+}
 .bigger-text {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -3187,6 +3203,13 @@ input.tab:checked + .tab-content,
     line-height: 1.5rem;
   }
 }
+@media (min-width: 1280px) {
+
+  .btn {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
 /* Overriding default `text color` property for `btn-primary` daisyUI class */
 .btn-primary, .btn-error {
   --tw-text-opacity: 1;
@@ -3215,7 +3238,10 @@ input.tab:checked + .tab-content,
   }
 
   .modal-box {
+    max-height: 80%;
     max-width: 40rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }
 .modal-action > :not([hidden]) ~ :not([hidden]) {
@@ -3234,6 +3260,8 @@ form[method="dialog"] .btn-square {
 @media (min-width: 1280px) {
 
   form[method="dialog"] .btn-square {
+    margin-right: 0.75rem;
+    margin-top: 0.75rem;
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 0.75rem;
@@ -3248,9 +3276,23 @@ form[method="dialog"] .btn-square {
 .toast {
   white-space: normal;
 }
-.alert {
+.alert span {
   max-width: 14rem;
   text-align: right;
+}
+@media (min-width: 1024px) {
+
+  .alert span {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+@media (min-width: 1280px) {
+
+  .alert span {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }
 .glide__arrow {
   position: absolute;
@@ -3270,6 +3312,12 @@ form[method="dialog"] .btn-square {
 }
 .glide__arrow img {
   height: 1.75rem;
+}
+@media (min-width: 1280px) {
+
+  .glide__arrow img {
+    height: 2.75rem;
+  }
 }
 .glide__arrow--left {
   left: 0.75rem;
