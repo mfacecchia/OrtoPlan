@@ -59,6 +59,7 @@
     }
     footer img{
         @apply size-11;
+        @apply lg:size-14;
     }
     section{
         @apply w-full py-11;
