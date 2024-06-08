@@ -57,6 +57,7 @@
     }
     form{
         @apply flex flex-col items-center justify-center gap-y-3 w-full overflow-hidden box-border p-2;
+        @apply sm:gap-y-4;
     }
     form :is(input, textarea, select, option){
         @apply bg-base-100;
@@ -80,13 +81,16 @@
         @apply border-none p-0;
     }
     input[type="checkbox"]{
-        @apply scale-110 w-auto;
+        @apply w-auto;
     }
     form button[type="submit"]{
-        @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3;
+        @apply rounded-full text-base-100 bg-primary px-3 py-1 text-lg font-bold w-1/3 mt-3;
     }
     form button[data-btn-action]{
         @apply outline-offset-1 p-2;
+    }
+    form .join{
+        @apply w-full;
     }
     form .join input:first-child{
         @apply rounded-r-none;

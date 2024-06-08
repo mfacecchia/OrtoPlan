@@ -605,6 +605,12 @@ html {
   overflow: hidden;
   padding: 0.5rem;
 }
+    @media (min-width: 640px) {
+
+  form {
+    row-gap: 1rem;
+  }
+}
     form :is(input, textarea, select, option) {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
@@ -666,11 +672,9 @@ html {
 }
     input[type="checkbox"] {
   width: auto;
-  --tw-scale-x: 1.1;
-  --tw-scale-y: 1.1;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
     form button[type="submit"] {
+  margin-top: 0.75rem;
   width: 33.333333%;
   border-radius: 9999px;
   --tw-bg-opacity: 1;
@@ -688,6 +692,9 @@ html {
     form button[data-btn-action] {
   padding: 0.5rem;
   outline-offset: 1px;
+}
+    form .join {
+  width: 100%;
 }
     form .join input:first-child {
   border-top-right-radius: 0px;
@@ -3255,9 +3262,11 @@ form[method="dialog"] .btn-square {
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
 .hover\:stroke-primary:hover {
   stroke: var(--fallback-p,oklch(var(--p)/1));
 }
+
 @media (min-width: 640px) {
 
   .sm\:w-4\/5 {
