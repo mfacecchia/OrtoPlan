@@ -13,9 +13,9 @@ export async function findUser(userField, isID = false, throwOnFound = false){
             userExists = await prisma.credentials.findUniqueOrThrow({
                 where: isID? { userID: userField }: { email: userField }
             });
-            throwOnFound? reject(false): resolve(userExists);
+            throwOnFound? reject(userExists): resolve(userExists);
         }catch(err){
-            throwOnFound? resolve(userExists): reject(false);
+            throwOnFound? resolve(false): reject(false);
         }
     });
 }
