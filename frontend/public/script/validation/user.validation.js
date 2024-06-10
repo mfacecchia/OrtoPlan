@@ -1,4 +1,4 @@
-async function validateLoginSignup(formData, isLogin = true){
+function validateLoginSignup(formData, isLogin = true){
     // Default validator for empty values, defined to simplify code readability
     const defaultPresenceValidator = { presence: { allowEmpty: false } };
     const fieldsValidations = {
@@ -45,5 +45,54 @@ async function validateLoginSignup(formData, isLogin = true){
         }catch(validationErrors){
             reject(validationErrors);
         }
-    })
+    });
+}
+
+function validateUserUpdate(formData){
+    const validators = {
+        firstName: {
+            ...defaultPresenceValidator,
+            ...defaultMaxLength
+        },
+        lastName: {
+            ...defaultPresenceValidator,
+            ...defaultMaxLength
+        },
+        email: {
+            ...defaultPresenceValidator,
+            ...defaultMaxLength,
+            email: true
+        }
+    };
+    if(formData.password){
+        validators.oldPassword = {
+            ...defaultPresenceValidator
+        };
+        validators.password = {
+            ...defaultPresenceValidator,
+            length: {
+                minimum: 15,
+                tooShort: '^Too short (minimum length is %{count} characters).'
+            }
+        };
+        validators.passwordVerify = {
+            ...defaultPresenceValidator,
+            equality: {
+                attribute: 'password',
+                message: '^Passwords do not match'
+            }
+        };
+    };
+    validate.validators.email.message = '^Not a valid email';
+    return new Promise(async (resolve, reject) => {
+        try{
+            await validate.async(formData, validators);
+            formData.email = formData.email.toLowerCase();
+            formData.firstName = validate.capitalize(formData.firstName.trim());
+            formData.lastName = validate.capitalize(formData.lastName.trim());
+            resolve(formData);
+        }catch(validationErrors){
+            reject(validationErrors);
+        }
+    });
 }
