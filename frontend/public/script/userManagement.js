@@ -31,7 +31,19 @@ async function updateUser(){
     updateUserForm.onsubmit = async e => {
         e.preventDefault();
         let newUserFormData = formDataToObject(new FormData(updateUserForm));
-        // TODO: Add validation also before call to backend
+        try{
+            const validationResult = await validateUserUpdate(newUserFormData);
+            // Overwriting the Object with the sanitized data version
+            newUserFormData = validationResult;
+        }catch(err){
+            clearFormErrorMessages(updateUserForm, false);
+            for(const key of Object.keys(err)){
+                // Element to display the error to can be either an input element, and an input container
+                const fieldError = updateUserForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || updateUserForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                showErrorMessage(fieldError, err[key]);
+            }
+            return;
+        }
         try{
             const res = await fetch(`${BACKEND_ADDRESS}/api/user`, {
                 method: 'PUT',
