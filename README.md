@@ -31,6 +31,7 @@
 <h2 id = "modules-references">Technologies References</h2>
 <h4>Core Functionalities</h4>
 <a href = "https://expressjs.com/en/4x/api.html#express">Express.JS</a> |
+<a href = "https://www.npmjs.com/package/cors">CORS</a> |
 <a href = "https://ejs.co/">EJS</a> |
 <a href = "https://momentjs.com/docs/">Moment.JS</a> |
 <a href = "https://postcss.org/">PostCSS</a> |
