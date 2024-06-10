@@ -24,10 +24,14 @@ async function updateUser(){
     updateUserForm.querySelector('[name="lastName"]').value = userInfo.lastName;
     updateUserForm.querySelector('[name="email"]').value = userInfo.credential[0].email;
 
-    updateUserDialog.onclose = () => setTabIndexToMinusOne(updateUserDialog);
+    updateUserDialog.onclose = () =>{
+        clearFormErrorMessages(updateUserForm, true);
+        setTabIndexToMinusOne(updateUserDialog);
+    }
     updateUserForm.onsubmit = async e => {
         e.preventDefault();
-        const newUserFormData = formDataToObject(new FormData(updateUserForm));
+        let newUserFormData = formDataToObject(new FormData(updateUserForm));
+        // TODO: Add validation also before call to backend
         try{
             const res = await fetch(`${BACKEND_ADDRESS}/api/user`, {
                 method: 'PUT',
@@ -39,15 +43,27 @@ async function updateUser(){
                 body: JSON.stringify(newUserFormData)
             });
             const jsonRes = await res.json();
+            if(res.status === 403){
+                clearFormErrorMessages(updateUserForm, false);
+                for(const key of Object.keys(jsonRes.validationErrors)){
+                    /*
+                        * Element to display the error to can be either an input element, and an input container
+                        * NOTE: `.inputBoxContainer` is an alternative class used just for error displaying purposes
+                        * in order to place the item exactly below the whole input row
+                    */
+                    const fieldError = updateUserForm.querySelector(`:is(.inputStyleContainer, .inputBoxContainer):has(:is(input, select, textarea)[name="${key}"])`) || updateUserForm.querySelector(`:is(input, select, textarea)[name="${key}"]`);
+                    showErrorMessage(fieldError, jsonRes.validationErrors[key]);
+                }
+                return;
+            }
             if(!res.ok) throw new Error(jsonRes.message);
-            displayMessage('User information updated successfully.', 'success');
         }catch(err){
             displayMessage(`Could not update user information. ${err.message}`, 'error');
+            updateUserDialog.close();
             return;
         }
-        finally{
-            updateUserDialog.close();
-        }
+        displayMessage('User information updated successfully.', 'success');
+        updateUserDialog.close();
     }
     updateUserDialog.showModal();
     setTabIndexToZero(updateUserDialog);
