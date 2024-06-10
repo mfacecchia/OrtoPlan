@@ -85,3 +85,16 @@
 <p>If you want to test this project yourself, you can compile the <code>Plant</code> and <code>Location</code> tables by just running <code>npm run setupDB</code> and wait for completion.</p>
 <b>DISCLAIMER: in order for this to work you have to first set the <code>RAPIDAPI_KEY</code> as well as the <code>UNSPLASHAPI_KEY</code> API Keys since all data obtained comes from external sources.</b>
 <hr>
+
+<h2 id = "app-routes">App Routes</h2>
+<p>All the main routes for this application start with <code>/api/</code> and are mainly used to retrieve, add, and update values from/to the Database.</p>
+<p>The routes responsible for user authentications are <code>/user/login</code>, and <code>/user/signup</code>. Both routes return the final user, obtained from Database Read (in case of login) or new user creation (in case of signup).</p>
+<p>To enhance security, all routes starting with <code>/api/</code> require the user to be authenticated; such validation is made by verifying the Bearer Token sent along with the request in the header. If it's not valid or it's valid but the user does not exist anymore, the server returns a <code>401 Unhauthorized</code> status code and the user needs to re-authenticate again with a valid JWT before making any request.</p>
+<p>Such token validation is made through the <code>isLoggedIn</code> Middleware, which:
+    <ul>
+        <li>Checks if the Bearer token is in the <code>req.header</code></li>
+        <li>Decodes it and gets the <code>userID</code> field from the Token's Payload</li>
+        <li>Makes a <code>findUniqueOrThrow</code> query to the database and checks if the <code>Prisma Promise</code> Resolves or Rejects to consequently return a <code>200 OK</code> status code if it still exists or a <code>402 Unhauthorized</code> in case the Promise Rejects</li>
+    </ul>
+</p>
+<hr>
