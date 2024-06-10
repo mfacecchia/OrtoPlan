@@ -1,6 +1,7 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import argon2 from 'argon2';
+import { validateUserUpdate } from '../validation/user.validation.js';
 
 
 export default function users(app){
@@ -21,7 +22,7 @@ export default function users(app){
                 });
             }
         })
-        .put(deleteUpdateUser)
+        .put(validateUserUpdate(), deleteUpdateUser)
         .delete(deleteUpdateUser)
 }
 
