@@ -4,6 +4,12 @@
 
 <h2>Table of contents</h2>
 <a href = "#built-in">Built in - Technologies</a><br>
+<a href = "#modules-references">Modules References</a><br>
+<a href = "#importing-modules">Importing modules</a><br>
+<a href = "#environmental-variables">Environmental Variables</a><br>
+<a href = "#db-er">Database Entity Relationship model</a><br>
+<a href = "#app-routes">App Routes</a><br>
+<a href = "#hashing-methods">Hashing methods</a><br>
 <hr>
 
 <h2 id = "built-in">Built in - Technologies</h2>
@@ -20,4 +26,20 @@
 <img src = "https://img.shields.io/badge/daisyUI-1ad1a5?style=for-the-badge&logo=daisyui&logoColor=white" alt = "DaisyUI">
 <br>
 <img src = "https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" alt = "MySQL">
+<img src = "https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white" alt = "Prisma ORM">
+<hr>
 
+<h2 id = "modules-references">Technologies References</h2>
+<h4>Core Functionalities</h4>
+<a href = "https://expressjs.com/en/4x/api.html#express">Express.JS</a> |
+<a href = "https://ejs.co/">EJS</a> |
+<a href = "https://momentjs.com/docs/">Moment.JS</a> |
+<a href = "https://postcss.org/">PostCSS</a> |
+<a href = "https://tailwindcss.com/docs/installation">Tailwind CSS</a> |
+<a href = "https://daisyui.com/">DaisyUI</a> |
+<a href = "https://www.prisma.io/docs/getting-started/quickstart">Prisma ORM</a>
+<h4>Hashing & security</h4>
+<a href = "https://www.npmjs.com/package/argon2">Argon2</a>
+<h4>Login Methods</h4>
+<a href = "https://www.npmjs.com/package/jsonwebtoken">JWT</a>
+<hr>
