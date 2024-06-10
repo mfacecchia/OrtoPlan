@@ -99,3 +99,6 @@
     </ul>
 </p>
 <hr>
+
+<h2 id = "hashing-methods">Hashing methods</h2>
+<p>All user-related sensitive data such as passwords are securely hashed and stored in the database using the <a href = "https://en.wikipedia.org/wiki/Argon2">Argon2id algorithm</a>. To manage and verify such data, <a href = "https://www.npmjs.com/package/argon2">argon2</a> module is being used, in particular the <code>argon2.hash()</code> and <code>argon2.verify()</code> functions with default memory cost, time complexity, and parallellism values.</p>
