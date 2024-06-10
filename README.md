@@ -14,8 +14,7 @@
 
 <h2 id = "built-in">Built in - Technologies</h2>
 <img src = "https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt = "HTML">
-<img src = "https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white
-" alt = "CSS">
+<img src = "https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt = "CSS">
 <img src = "https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt = "JavaScript">
 <br>
 <img src = "https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt = "Node.js">
@@ -79,4 +78,10 @@
   </tr>
 </table>
 <b>NOTE:</b> <span>For this project the database is locally hosted so the environmental value for <code>DATABASE_URL</code> will be something like this: <code>mysql://root@localhost:3306/OrtoPlan</code>.</span>
+<hr>
+
+<h2 id = "db-er">Database Entity Relationship model</h2>
+<img src = "https://github.com/mfacecchia/OrtoPlan/assets/86726458/3b4d16ae-0810-4002-9358-8b17979819e1" alt = "DB E-R Model">
+<p>If you want to test this project yourself, you can compile the <code>Plant</code> and <code>Location</code> tables by just running <code>npm run setupDB</code> and wait for completion.</p>
+<b>DISCLAIMER: in order for this to work you have to first set the <code>RAPIDAPI_KEY</code> as well as the <code>UNSPLASHAPI_KEY</code> API Keys since all data obtained comes from external sources.</b>
 <hr>
