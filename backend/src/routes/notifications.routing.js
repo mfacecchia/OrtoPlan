@@ -29,11 +29,11 @@ export default function notifications(app){
             const decodedToken = decodeToken(req.headers.authorization, false);
             req.body.userID = decodedToken.userID;
             try{
-                const newPlantation = await createNotification(req.body);
+                const newNotification = await createNotification(req.body);
                 res.status(201).json({
                     status: 201,
-                    message: "Plantation successfully created",
-                    plantation: newPlantation
+                    message: "Notification successfully created",
+                    notification: newNotification
                 });
             }catch(err){
                 res.status(400).json({
