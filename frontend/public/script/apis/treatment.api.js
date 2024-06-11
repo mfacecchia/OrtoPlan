@@ -26,7 +26,7 @@ function getUpcomingTreatments(treatmentsList){
             upcomingTreatments.push({
                 plantationName: treatment.plantationPlant.plantation.plantationName,
                 plantName: treatment.plantationPlant.plant.plantName,
-                treatmentType: treatment.plantationPlant.treatmentType,
+                treatmentType: treatment.treatmentType,
                 dueInDays: dueInDays
             });
         }
