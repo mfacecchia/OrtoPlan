@@ -43,6 +43,23 @@ export default function notifications(app){
                 return;
             }
         })
+        .delete(async (req, res) => {
+            try{
+                const decodedToken = decodeToken(req.headers.authorization, false);
+                const userID = decodedToken.userID;
+                const notification = await removeNotification(parseInt(req.body.notificationID) || 0, userID);
+                res.status(200).json({
+                    status: 200,
+                    message: "Notification successfully removed",
+                    notification: notification
+                });
+            }catch(err){
+                res.status(404).json({
+                    status: 404,
+                    message: err
+                });
+            }
+        });
 }
 
 
@@ -55,6 +72,22 @@ function createNotification(notificationData){
             resolve(newNotification);
         }catch(err){
             reject(false);
+        }
+    });
+}
+
+function removeNotification(notificationID, userID){
+    return new Promise(async (resolve, reject) => {
+        try{
+            const removedNotification = await prisma.notification.delete({
+                where: {
+                    notificationID: notificationID,
+                    userID: userID
+                }
+            });
+            resolve(removedNotification);
+        }catch(err){
+            reject(err.code === 'P2025'? 'Notification not found.': 'Unknown error.');
         }
     });
 }
