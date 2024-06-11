@@ -125,7 +125,7 @@ function resetTreatmentsList(form){
 async function getPlantTreatments(plantID){
     const treatmentsModal = document.querySelector('#treatments');
     // Obtaining data from the API
-    const treatmentsData = await makeTreatmentsRequest(plantID);
+    const treatmentsData = await getTreatmentsList(plantID);
     if(!Array.isArray(treatmentsData)){
         // In this case `treatmentsData` is a `typeof string`, and it will represent an error message received from the `fetch` operation
         displayMessage(`Could not retrieve treatments data. ${treatmentsData}`, 'error');
@@ -239,23 +239,6 @@ function newTreatment(plantID){
     }
     newTreatmentDialog.showModal();
     setTabIndexToZero(newTreatmentDialog);
-}
-
-async function makeTreatmentsRequest(plantID){
-    try{
-        const res = await fetch(`${BACKEND_ADDRESS}/api/treatments/all?plantationPlantID=${plantID}`, {
-            method: 'GET',
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            }
-        });
-        const jsonRes = await res.json();
-        if(!res.ok) throw new Error(jsonRes.message);
-        return jsonRes.treatments;
-    }catch(err){
-        return err.message;
-    }
 }
 
 function insertTreatmentInList(formsContainer, treatmentForm){
