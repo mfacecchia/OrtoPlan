@@ -14,3 +14,22 @@ async function getTreatmentsList(plantID = undefined){
         return err.message;
     }
 }
+
+function getUpcomingTreatments(treatmentsList){
+    /*
+        * Filters all plant's treatments and returns the most upcoming ones (7 days from current date)
+    */
+    const upcomingTreatments = [];
+    treatmentsList.forEach(treatment => {
+        const dueInDays = moment.utc(treatment.treatmentDate).diff(moment.utc(), 'days');
+        if(dueInDays >= 0 && dueInDays <= 7){
+            upcomingTreatments.push({
+                plantationName: treatment.plantationPlant.plantation.plantationName,
+                plantName: treatment.plantationPlant.plant.plantName,
+                treatmentType: treatment.plantationPlant.treatmentType,
+                dueInDays: dueInDays
+            });
+        }
+    });
+    return upcomingTreatments;
+}
