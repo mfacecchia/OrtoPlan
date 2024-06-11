@@ -123,6 +123,8 @@
         <script src = "/script/apis/treatment.api.js"></script>
         <script src = "/script/apis/plantation.api.js"></script>
         <script src = "/script/apis/weather.api.js"></script>
+        <script src = "/script/apis/notifications.api.js"></script>
+        <script src = "/script/apis/treatment.api.js"></script>
         <script src = "/script/validation/customDefaultValidators.validation.js"></script>
         <script src = "/script/validation/user.validation.js"></script>
         <script src = "/script/validation/plant.validation.js"></script>
@@ -131,10 +133,12 @@
         <script src = "/script/treatmentsManagement.js"></script>
         <script src = "/script/plantPlantationsManagement.js"></script>
         <script src = "/script/weatherSlider.js"></script>
+        <script src = "/script/notificationsManagement.js"></script>
         <script>
             updatePageData(<%=plantationID%>);
             getUserList('plant', <%=plantationID%>);
             addSliderElements(<%=plantationID%>);
+            updateNotificationsDropdown();
         </script>
     </body>
 </html>

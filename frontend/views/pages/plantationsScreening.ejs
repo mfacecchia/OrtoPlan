@@ -56,12 +56,19 @@
         <%- include('../partials/footer.partial.ejs') %>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
         <script src = "/script/utilities.js"></script>
         <script src = "/script/auth/jwt.auth.js"></script>
         <script src = "/script/validation/customDefaultValidators.validation.js"></script>
         <script src = "/script/validation/user.validation.js"></script>
         <script src = "/script/validation/plantation.validation.js"></script>
+        <script src = "/script/apis/notifications.api.js"></script>
+        <script src = "/script/apis/treatment.api.js"></script>
         <script src = "/script/plantPlantationsManagement.js"></script>
-        <script>getUserList('plantation')</script>
+        <script src = "/script/notificationsManagement.js"></script>
+        <script>
+            getUserList('plantation');
+            updateNotificationsDropdown();
+        </script>
     </body>
 </html>
