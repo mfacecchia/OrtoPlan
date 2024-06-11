@@ -3443,9 +3443,6 @@ form[method="dialog"] .btn-square {
 .\!h-36 {
   height: 9rem !important;
 }
-.h-60 {
-  height: 15rem;
-}
 .h-64 {
   height: 16rem;
 }
@@ -3454,6 +3451,9 @@ form[method="dialog"] .btn-square {
 }
 .h-full {
   height: 100%;
+}
+.max-h-60 {
+  max-height: 15rem;
 }
 .w-1\/2 {
   width: 50%;
