@@ -31,3 +31,26 @@ async function removeAllNotifications(){
         return false;
     }
 }
+
+async function addTreatmentNotification(treatmentData){
+    try{
+        const res = await fetch(`${BACKEND_ADDRESS}/api/notifications`, {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+            },
+            body: JSON.stringify({
+                message: `${treatmentData.treatmentType} scheduled for ${treatmentData.plantationName}'s ${treatmentData.plantName} ${treatmentData.dueInDays > 0? `in ${treatmentData.dueInDays} day(s)`: 'today'}.`,
+                notificationType: 'treatment',
+                notificationIcon: `${treatmentData.treatmentType.toLowerCase()}_green.svg`
+            })
+        });
+        const jsonRes = await res.json();
+        if(!res.ok) throw new Error(jsonRes.message);
+        return jsonRes.notification;
+    }catch(err){
+        return false;
+    }
+}
