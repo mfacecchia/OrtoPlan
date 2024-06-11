@@ -60,6 +60,17 @@ export default function notifications(app){
                 });
             }
         });
+    
+    app.route('/api/notifications/all')
+        .get(async (req, res) => {
+            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+            const notificationsList = await getNotificationsList(decodedToken.userID);
+            res.status(200).json({
+                status: 200,
+                message: "Notifications found",
+                notifications: notificationsList
+            });
+        })
 }
 
 
@@ -89,5 +100,16 @@ function removeNotification(notificationID, userID){
         }catch(err){
             reject(err.code === 'P2025'? 'Notification not found.': 'Unknown error.');
         }
+    });
+}
+
+function getNotificationsList(userID){
+    return new Promise(async (resolve, reject) => {
+        const notifications = await prisma.notification.findMany({
+            where: {
+                userID: userID
+            }
+        });
+        resolve(notifications);
     });
 }
