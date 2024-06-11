@@ -67,7 +67,7 @@ export default function treatments(app){
             * Returns an Array with all treatments' information as well as all relative plant and plantation's information
         */
         const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-        const treatment = await getPlantTreatmentsList(parseInt(req.query.plantationPlantID) || 0, decodedToken.userID);
+        const treatment = await getPlantTreatmentsList(parseInt(req.query.plantationPlantID) || undefined, decodedToken.userID);
         res.status(200).json({
             status: 200,
             message: "Treatments found",
