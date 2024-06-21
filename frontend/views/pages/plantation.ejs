@@ -59,6 +59,45 @@
                 <div class = "btn btn-primary rounded-full w-1/2 py-2 px-3" id = "newTreatment" role = "button"><p>New treatment</p></div>
             </div>
         </dialog>
+        <dialog class = "modal" id = "plantInfo">
+            <div class = "modal-box">
+                <form method = "dialog">
+                    <button class = "btn btn-square rounded-md btn-outline absolute right-2 top-2 btn-primary">X</button>
+                </form>
+                <div class = "flex flex-col justify-center items-center space-y-5" role = "definition">
+                    <header class = "mb-0">
+                        <h1 class = "text-secondary font-bold">About <span id = "plantName"></span></h1>
+                        <hr class = "animate-showHide w-20 green-line mx-auto">
+                    </header>
+                    <div class = "space-y-5 w-full">
+                        <article>
+                            <h1>Name</h1>
+                            <p data-plant-info = "plantName"></p>
+                        </article>
+                        <article>
+                            <h1>Family</h1>
+                            <p data-plant-info = "plantFamily"></p>
+                        </article>
+                        <article>
+                            <h1>Scientific name</h1>
+                            <p data-plant-info = "scientificName"></p>
+                        </article>
+                        <article>
+                            <h1>Category</h1>
+                            <p data-plant-info = "category"></p>
+                        </article>
+                        <article>
+                            <h1>Variety</h1>
+                            <p data-plant-info = "variety"></p>
+                        </article>
+                        <article>
+                            <h1>Preferred climate</h1>
+                            <p data-plant-info = "preferredClimate"></p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </dialog>
         <section class = "h-64 bg-defaultPlantation bg-cover bg-center p-0 shadow-lg xl:h-96 2xl:h-[400px]" id = "plantationBG">
             <div class = "size-full bg-black opacity-30"></div>
         </section>
@@ -122,6 +161,7 @@
         <script src = "/script/auth/jwt.auth.js"></script>
         <script src = "/script/apis/treatment.api.js"></script>
         <script src = "/script/apis/plantation.api.js"></script>
+        <script src = "/script/apis/plant.api.js"></script>
         <script src = "/script/apis/weather.api.js"></script>
         <script src = "/script/apis/notifications.api.js"></script>
         <script src = "/script/apis/treatment.api.js"></script>

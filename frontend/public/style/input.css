@@ -219,6 +219,9 @@
         @apply lg:text-base;
         @apply xl:text-lg;
     }
+    #plantInfo article h1{
+        @apply font-semibold;
+    }
 }
 
 @layer components{
