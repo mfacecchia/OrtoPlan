@@ -12,26 +12,29 @@ export default function sendWelcomeEmail(recipient, name, surname){
         else renderedHTMLTemplate = htmlStr;
     });
     if(!renderedHTMLTemplate) return false;
-    transporter.sendMail({
-        from: `OrtoPlan Mailing System <${process.env.MAILING_SYSTEM_ADDRESS}>`,
-        to: recipient,
-        subject: "Welcome to OrtoPlan!",
-        text: `Welcome to the OrtoPlan family, ${name + ' ' + surname}! Thanks to be a part of our continuously growing family.`,
-        html: renderedHTMLTemplate,
-        attachments: [
-            {
-                filename: 'favicon.webp',
-                path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/favicon.webp`,
-                cid: 'OrtoPlanLogo'
-            },
-            {
-                filename: 'footer.webp',
-                path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/footer.webp`,
-                cid: 'OrtoPlanFooterBG'
-            }
-        ]
-    }, (error, info) => {
-        if(error) return false;
-        else return true;
-    });
+    return new Promise((resolve, reject) => {
+        transporter.sendMail({
+            from: `OrtoPlan Mailing System <${process.env.MAILING_SYSTEM_ADDRESS}>`,
+            to: recipient,
+            subject: "Welcome to OrtoPlan!",
+            text: `Welcome to the OrtoPlan family, ${name + ' ' + surname}! Thanks to be a part of our continuously growing family.`,
+            html: renderedHTMLTemplate,
+            attachments: [
+                {
+                    filename: 'favicon.webp',
+                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/favicon.webp`,
+                    cid: 'OrtoPlanLogo'
+                },
+                {
+                    filename: 'footer.webp',
+                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/footer.webp`,
+                    cid: 'OrtoPlanFooterBG'
+                }
+            ]
+        }, (error, info) => {
+            if(error) return false;
+            else return true;
+        });
+        resolve(true);
+    })
 }
