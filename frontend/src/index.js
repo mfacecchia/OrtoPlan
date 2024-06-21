@@ -26,6 +26,10 @@ app.get('/user/plantations/:plantationID', (req, res) => {
     res.render('pages/plantation', {plantationID: req.params.plantationID});
 });
 
+app.use((req, res) => {
+    res.status(404).render('pages/notFound');
+});
+
 app.listen(5500, () => {
     console.log("Pong.");
 });
