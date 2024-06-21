@@ -271,3 +271,28 @@ async function updatePageData(plantationID){
     plantationMainData.querySelector('h1').textContent = plantation.plantationName;
     plantationMainData.querySelector('b').textContent = plantation.location.locationName;
 }
+
+async function showPlantInformation(plantID){
+    const res = await getPlantInfo(plantID);
+    if(!res){
+        displayMessage('Plant not found.', 'error');
+        return;
+    }
+    if(res.status !== 200){
+        displayMessage(plantInfo.message, 'error');
+        return;
+    }
+    const plantInfo = res.plants.plant;
+    // Assigning data from JSON `plantDescription` field
+    const plantDescriptionData = JSON.parse(plantInfo.plantDescription);
+    plantInfo.category = plantDescriptionData['Category'];
+    plantInfo.variety = plantDescriptionData['Variety'];
+    plantInfo.preferredClimate = plantDescriptionData['Preferred Climate'];
+    delete plantInfo.plantDescription;
+    const plantInfoDialog = document.querySelector('#plantInfo');
+    plantInfoDialog.querySelector('header h1 #plantName').textContent = plantInfo.plantName;
+    ['plantName', 'plantFamily', 'scientificName', 'category', 'variety', 'preferredClimate'].forEach(key => {
+        plantInfoDialog.querySelector(`[data-plant-info="${key}"]`).textContent = plantInfo[key];
+    })
+    plantInfoDialog.showModal();
+}
