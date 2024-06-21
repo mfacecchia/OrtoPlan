@@ -4,6 +4,7 @@ import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
 import { findUser } from '../middlewares/findUser.middleware.js';
 import { validateLoginSignup } from '../validation/user.validation.js';
 import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
+import sendWelcomeEmail from '../mail/welcome.mail.js'
 
 
 export default function userAuth(app){
@@ -11,6 +12,7 @@ export default function userAuth(app){
         try{
             const hashedPass = await hashPassword(req.body.password);
             await newUser(req.body, hashedPass);
+            await sendWelcomeEmail(req.body.email, req.body.firstName, req.body.lastName);
             res.status(201).json({
                 status: 201,
                 message: "User created successfully"
