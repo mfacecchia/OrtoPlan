@@ -11,14 +11,5 @@ export default function configureMailingSystem(){
             pass: process.env.MAILING_SYSTEM_PASSWORD
         }
     });
-    transporter.verify((error, success) => {
-        if(error){
-            console.log(error);
-            return false;
-        }
-        else{
-            console.log("Ready to send email");
-            return transporter;
-        }
-    });
+    return transporter;
 }
