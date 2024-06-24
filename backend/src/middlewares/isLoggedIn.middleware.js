@@ -17,7 +17,9 @@ export const isLoggedIn = (strict = false, setHeaderOnValid = true) => {
                 await validateJWT(token.replace('Bearer ', ''));
                 // Obtaining the userID from the jwt decoded payload to check if the user still exists
                 const tokenUserID = jwt.decode(token.replace('Bearer ', '')).userID;
-                await findUser(tokenUserID, true, false)
+                const user = await findUser(tokenUserID, true, false);
+                // NOTE: Passing the user's email verification status to the next middleware for further verifications
+                req.userEmailStatus = user.verified;
                 if(setHeaderOnValid){
                     res.status(200).json({
                         status: 200,
