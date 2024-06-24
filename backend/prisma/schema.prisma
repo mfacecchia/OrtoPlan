@@ -29,6 +29,7 @@ model Credentials {
   password String
   githubID String?
   googleID String?
+  verified Boolean @default(false)
   userID Int @unique
   // NOTE: Foreign key (1:N relation with `User` table)
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
