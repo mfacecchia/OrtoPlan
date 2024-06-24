@@ -1,13 +1,16 @@
 import configureMailingSystem from "./configure.mail.js";
 import ejs from 'ejs'
 import 'dotenv/config';
+import generateEmailVerificationLink from "./validateAddress.mail.js";
 
 
-export default function sendWelcomeEmail(recipient, name, surname){
+export default async function sendWelcomeEmail(recipient, name, surname){
     const transporter = configureMailingSystem();
+    const emailVerificationToken =  await generateEmailVerificationLink(recipient);
+    const emailVerificationLink = `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/user/verify?q=${emailVerificationToken}`;
     let renderedHTMLTemplate = undefined;
     // Rendering HTML templayte with all the data passed as function arguments
-    ejs.renderFile(`src/mail/templates/welcome.mail.template.ejs`, {name: name, surname: surname}, (error, htmlStr) => {
+    ejs.renderFile(`src/mail/templates/welcome.mail.template.ejs`, {name: name, surname: surname, verificationLink: emailVerificationLink}, (error, htmlStr) => {
         if(error) return false;
         else renderedHTMLTemplate = htmlStr;
     });
@@ -19,6 +22,7 @@ export default function sendWelcomeEmail(recipient, name, surname){
             subject: "Welcome to OrtoPlan!",
             text: `Welcome to the OrtoPlan family, ${name + ' ' + surname}! Thanks to be a part of our continuously growing family.`,
             html: renderedHTMLTemplate,
+            // TODO: Add icons in the backend as well instead of accessing from frontend server
             attachments: [
                 {
                     filename: 'favicon.webp',
