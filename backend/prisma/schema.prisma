@@ -31,8 +31,16 @@ model Credentials {
   googleID String?
   verified Boolean @default(false)
   userID Int @unique
+  verification Verification[]
   // NOTE: Foreign key (1:N relation with `User` table)
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
+}
+
+model Verification {
+  messageID Int @id @default(autoincrement())
+  email String
+
+  credential Credentials @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Notification{
