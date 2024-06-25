@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "css": "postcss public/style/input.css -o public/style/style.css --watch",
-    "dev": "nodemon src/index.js",
-    "production": "node src/index.js"
+    "dev": "nodemon src/index.mjs",
+    "production": "node src/index.mjs"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.11.1",
+    "dotenv": "^16.4.5",
     "nodemon": "^3.1.0",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "ejs": "^3.1.10",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
   }
 }
