@@ -10,10 +10,10 @@ export function generateJWT(payload, rememberMe = false){
     });
 }
 
-export function validateJWT(token){
+export function validateJWT(token, secret){
     return new Promise(async (resolve, reject) => {
         try{
-            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+            const decodedToken = jwt.verify(token, secret);
             resolve(decodedToken);
         }catch(err){
             if(err.name === 'TokenExpiredError') reject('Token expired.');

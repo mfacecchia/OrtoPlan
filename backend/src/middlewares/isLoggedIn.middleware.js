@@ -14,7 +14,7 @@ export const isLoggedIn = (strict = false, setHeaderOnValid = true) => {
             const token = req.headers.authorization;
             if(strict && !token) throw new Error('Invalid token.');
             if(token){
-                await validateJWT(token.replace('Bearer ', ''));
+                await validateJWT(token.replace('Bearer ', ''), process.env.JWT_SECRET);
                 // Obtaining the userID from the jwt decoded payload to check if the user still exists
                 const tokenUserID = jwt.decode(token.replace('Bearer ', '')).userID;
                 const user = await findUser(tokenUserID, true, false);
