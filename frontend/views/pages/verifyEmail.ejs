@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+    <%- include('../partials/head.partial.ejs', {
+        title: 'Page not found',
+    }) %>
+    <body>
+        <section class = "flex flex-col justify-center items-center gap-y-5 text-center">
+            <% if(successful){ %>
+                <h1>You're <strong class = "text-primary">all set up!</strong></h1>
+                <div class = "flex-col-container">
+                    <p class = "w-5/6 2xl:w-3/5">
+                        Your Email address has been verified and all the OrtoPlan's features has been enabled.
+                    </p>
+                    <p class = "w-5/6 2xl:w-3/5">Happy gardening!</p>
+                    <hr class = "animate-showHide origin-center green-line w-20 xl:w-36">
+                </div>
+                <a class = "btn btn-primary btn-outline mt-5" href = "/login">Go to login</a>
+            <% } else{ %>
+                <h1>Verification <strong class = "text-error">failed</strong></h1>
+                <div class = "flex-col-container">
+                    <p class = "w-5/6 2xl:w-3/5">
+                        Could not verificate your Email address due to an unknown error. Please try again or <a class = "text-primary" href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D" title = "Our support email, definitely not a rickroll.">contact the support</a> and let us know.
+                    </p>
+                    <hr class = "animate-showHide origin-center green-line w-20 xl:w-36">
+                </div>
+                <!-- TODO: Add verification code generation endpoint -->
+                <!-- <a class = "btn btn-primary btn-outline mt-5" href = "/verification/send">Re-send verification code</a> -->
+            <% } %>
+        </section>
+        
+        <%- include('../partials/footer.partial.ejs', {
+            includeScripts: false
+        }) %>
+    </body>
+</html>
