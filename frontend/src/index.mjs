@@ -1,4 +1,7 @@
 import express from 'express';
+import fetch from 'node-fetch';
+import 'dotenv/config';
+
 
 const app = express();
 app.use(express.static('public'));
@@ -15,6 +18,25 @@ app.get('/login', (req, res) => {
 
 app.get('/signup', (req, res) => {
     res.render('pages/signup');
+});
+
+app.get('/user/verify', async (req, res) => {
+    const query = req.query.q;
+    try{
+        const verificationRes = await fetch(`${process.env.BACKEND_ADDRESS}:${process.env.BACKEND_PORT}/user/verify`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                verificationToken: query
+            })
+        });
+        res.render('pages/verifyEmail', {successful: verificationRes.ok});
+    }catch{
+        res.render('pages/verifyEmail', {successful: false});
+    }
 });
 
 app.get('/user/plantations', (req, res) => {
