@@ -17,6 +17,8 @@
             <a class = "btn btn-primary btn-outline mt-5" href = "/">Go back home</a>
         </section>
         
-        <%- include('../partials/footer.partial.ejs') %>
+        <%- include('../partials/footer.partial.ejs', {
+            includeScripts: false
+        }) %>
     </body>
 </html>
