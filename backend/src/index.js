@@ -20,9 +20,13 @@ app.use(cors(
 ));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use('/api/*', isLoggedIn(true, false), isEmailVerified(false), (req, res, next) => {
+app.use('/api/user', isLoggedIn(true, false), (req, res, next) => {
     next();
-})
+});
+// NOTE: REGEX that triggers for all routes except for the ones starting with `/api/user`
+app.use(/^\/api\/(?!user).*/, isLoggedIn(true, false), isEmailVerified(false), (req, res, next) => {
+    next();
+});
 
 app.get('/ping', (req, res) => {
     res.status(200).json({
