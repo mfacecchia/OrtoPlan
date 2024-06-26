@@ -1,4 +1,8 @@
 function newElement(type, plantationID = undefined){
+    if(!USER_SETTINGS.verified){
+        displayMessage('Please verify your Email before.', 'error');
+        return;
+    }
     const newElementDialog = document.querySelector('#newPlantPlantation');
     const newElementForm = document.querySelector('#newPlantPlantationForm');
     
@@ -111,6 +115,10 @@ function setCardData(card, elementData, type){
 }
 
 async function modify(elementID, type){
+    if(!USER_SETTINGS.verified){
+        displayMessage('Please verify your Email before.', 'error');
+        return;
+    }
     const pluralType = type + 's';
     const updateElementDialog = document.querySelector('#newPlantPlantation');
     const updateElementForm = document.querySelector('#newPlantPlantationForm');
@@ -239,6 +247,7 @@ async function getUserList(type, plantationID = undefined){
     });
     const jsonRes = await res.json();
     const list = jsonRes[pluralType];
+    // TODO: Check if it's an Array, not if it contains more than one element
     if(list.length){
         list.forEach(listElement => {
             addElementToList(listElement, type);
