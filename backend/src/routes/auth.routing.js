@@ -37,7 +37,8 @@ export default function userAuth(app){
             res.status(200).json({
                 status: 200,
                 message: "Logged in successfully.",
-                token: token
+                token: token,
+                verified: userExists.verified
             });
         }catch(err){
             res.status(404).json({
