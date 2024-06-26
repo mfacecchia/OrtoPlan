@@ -1,5 +1,6 @@
 async function updateNotificationsDropdown(){
     const treatmentsList = await getTreatmentsList();
+    if(!Array.isArray(treatmentsList)) return;
     const upcomingTreatments = getUpcomingTreatments(treatmentsList);
     await removeAllNotifications();
     upcomingTreatments.forEach(async treatment => {

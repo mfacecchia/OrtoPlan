@@ -247,8 +247,7 @@ async function getUserList(type, plantationID = undefined){
     });
     const jsonRes = await res.json();
     const list = jsonRes[pluralType];
-    // TODO: Check if it's an Array, not if it contains more than one element
-    if(list.length){
+    if(Array.isArray(list)){
         list.forEach(listElement => {
             addElementToList(listElement, type);
         });
