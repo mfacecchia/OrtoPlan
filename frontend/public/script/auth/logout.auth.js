@@ -1,4 +1,4 @@
 function logout(){
-    localStorage.removeItem('OPToken');
+    localStorage.clear();
     window.location.pathname = '/';
 }

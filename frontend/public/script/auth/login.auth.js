@@ -45,6 +45,7 @@ userLoginForm.onsubmit = async e => {
             return;
         }
         localStorage.setItem('OPToken', jsonRes.token);
+        localStorage.setItem('OPUserSettings', JSON.stringify({verified: Boolean(jsonRes.verified)}));
         window.location.href = '/user/plantations';
     }catch(err){
         displayMessage('Unknown error. Please try again.', 'error');
