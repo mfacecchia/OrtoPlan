@@ -22,6 +22,16 @@
         }) %>
         <%- include('../partials/updateUser.partial.ejs') %>
         <%- include('../partials/userRemovalConfirmation.partial.ejs') %>
+        <section id = "notVerifiedNotice">
+            <article class = "bg-warning my-5 box-border p-5 rounded-xl flex flex-col items-center gap-5 sm:flex-row">
+                <img class = "h-11" src = "/assets/icons/warning_red.svg" alt = "Warning">
+                <!-- TODO: Add verification code generation endpoint -->
+                <div>
+                    <b>Verify your email</b>
+                    <p>In order to be able to access all OrtoPlan's functionalities, the system requires each user to verify the registered email. Please <a>click here</a> to receive a new email verification code. All functionalities are disabled until then.</p>
+                </div>
+            </article>
+        </section>
         <section>
             <div class = "mb-5 sm:mb-7">
                 <h1 class = "font-bold">Your <span class = "text-secondary">Plantations</span></h1>
