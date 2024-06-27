@@ -222,6 +222,15 @@
     #plantInfo article h1{
         @apply font-semibold;
     }
+    #notVerifiedNotice{
+        @apply hidden;
+    }
+    #notVerifiedNotice article{
+        @apply bg-warning my-5 box-border p-5 rounded-xl flex flex-col items-center gap-5 sm:flex-row;
+    }
+    #notVerifiedNotice article img{
+        @apply h-11;
+    }
 }
 
 @layer components{
