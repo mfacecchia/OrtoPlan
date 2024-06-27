@@ -111,3 +111,12 @@ function confirmUserRemoval(){
     confirmUserRemovalDialog.showModal();
     setTabIndexToZero(confirmUserRemovalDialog);
 }
+
+async function checkEmailVerification(){
+    let isEmailVerified = USER_SETTINGS.verified;
+    if(!isEmailVerified){
+        const user = await getUserInfo();
+        isEmailVerified = user.credential[0].verified;
+    }
+    if(!isEmailVerified) document.querySelector('#notVerifiedNotice').style.display = 'block';
+}
