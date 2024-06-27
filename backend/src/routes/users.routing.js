@@ -33,7 +33,8 @@ function getUser(userID){
                 include: {
                     credential: {
                         select: {
-                            email: true
+                            email: true,
+                            verified: true
                         }
                     }
                 },
