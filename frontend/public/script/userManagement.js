@@ -114,7 +114,7 @@ function confirmUserRemoval(){
 
 async function checkEmailVerification(){
     let isEmailVerified = USER_SETTINGS.verified;
-    if(!isEmailVerified){
+    if(!isEmailVerified && isEmailVerified !== false){
         const user = await getUserInfo();
         isEmailVerified = user.credential[0].verified;
     }
