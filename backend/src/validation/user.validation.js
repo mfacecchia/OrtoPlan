@@ -1,4 +1,4 @@
-import { findUser } from '../middlewares/findUser.middleware.js';
+import { findUser } from '../apis/findUser.api.js';
 import validate from 'validate.js';
 import { defaultPresenceValidator, defaultPrismaMaxLength } from './customDefaultValidators.validation.js';
 import argon2 from 'argon2';

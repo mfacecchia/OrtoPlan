@@ -9,7 +9,7 @@ export default function users(app){
         .get(async (req, res) => {
             try{
                 const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-                const user = await getUser(decodedToken.userID);
+                const user = await getUserFullInfo(decodedToken.userID);
                 res.status(200).json({
                     status: 200,
                     message: "User found",
@@ -26,7 +26,7 @@ export default function users(app){
         .delete(deleteUpdateUser)
 }
 
-function getUser(userID){
+function getUserFullInfo(userID){
     return new Promise(async (resolve, reject) => {
         try{
             const user = await prisma.user.findUniqueOrThrow({

@@ -1,5 +1,5 @@
 import { validateJWT } from "../auth/jwt.auth.js";
-import { findUser } from "./findUser.middleware.js";
+import { findUser } from "../apis/findUser.api.js";
 import jwt from 'jsonwebtoken'
 
 

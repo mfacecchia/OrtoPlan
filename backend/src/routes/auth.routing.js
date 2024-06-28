@@ -1,7 +1,7 @@
 import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
 import { generateJWT, validateJWT } from '../auth/jwt.auth.js';
-import { findUser } from '../middlewares/findUser.middleware.js';
+import { findUser } from '../apis/findUser.api.js';
 import { validateLoginSignup } from '../validation/user.validation.js';
 import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 import sendWelcomeEmail from '../mail/welcome.mail.js';

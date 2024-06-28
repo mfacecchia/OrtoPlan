@@ -1,5 +1,6 @@
 export default function isEmailVerified(setHeaderOnValid = true){
     return (req, res, next) => {
+        // `req.userEmailStatus` is a value passed from the previous middleware (obtained from a query that gets user data from the DB)
         const userEmailStatus = req.userEmailStatus;
         if(!userEmailStatus){
             res.status(401).json({
