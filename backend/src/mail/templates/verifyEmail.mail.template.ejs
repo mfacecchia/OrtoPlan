@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <%- include('../partials/head.mail.partial.ejs') %>
+    <body>
+        <h1 style = "font-size: x-large">📫 Verify your OrtoPlan Email address</h1>
+        <p style = "font-size: large">You're receiving this email because you recently requested a new email verification code.</p>
+        <p style = "font-size: large;">If it was you making the request, please click on the button below to verify your email address. If it wasn't you, then you don't have to do anything and you can delete this email.</p>
+
+        <div style = "width: 100%; margin-top: 50px; text-align: center;">
+            <a href = "<%=verificationLink%>" style = "box-sizing: border-box; padding: 10px 25px; color: white; background-color: #7FBA52; font-size: medium; text-decoration: none; border-radius: 99999px;">VERIFY</a>
+        </div>
+        
+        <hr style = "width: 80%; height: 0.5px; margin-left: auto; margin-right: auto; margin-bottom: 30px; margin-top: 30px; border: none; background-color: rgba(0,0,0,0.8)">
+
+        <%- include('../partials/footer.mail.partial.ejs', {signature: true}) %>
+    </body>
+</html>
