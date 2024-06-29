@@ -5,7 +5,7 @@ import 'dotenv/config';
 import ejs from 'ejs'
 import configureMailingSystem from '../mail/configure.mail.js';
 import { findUser } from '../apis/findUser.api.js';
-import generateEmailVerificationLink from '../mail/validateAddress.mail.js';
+import generateEmailVerificationLink from '../auth/verificateEmailAddress.auth.js';
 
 
 export default function emailAddressVerification(app){
