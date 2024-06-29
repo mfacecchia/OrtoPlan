@@ -10,6 +10,7 @@ import plants from './routes/plants.routing.js';
 import treatments from './routes/treatments.routing.js';
 import users from './routes/users.routing.js';
 import notifications from './routes/notifications.routing.js';
+import emailAddressVerification from './routes/emailVerification.routing.js';
 
 const app = express();
 app.use(cors(
@@ -46,3 +47,4 @@ plants(app);
 treatments(app);
 users(app);
 notifications(app);
+emailAddressVerification(app);
