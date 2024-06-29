@@ -37,7 +37,6 @@ export default function emailAddressVerification(app){
     });
 
     app.post('/user/verify/generate', async (req, res) => {
-        // TODO: Check if email is already verified before processing
         let user;
         try{
             const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
@@ -46,6 +45,13 @@ export default function emailAddressVerification(app){
             res.status(404).json({
                 status: 404,
                 message: err.message
+            });
+            return;
+        }
+        if(user.verified){
+            res.status(401).json({
+                status: 401,
+                message: "Email address already verified."
             });
             return;
         }
@@ -59,8 +65,8 @@ export default function emailAddressVerification(app){
             });
             return;
         }
-        res.status(200).json({
-            status: 200,
+        res.status(201).json({
+            status: 201,
             message: "Verification code sent."
         });
     });
