@@ -2,6 +2,10 @@ import prisma from '../../db/prisma.db.js';
 import { validateJWT } from '../auth/jwt.auth.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import 'dotenv/config';
+import ejs from 'ejs'
+import configureMailingSystem from '../mail/configure.mail.js';
+import { findUser } from '../apis/findUser.api.js';
+import generateEmailVerificationLink from '../mail/validateAddress.mail.js';
 
 
 export default function emailAddressVerification(app){
@@ -30,6 +34,35 @@ export default function emailAddressVerification(app){
                 message: 'Invalid token or email address not found'
             });
         }
+    });
+
+    app.post('/user/verify/generate', async (req, res) => {
+        // TODO: Check if email is already verified before processing
+        let user;
+        try{
+            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+            user = await findUser(decodedToken.userID, true, false);
+        }catch(err){
+            res.status(404).json({
+                status: 404,
+                message: err.message
+            });
+            return;
+        }
+        const messageLink = await generateEmailVerificationLink(user.email, true);
+        try{
+            await sendVerificationMail(user.email, messageLink);
+        }catch(err){
+            res.status(404).json({
+                status: 404,
+                message: err.message
+            });
+            return;
+        }
+        res.status(200).json({
+            status: 200,
+            message: "Verification code sent."
+        });
     });
 }
 
@@ -70,5 +103,47 @@ function verifyEmailAddress(email){
             else if(err.code === 'P2025') reject('Email address not found or invalid update values.');
             else reject('Unknown error.');
         }
+    });
+}
+
+function sendVerificationMail(recipient, verificationLink){
+    return new Promise((resolve, reject) => {
+        const transporter = configureMailingSystem();
+        let renderedHTMLTemplate = undefined;
+        // Rendering HTML templayte with all the data passed as function arguments
+        ejs.renderFile(`src/mail/templates/verifyEmail.mail.template.ejs`, {verificationLink: verificationLink}, (error, htmlStr) => {
+            if(error){
+                reject("Could not generate email.");
+                return
+            }
+            renderedHTMLTemplate = htmlStr;
+        });
+        if(!renderedHTMLTemplate){
+            reject("Could not generate email.");
+            return;
+        }
+        transporter.sendMail({
+            from: `OrtoPlan Mailing System <${process.env.MAILING_SYSTEM_ADDRESS}>`,
+            to: recipient,
+            subject: "Verify your OrtoPlan Email address",
+            text: `You're receiving this email because you recently requested a new email verification code. If it was you making the request, please copy the link below and paste it in your favourite web browser to verify your email address. If it wasn't you, then you don't have to do anything and you can delete this email.\nLink to copy: ${verificationLink} \n\nFrom the bottom of our heart.\n- The OrtoPlan Team`,
+            html: renderedHTMLTemplate,
+            // TODO: Add icons in the backend as well instead of accessing from frontend server
+            attachments: [
+                {
+                    filename: 'favicon.webp',
+                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/favicon.webp`,
+                    cid: 'OrtoPlanLogo'
+                },
+                {
+                    filename: 'footer.webp',
+                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/footer.webp`,
+                    cid: 'OrtoPlanFooterBG'
+                }
+            ]
+        }, (error, info) => {
+            if(error) reject("Could not send email.");
+            else resolve(true);
+        });
     });
 }
