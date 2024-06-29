@@ -6,11 +6,10 @@ import generateEmailVerificationLink from "./validateAddress.mail.js";
 
 export default async function sendWelcomeEmail(recipient, name, surname){
     const transporter = configureMailingSystem();
-    const emailVerificationToken =  await generateEmailVerificationLink(recipient);
-    const emailVerificationLink = `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/user/verify?q=${emailVerificationToken}`;
+    const verificationLink =  await generateEmailVerificationLink(recipient, true);
     let renderedHTMLTemplate = undefined;
     // Rendering HTML templayte with all the data passed as function arguments
-    ejs.renderFile(`src/mail/templates/welcome.mail.template.ejs`, {name: name, surname: surname, verificationLink: emailVerificationLink}, (error, htmlStr) => {
+    ejs.renderFile(`src/mail/templates/welcome.mail.template.ejs`, {name: name, surname: surname, verificationLink: verificationLink}, (error, htmlStr) => {
         if(error) return false;
         else renderedHTMLTemplate = htmlStr;
     });
@@ -36,6 +35,7 @@ export default async function sendWelcomeEmail(recipient, name, surname){
                 }
             ]
         }, (error, info) => {
+            // TODO: Reject in case of error, not return
             if(error) return false;
             else return true;
         });
