@@ -35,10 +35,8 @@ export default async function sendWelcomeEmail(recipient, name, surname){
                 }
             ]
         }, (error, info) => {
-            // TODO: Reject in case of error, not return
-            if(error) return false;
-            else return true;
+            if(error) reject("Could not send email.");
+            else resolve(true);
         });
-        resolve(true);
-    })
+    });
 }
