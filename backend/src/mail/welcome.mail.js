@@ -21,16 +21,15 @@ export default async function sendWelcomeEmail(recipient, name, surname){
             subject: "Welcome to OrtoPlan!",
             text: `Welcome to the OrtoPlan family, ${name + ' ' + surname}! Thanks to be a part of our continuously growing family.`,
             html: renderedHTMLTemplate,
-            // TODO: Add icons in the backend as well instead of accessing from frontend server
             attachments: [
                 {
                     filename: 'favicon.webp',
-                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/favicon.webp`,
+                    path: `src/mail/assets/icons/favicon.webp`,
                     cid: 'OrtoPlanLogo'
                 },
                 {
                     filename: 'footer.webp',
-                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/footer.webp`,
+                    path: `src/mail/assets/icons/footer.webp`,
                     cid: 'OrtoPlanFooterBG'
                 }
             ]

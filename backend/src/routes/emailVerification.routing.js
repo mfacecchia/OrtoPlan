@@ -134,16 +134,15 @@ function sendVerificationMail(recipient, verificationLink){
             subject: "Verify your OrtoPlan Email address",
             text: `You're receiving this email because you recently requested a new email verification code. If it was you making the request, please copy the link below and paste it in your favourite web browser to verify your email address. If it wasn't you, then you don't have to do anything and you can delete this email.\nLink to copy: ${verificationLink} \n\nFrom the bottom of our heart.\n- The OrtoPlan Team`,
             html: renderedHTMLTemplate,
-            // TODO: Add icons in the backend as well instead of accessing from frontend server
             attachments: [
                 {
                     filename: 'favicon.webp',
-                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/favicon.webp`,
+                    path: `src/mail/assets/icons/favicon.webp`,
                     cid: 'OrtoPlanLogo'
                 },
                 {
                     filename: 'footer.webp',
-                    path: `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/assets/icons/footer.webp`,
+                    path: `src/mail/assets/icons/footer.webp`,
                     cid: 'OrtoPlanFooterBG'
                 }
             ]
