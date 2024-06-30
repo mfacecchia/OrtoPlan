@@ -112,11 +112,20 @@ function confirmUserRemoval(){
     setTabIndexToZero(confirmUserRemovalDialog);
 }
 
-async function checkEmailVerification(){
-    let isEmailVerified = USER_SETTINGS.verified;
-    if(!isEmailVerified && isEmailVerified !== false){
-        const user = await getUserInfo();
-        isEmailVerified = user.credential[0].verified;
-    }
+async function checkEmailVerification(updateLocalStorage = true){
+    const user = await getUserInfo();
+    isEmailVerified = user.credential[0].verified;
     if(!isEmailVerified) document.querySelector('#notVerifiedNotice').style.display = 'block';
+    if(updateLocalStorage) updateUserSettings({verified: isEmailVerified});
+}
+
+function updateUserSettings(options){
+    /*
+        * Updates the user settings located in user's LocalStorage
+        * from a given `options` parameter (MUST be an Object)
+    */
+    for(const key of Object.keys(options)){
+        USER_SETTINGS[key] = options[key];
+    }
+    localStorage.setItem('OPUserSettings', JSON.stringify(USER_SETTINGS));
 }
