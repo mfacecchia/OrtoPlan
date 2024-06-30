@@ -20,7 +20,7 @@ export default function userAuth(app){
         }catch(err){
             res.status(400).json({
                 status: 400,
-                message: "Unknown error. Please try again later."
+                message: err
             });
         }
     });
@@ -65,7 +65,7 @@ async function newUser(userInfo, hashedPass){
             });
             resolve(user);
         }catch(err){
-            reject(err.message);
+            reject("Could not create user.");
         }
     });
 }
