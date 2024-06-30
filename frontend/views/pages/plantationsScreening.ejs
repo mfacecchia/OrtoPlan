@@ -27,7 +27,7 @@
                 <img src = "/assets/icons/warning_red.svg" alt = "Warning">
                 <div>
                     <b>Verify your email</b>
-                    <p>In order to be able to access all OrtoPlan's functionalities, the system requires each user to verify the registered email. Please <a>click here</a> to receive a new email verification code. All functionalities are disabled until then.</p>
+                    <p>In order to be able to access all OrtoPlan's functionalities, the system requires each user to verify the registered email. Please <a class = "text-info hover:cursor-pointer hover:underline" onclick = "requestNewCode()">click here</a> to receive a new email verification code. All functionalities are disabled until then.</p>
                 </div>
             </article>
         </section>
@@ -68,6 +68,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
         <script src = "/script/utilities.js"></script>
         <script src = "/script/auth/jwt.auth.js"></script>
+        <script src = "/script/auth/verificateEmailAddress.auth.js"></script>
         <script src = "/script/validation/customDefaultValidators.validation.js"></script>
         <script src = "/script/validation/user.validation.js"></script>
         <script src = "/script/validation/plantation.validation.js"></script>
