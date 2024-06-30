@@ -24,13 +24,19 @@
                     </p>
                     <hr class = "animate-showHide origin-center green-line w-20 xl:w-36">
                 </div>
-                <!-- TODO: Add verification code generation endpoint -->
-                <!-- <a class = "btn btn-primary btn-outline mt-5" href = "/verification/send">Re-send verification code</a> -->
+                <a class = "btn btn-primary btn-outline mt-5" onclick = "requestNewCode()">Re-send verification code</a>
             <% } %>
         </section>
+
+        <div class = "toast"></div>
         
         <%- include('../partials/footer.partial.ejs', {
             includeScripts: false
         }) %>
+        <% if(!successful){ %>
+            <script src = "/script/constants.js"></script>
+            <script src = "/script/utilities.js"></script>
+            <script src = "/script/auth/verificateEmailAddress.auth.js"></script>
+        <% } %>
     </body>
 </html>

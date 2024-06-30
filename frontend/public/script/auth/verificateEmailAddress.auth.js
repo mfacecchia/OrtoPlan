@@ -13,7 +13,7 @@ async function requestNewCode(){
         if(!res.ok) throw new Error(jsonRes.message);
         displayMessage(jsonRes.message, 'success');
     }catch(err){
-        displayMessage(err instanceof Error? `Could not add generate the verification link. ${err.message}`: `Unknown error while generating the verification link. Please try again.`, 'error');
+        displayMessage(err instanceof Error? `Could not generate the verification link. ${err.message}`: `Unknown error while generating the verification link. Please try again.`, 'error');
         return;
     }
 }
