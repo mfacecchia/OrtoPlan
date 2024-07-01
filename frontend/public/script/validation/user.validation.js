@@ -49,21 +49,26 @@ function validateLoginSignup(formData, isLogin = true){
 }
 
 function validateUserUpdate(formData){
-    const validators = {
-        firstName: {
+    const validators = {};
+    if(formData.firstName){
+        validators.firstName = {
             ...defaultPresenceValidator,
             ...defaultMaxLength
-        },
-        lastName: {
+        };
+    }
+    if(formData.lastName){
+        validators.lastName = {
             ...defaultPresenceValidator,
             ...defaultMaxLength
-        },
-        email: {
+        };
+    }
+    if(formData.email){
+        validators.email = {
             ...defaultPresenceValidator,
             ...defaultMaxLength,
             email: true
-        }
-    };
+        };
+    }
     if(formData.password){
         validators.oldPassword = {
             ...defaultPresenceValidator
@@ -87,9 +92,9 @@ function validateUserUpdate(formData){
     return new Promise(async (resolve, reject) => {
         try{
             await validate.async(formData, validators);
-            formData.email = formData.email.toLowerCase();
-            formData.firstName = validate.capitalize(formData.firstName.trim());
-            formData.lastName = validate.capitalize(formData.lastName.trim());
+            if(formData.email) formData.email = formData.email.toLowerCase();
+            if(formData.firstName) formData.firstName = validate.capitalize(formData.firstName.trim());
+            if(formData.lastName) formData.lastName = validate.capitalize(formData.lastName.trim());
             resolve(formData);
         }catch(validationErrors){
             reject(validationErrors);

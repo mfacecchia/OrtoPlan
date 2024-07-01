@@ -71,22 +71,27 @@ export const validateLoginSignup = (isLogin = true) => {
 
 export const validateUserUpdate = () => {
     return async(req, res, next) => {
-        const validators = {
-            firstName: {
+        const validators = {};
+        if(req.body.lastName){
+            validators.lastName = {
                 ...defaultPresenceValidator,
                 ...defaultPrismaMaxLength
-            },
-            lastName: {
+            };
+        }
+        if(req.body.firstName){
+            validators.firstName = {
                 ...defaultPresenceValidator,
                 ...defaultPrismaMaxLength
-            },
-            email: {
+            };
+        }
+        if(req.body.email){
+            validators.email = {
                 ...defaultPresenceValidator,
                 ...defaultPrismaMaxLength,
                 email: true,
                 emailExists: true
-            }
-        };
+            };
+        }
         if(req.body.password){
             validators.oldPassword = {
                 ...defaultPresenceValidator,
@@ -137,9 +142,9 @@ export const validateUserUpdate = () => {
         };
         try{
             await validate.async(req.body, validators);
-            req.body.email = req.body.email.toLowerCase();
-            req.body.firstName = validate.capitalize(req.body.firstName.trim());
-            req.body.lastName = validate.capitalize(req.body.lastName.trim());
+            if(req.body.email) req.body.email = req.body.email.toLowerCase();
+            if(req.body.firstName) req.body.firstName = validate.capitalize(req.body.firstName.trim());
+            if(req.body.lastName) req.body.lastName = validate.capitalize(req.body.lastName.trim());
             next();
         }catch(validationErrors){
             res.status(403).json({

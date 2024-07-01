@@ -77,8 +77,8 @@ function updateUser(userInfo, userID){
         try{
             const user = prisma.user.update({
                 data: {
-                    firstName: userInfo.firstName,
-                    lastName: userInfo.lastName,
+                    firstName: userInfo.firstName && userInfo.firstName !== ''? userInfo.firstName: undefined,
+                    lastName: userInfo.firstName && userInfo.firstName !== ''? userInfo.lastName: undefined,
                     credential: {
                         update: {
                             data: {
