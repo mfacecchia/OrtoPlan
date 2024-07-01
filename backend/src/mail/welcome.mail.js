@@ -1,7 +1,7 @@
 import configureMailingSystem from "./configure.mail.js";
 import ejs from 'ejs'
 import 'dotenv/config';
-import generateEmailVerificationLink from "../auth/verificateEmailAddress.auth.js";
+import { generateEmailVerificationLink } from "../auth/verificateEmailAddress.auth.js";
 
 
 export default async function sendWelcomeEmail(recipient, name, surname){
