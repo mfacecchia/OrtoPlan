@@ -33,6 +33,8 @@
 <h4>Core Functionalities</h4>
 <a href = "https://expressjs.com/en/4x/api.html#express">Express.JS</a> |
 <a href = "https://www.npmjs.com/package/cors">CORS</a> |
+<a href = "https://nodemailer.com/">NodeMailer</a> |
+<a href = "https://express-rate-limit.mintlify.app/">RateLimiter</a> |
 <a href = "https://ejs.co/">EJS</a> |
 <a href = "https://momentjs.com/docs/">Moment.JS</a> |
 <a href = "https://postcss.org/">PostCSS</a> |
@@ -78,6 +80,26 @@
     <td><code>DATABASE_URL</code></td>
     <td>URL to connect to database. with Prisma ORM</td>
   </tr>
+  <tr>
+    <td><code>JWT_MAIL_VERIFICATION_SECRET</code></td>
+    <td>Json Web Token's secret for user email verification code generation</td>
+  </tr>
+  <tr>
+    <td><code>MAILING_SYSTEM_ADDRESS</code></td>
+    <td>Email address for mailing system functionality</td>
+  </tr>
+  <tr>
+    <td><code>MAILING_SYSTEM_PASSWORD</code></td>
+    <td>Password for Email access</td>
+  </tr>
+  <tr>
+    <td><code>FRONTEND_ADDRESS</code></td>
+    <td>Application's Front-End side hostname</td>
+  </tr>
+  <tr>
+    <td><code>FRONTEND_PORT</code></td>
+    <td>Application's Front-End side port</td>
+  </tr>
 </table>
 <b>NOTE:</b> <span>For this project the database is locally hosted so the environmental value for <code>DATABASE_URL</code> will be something like this: <code>mysql://root@localhost:3306/OrtoPlan</code>.</span>
 <hr>
@@ -114,6 +136,7 @@
 <h2 id = "functionalities-roadmap">Functionalities Roadmap</h2>
 <p>I aim to keep this repository updated for as long as possible, all the future updates, improvements and ideas are listed below:
   <ul>
+    <li><i><s>User email verification functionality</s></i> (<b>New in Update 1</b>) 🎉</li>
     <li>Anti-CSRF Token</li>
     <li>Google/GitHub login functionality</li>
     <li>Password recovery functionality</li>
