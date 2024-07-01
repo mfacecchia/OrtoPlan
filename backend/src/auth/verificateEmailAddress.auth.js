@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import prisma from "../../db/prisma.db.js";
 import 'dotenv/config';
+import ejs from 'ejs'
+import configureMailingSystem from '../mail/configure.mail.js';
 
 
 export async function generateEmailVerificationLink(userEmail, returnLink = false){

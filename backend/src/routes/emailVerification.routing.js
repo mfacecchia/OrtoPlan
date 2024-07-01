@@ -1,11 +1,8 @@
-import prisma from '../../db/prisma.db.js';
 import { validateJWT } from '../auth/jwt.auth.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import 'dotenv/config';
-import ejs from 'ejs'
-import configureMailingSystem from '../mail/configure.mail.js';
 import { findUser } from '../apis/findUser.api.js';
-import { generateEmailVerificationLink } from '../auth/verificateEmailAddress.auth.js';
+import { generateEmailVerificationLink, sendVerificationMail, removeVerificationMessage, verifyEmailAddress } from '../auth/verificateEmailAddress.auth.js';
 
 
 export default function emailAddressVerification(app){
