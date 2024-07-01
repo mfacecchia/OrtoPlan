@@ -7,7 +7,7 @@
 <a href = "#modules-references">Modules References</a><br>
 <a href = "#installing-dependencies">Installing Dependencies</a><br>
 <a href = "#environmental-variables">Environmental Variables</a><br>
-<a href = "#db-er">Database Entity Relationship model</a><br>
+<a href = "#db">Database Entity Relationship model</a><br>
 <a href = "#app-routes">App Routes</a><br>
 <a href = "#hashing-methods">Hashing methods</a><br>
 <a href = "#functionalities-roadmap">Functionalities roadmap</a><br>
@@ -104,8 +104,8 @@
 <b>NOTE:</b> <span>For this project the database is locally hosted so the environmental value for <code>DATABASE_URL</code> will be something like this: <code>mysql://root@localhost:3306/OrtoPlan</code>.</span>
 <hr>
 
-<h2 id = "db-er">Database Entity Relationship model</h2>
-<img src = "https://github.com/mfacecchia/OrtoPlan/assets/86726458/3b4d16ae-0810-4002-9358-8b17979819e1" alt = "DB E-R Model">
+<h2 id = "db">Database</h2>
+<img src = "https://github.com/mfacecchia/OrtoPlan/assets/86726458/df222adf-a187-4827-ad0c-be30758e9fbd" alt = "Database representation">
 <p>To quickly setup the database with all the tables and relations, follow the following instructions:</p>
 <ul>
   <li>Create a MySQL schema</li>
