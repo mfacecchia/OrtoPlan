@@ -14,6 +14,8 @@ import users from './routes/users.routing.js';
 import notifications from './routes/notifications.routing.js';
 import emailAddressVerification from './routes/emailVerification.routing.js';
 
+
+const commonNextHandler = (req, res, next) => { next(); };
 const app = express();
 const limiter = rateLimit({
     // NOTE: 2 mins
@@ -30,21 +32,23 @@ const limiter = rateLimit({
 app.use(cors(
     {
         // Frontend address
-        origin: 'http://localhost:5500'
+        origin: `${process.env.FRONTEND_ADDRESS}:${process.env.FRONTEND_PORT}`
     }
 ));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use('/api/user', isLoggedIn(true, false), (req, res, next) => {
-    next();
-});
-app.use('/user/verify/generate', limiter, (req, res, next) => {
-    next();
-});
+/*
+    * NOTE: Executing the same middleware for all route methods except for `PUT` which uses the same MW
+    * but needs it to place last user parameters in the `req` Object for further verifications
+*/
+app.route('/api/user')
+    .get(isLoggedIn(true, false, false), commonNextHandler)
+    .post(isLoggedIn(true, false, false), commonNextHandler)
+    .delete(isLoggedIn(true, false, false), commonNextHandler)
+    .put(isLoggedIn(true, false, true), commonNextHandler);
+app.use('/user/verify/generate', limiter, commonNextHandler);
 // NOTE: REGEX that triggers for all routes except for the ones starting with `/api/user`
-app.use(/^\/api\/(?!user).*/, isLoggedIn(true, false), isEmailVerified(false), (req, res, next) => {
-    next();
-});
+app.use(/^\/api\/(?!user).*/, isLoggedIn(true, false, false), isEmailVerified(false), commonNextHandler);
 
 app.get('/ping', (req, res) => {
     res.status(200).json({
