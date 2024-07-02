@@ -2,6 +2,7 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import argon2 from 'argon2';
 import { validateUserUpdate } from '../validation/user.validation.js';
+import { generateEmailVerificationLink, sendVerificationMail, resetVerificationStatus } from '../auth/verificateEmailAddress.auth.js';
 
 
 export default function users(app){
@@ -56,7 +57,24 @@ async function deleteUpdateUser(req, res){
     try{
         let user = undefined;
         if(req.method === 'DELETE') user = await removeUser(decodedToken.userID)
-        else if(req.method === 'PUT') user = await updateUser(req.body, decodedToken.userID);
+        else if(req.method === 'PUT'){
+            user = await updateUser(req.body, decodedToken.userID);
+            user.credential = user.credential[0];
+            // Ressetting user verification status and re-sending verification code in case the email changed
+            // NOTE: user parameters before update are obtained from previous middleware
+            if(req.body.email && req.body.email !== req.lastUserValues.email){
+                user.credential.verified = false;
+                const messageLink = await generateEmailVerificationLink(user.credential.email, true);
+                try{
+                    await Promise.all([
+                        resetVerificationStatus(user.credential.email),
+                        sendVerificationMail(user.credential.email, messageLink),
+                    ]);
+                }catch(err){
+                    throw new Error(err.message);
+                }
+            }
+        }
         res.status(200).json({
             status: 200,
             message: req.method === 'DELETE'? "User successfully removed": "User data successfully updated",
@@ -94,7 +112,8 @@ function updateUser(userInfo, userID){
                 include: {
                     credential: {
                         select: {
-                            email: true
+                            email: true,
+                            verified: true
                         }
                     }
                 },
