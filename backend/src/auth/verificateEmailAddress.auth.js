@@ -97,6 +97,26 @@ export function sendVerificationMail(recipient, verificationLink){
     });
 }
 
+export function resetVerificationStatus(userEmail){
+    return new Promise(async (resolve, reject) => {
+        try{
+            await prisma.credentials.update({
+                data: {
+                    verified: false
+                },
+                where: {
+                    email: userEmail
+                }
+            });
+            resolve(true);
+        }catch(err){
+            if(err.name === 'PrismaClientValidationError') reject('Invalid values');
+            else if(err.code === 'P2025') reject('User not found or invalid request values.');
+            else reject('Unknown error.');
+        }
+    });
+}
+
 function createMessage(userEmail){
     return new Promise(async (resolve, reject) => {
         const message = await prisma.verification.create({
