@@ -64,7 +64,7 @@ export default function emailAddressVerification(app){
         }
         res.status(201).json({
             status: 201,
-            message: "Verification code sent."
+            message: "Verification code sent. Check your inbox or your spam folder."
         });
     });
 }

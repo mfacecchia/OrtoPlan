@@ -11,7 +11,12 @@
             </header>
             <input type = "text" name = "firstName" placeholder = "First Name" required>
             <input type = "text" name = "lastName" placeholder = "Last name" required>
-            <input type = "email" name = "email" placeholder = "Email*" required>
+            <div class = "flex inputStyleContainer">
+                <input type = "email" name = "email" placeholder = "Email*" required>
+                <div class = "tooltip tooltip-left tooltip-info flex items-center" data-tip = 'If you update your Email address, you will need to verificate it again.'>
+                    <img class = "w-4 xl:w-5" src = "/assets/icons/info.svg" alt = "Information about updating email address" title = "About updating email address">
+                </div>
+            </div>
             <input type = "password" name = "oldPassword" placeholder = "Old Password">
             <input type = "password" name = "password" placeholder = "New Password">
             <input type = "password" name = "passwordVerify" placeholder = "Verify new password">
