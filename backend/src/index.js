@@ -46,9 +46,17 @@ app.route('/api/user')
     .post(isLoggedIn(true, false, false), commonNextHandler)
     .delete(isLoggedIn(true, false, false), commonNextHandler)
     .put(isLoggedIn(true, false, true), commonNextHandler);
+
+app.use(['/api/plantations', '/api/plants'], isLoggedIn(true, false, false), commonNextHandler);
+app.route(['/api/plantations', '/api/plants'])
+    .post(isEmailVerified(false), commonNextHandler)
+    .put(isEmailVerified(false), commonNextHandler)
+    .delete(isEmailVerified(false), commonNextHandler)
+
 app.use('/user/verify/generate', limiter, commonNextHandler);
+
 // NOTE: REGEX that triggers for all routes except for the ones starting with `/api/user`
-app.use(/^\/api\/(?!user).*/, isLoggedIn(true, false, false), isEmailVerified(false), commonNextHandler);
+app.use(/^\/api\/(?!user|plantations|plants).*/, isLoggedIn(true, false, false), isEmailVerified(false), commonNextHandler);
 
 app.get('/ping', (req, res) => {
     res.status(200).json({
