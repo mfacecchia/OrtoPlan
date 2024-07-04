@@ -9,7 +9,7 @@ export async function generateEmailVerificationLink(userEmail, returnLink = fals
     const messageID = await createMessage(userEmail);
     const token = jwt.sign({
         messageID: messageID.messageID
-    }, process.env.JWT_MAIL_VERIFICATION_SECRET, {
+    }, process.env.JWT_MAIL_VERIFICATION_PASSWORD_RESET_SECRET, {
         expiresIn: '10m'
     });
     if(returnLink) return `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/user/verify?q=${token}`;
