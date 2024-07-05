@@ -31,24 +31,18 @@ model Credentials {
   googleID String?
   verified Boolean @default(false)
   userID Int @unique
-  verification Verification[]
-  passwordReset PasswordReset[]
+  userAction UserAction[]
   // NOTE: Foreign key (1:N relation with `User` table)
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
 
-model Verification {
+model UserAction {
+  // Model used for email verification and password reset
   messageID Int @id @default(autoincrement())
   email String
+  type String
 
   credential Credentials @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
-}
-
-model PasswordReset {
-  messageID Int @id @default(autoincrement())
-  userID Int
-
-  credential Credentials @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
 
 model Notification{

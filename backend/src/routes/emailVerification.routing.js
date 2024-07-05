@@ -9,7 +9,7 @@ export default function emailAddressVerification(app){
     app.post('/user/verify', async (req, res) => {
         const token = req.body.verificationToken;
         try{
-            await validateJWT(token, process.env.JWT_MAIL_VERIFICATION_PASSWORD_RESET_SECRET);
+            await validateJWT(token, process.env.JWT_USER_ACTIONS_SECRET);
         }catch(err){
             res.status(401).json({
                 status: 401,

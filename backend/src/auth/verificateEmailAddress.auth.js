@@ -9,7 +9,7 @@ export async function generateEmailVerificationLink(userEmail, returnLink = fals
     const messageID = await createMessage(userEmail);
     const token = jwt.sign({
         messageID: messageID.messageID
-    }, process.env.JWT_MAIL_VERIFICATION_PASSWORD_RESET_SECRET, {
+    }, process.env.JWT_USER_ACTIONS_SECRET, {
         expiresIn: '10m'
     });
     if(returnLink) return `${process.env.FRONTEND_ADDRESS + ':' + process.env.FRONTEND_PORT}/user/verify?q=${token}`;
@@ -24,9 +24,10 @@ export function removeVerificationMessage(messageID){
     */
     return new Promise(async (resolve, reject) => {
         try{
-            const message = await prisma.verification.delete({
+            const message = await prisma.userAction.delete({
                 where: {
-                    messageID: messageID
+                    messageID: messageID,
+                    type: "emailVerification"
                 }
             });
             resolve(message);
@@ -119,9 +120,10 @@ export function resetVerificationStatus(userEmail){
 
 function createMessage(userEmail){
     return new Promise(async (resolve, reject) => {
-        const message = await prisma.verification.create({
+        const message = await prisma.userAction.create({
             data: {
-                email: userEmail
+                email: userEmail,
+                type: "emailVerification"
             },
             select: {
                 messageID: true
