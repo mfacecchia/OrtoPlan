@@ -40,7 +40,7 @@ model UserAction {
   // Model used for email verification and password reset
   messageID Int @id @default(autoincrement())
   email String
-  type String
+  actionType String
 
   credential Credentials @relation(fields: [email], references: [email], onDelete: Cascade, onUpdate: Cascade)
 }

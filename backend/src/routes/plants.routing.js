@@ -141,7 +141,6 @@ async function deleteUpdatePlant(req, res){
             plant: plant
         });
     }catch(err){
-        console.error(err);
         res.status(404).json({
             status: 404,
             message: err

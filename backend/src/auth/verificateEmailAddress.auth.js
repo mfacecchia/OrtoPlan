@@ -27,7 +27,7 @@ export function removeVerificationMessage(messageID){
             const message = await prisma.userAction.delete({
                 where: {
                     messageID: messageID,
-                    type: "emailVerification"
+                    actionType: "emailVerification"
                 }
             });
             resolve(message);
@@ -123,7 +123,7 @@ function createMessage(userEmail){
         const message = await prisma.userAction.create({
             data: {
                 email: userEmail,
-                type: "emailVerification"
+                actionType: "emailVerification"
             },
             select: {
                 messageID: true
