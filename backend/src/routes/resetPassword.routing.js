@@ -4,7 +4,7 @@ import 'dotenv/config';
 import { findUser } from '../apis/findUser.api.js';
 import { generatePasswordResetLink, sendPasswordResetMail, removePasswordResetMessage, updatePassword } from '../auth/resetPassword.auth.js';
 import argon2 from 'argon2';
-import { validatePasswordReset } from '../validation/resetPassword.validation.js';
+import { validatePasswordReset, validatePasswordResetEmailInput } from '../validation/resetPassword.validation.js';
 
 
 export default function passwordReset(app){
@@ -46,8 +46,7 @@ export default function passwordReset(app){
         }
     });
 
-    // TODO: Add validation to check if email is not empty
-    app.post('/user/reset/generate', async (req, res) => {
+    app.post('/user/reset/generate', validatePasswordResetEmailInput(), async (req, res) => {
         try{
             const user = await findUser(req.body.email, false, false);
             const messageLink = await generatePasswordResetLink(user.email, true);
