@@ -45,4 +45,17 @@ export default function passwordReset(app){
             });
         }
     });
+
+    // TODO: Add validation to check if email is not empty
+    app.post('/user/reset/generate', async (req, res) => {
+        try{
+            const user = await findUser(req.body.email, false, false);
+            const messageLink = await generatePasswordResetLink(user.email, true);
+            await sendPasswordResetMail(user.email, messageLink);
+        }catch(err){}
+        res.status(201).json({
+            status: 201,
+            message: "Code successfully generated. You will shortly receive an Email if the address entered is registered."
+        });
+    });
 }
