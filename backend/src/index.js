@@ -13,6 +13,7 @@ import treatments from './routes/treatments.routing.js';
 import users from './routes/users.routing.js';
 import notifications from './routes/notifications.routing.js';
 import emailAddressVerification from './routes/emailVerification.routing.js';
+import passwordReset from './routes/resetPassword.routing.js';
 
 
 const commonNextHandler = (req, res, next) => { next(); };
@@ -77,3 +78,4 @@ treatments(app);
 users(app);
 notifications(app);
 emailAddressVerification(app);
+passwordReset(app);
