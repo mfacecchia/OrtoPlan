@@ -39,6 +39,15 @@ app.get('/user/verify', async (req, res) => {
     }
 });
 
+app.get('/user/reset', async (req, res) => {
+    const resetToken = req.query.q;
+    if(!resetToken){
+        res.render('pages/resetPasswordEmailInput');
+        return;
+    }
+    res.render('pages/resetPassword', {resetToken: resetToken});
+});
+
 app.get('/user/plantations', (req, res) => {
     res.render('pages/plantationsScreening');
 });
