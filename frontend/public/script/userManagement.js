@@ -15,8 +15,8 @@ async function updateUser(){
     
     const userInfo = await getUserInfo();
     if(!userInfo){
-        displayMessage('Could not gather user information.', 'error');
         updateUserDialog.close();
+        displayMessage('Could not gather user information.', 'error');
         return;
     }
     // Compiling the form with the already obtained information from the backend
@@ -70,12 +70,12 @@ async function updateUser(){
             }
             if(!res.ok) throw new Error(jsonRes.message);
         }catch(err){
-            displayMessage(`Could not update user information. ${err.message}`, 'error');
             updateUserDialog.close();
+            displayMessage(`Could not update user information. ${err.message}`, 'error');
             return;
         }
-        displayMessage('User information updated successfully.', 'success');
         updateUserDialog.close();
+        displayMessage('User information updated successfully.', 'success');
     }
     updateUserDialog.showModal();
     setTabIndexToZero(updateUserDialog);
@@ -100,11 +100,13 @@ function confirmUserRemoval(){
             });
             const jsonRes = await res.json();
             if(!res.ok) throw new Error(jsonRes.message);
+            confirmUserRemovalDialog.close();
             displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 3 seconds.`, 'success');
             setTimeout(() => {
                 logout();
             }, 3000);
         }catch(err){
+            confirmUserRemovalDialog.close();
             displayMessage(`Could not complete the request. ${err.message}`, 'error');
         }
     }
