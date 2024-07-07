@@ -37,6 +37,7 @@ export const validatePasswordResetEmailInput = () => {
                 email: true
             }
         };
+        validate.validators.email.message = '^Not a valid email';    
         try{
             await validate.async(req.body, validators);
             req.body.email = req.body.email.toLowerCase();
