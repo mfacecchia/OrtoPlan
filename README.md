@@ -81,8 +81,8 @@
     <td>URL to connect to database. with Prisma ORM</td>
   </tr>
   <tr>
-    <td><code>JWT_MAIL_VERIFICATION_SECRET</code></td>
-    <td>Json Web Token's secret for user email verification code generation</td>
+    <td><code>JWT_USER_ACTIONS_SECRET</code></td>
+    <td>Json Web Token's secret for user email verification & password reset code generation</td>
   </tr>
   <tr>
     <td><code>MAILING_SYSTEM_ADDRESS</code></td>
@@ -136,10 +136,10 @@
 <h2 id = "functionalities-roadmap">Functionalities Roadmap</h2>
 <p>I aim to keep this repository updated for as long as possible, all the future updates, improvements and ideas are listed below:
   <ul>
-    <li><i><s>User email verification functionality</s></i> (<b>New in Update 1</b>) 🎉</li>
+    <li><i><s>User email verification functionality</s></i> (<b>Released in <a href = "https://github.com/mfacecchia/OrtoPlan/releases/tag/v1.1">v1.1</a></b>) 🎉</li>
+    <li><i><s>Password recovery functionality</s></i> (<b>Released in <a href = "https://github.com/mfacecchia/OrtoPlan/releases/tag/v1.1">v1.1</a></b>) 🎉</li>
     <li>Anti-CSRF Token</li>
     <li>Google/GitHub login functionality</li>
-    <li>Password recovery functionality</li>
     <li>Plantations sharing and collaboration functionality</li>
     <li>Plant finder with <a href = "https://www.algolia.com/doc/">Algolia Search</a> API</li>
     <li>Plants creation functionality</li>
