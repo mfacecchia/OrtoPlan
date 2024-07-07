@@ -129,6 +129,7 @@ export const validateUserUpdate = () => {
                 }
             });
         }
+        // FIXME: Validation ot working if email is not found in request body
         validate.validators.oldPasswordMatches = async (value, options) => {
             return new Promise(async (resolve, reject) => {
                 try{

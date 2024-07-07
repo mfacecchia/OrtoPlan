@@ -13,7 +13,6 @@ export default function passwordReset(app){
         try{
             await validateJWT(token, process.env.JWT_USER_ACTIONS_SECRET);
         }catch(err){
-            console.log(err);
             res.status(401).json({
                 status: 401,
                 message: "Token not found or invalid"
