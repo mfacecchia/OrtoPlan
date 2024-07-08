@@ -110,3 +110,8 @@ model Plantation_Plant {
   plantation Plantation @relation(fields: [plantationID], references: [plantationID], onDelete: Cascade)
   plant Plant @relation(fields: [plantID], references: [plantID], onDelete: Cascade)
 }
+
+model JWTBlacklist {
+  tokenID Int @id @default(autoincrement())
+  token String @db.VarChar(500) @unique
+}
