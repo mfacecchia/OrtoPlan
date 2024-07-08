@@ -31,6 +31,7 @@ model Credentials {
   googleID String?
   verified Boolean @default(false)
   userID Int @unique
+  updatedAt Int
   userAction UserAction[]
   // NOTE: Foreign key (1:N relation with `User` table)
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
