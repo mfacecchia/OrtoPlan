@@ -18,8 +18,10 @@ export const isLoggedIn = (strict = false, setHeaderOnValid = true, returnLastUs
             if(token){
                 await validateJWT(token.replace('Bearer ', ''), process.env.JWT_SECRET);
                 // Obtaining the userID from the jwt decoded payload to check if the user still exists
-                const tokenUserID = jwt.decode(token.replace('Bearer ', '')).userID;
+                const decodedToken = jwt.decode(token.replace('Bearer ', ''));
+                const tokenUserID = decodedToken.userID;
                 const user = await findUser(tokenUserID, true, false);
+                if(user.updatedAt > decodedToken.iat) throw new Error();
                 // NOTE: Passing the user's email verification status to the next middleware for further verifications
                 req.userEmailStatus = user.verified;
                 if(returnLastUserValues) req.lastUserValues = user;
