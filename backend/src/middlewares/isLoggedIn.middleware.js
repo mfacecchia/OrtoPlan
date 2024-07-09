@@ -1,6 +1,7 @@
 import { validateJWT } from "../auth/jwt.auth.js";
 import { findUser } from "../apis/findUser.api.js";
 import jwt from 'jsonwebtoken'
+import { isTokenBlacklisted } from "../jwt/blacklist.jwt.js";
 
 
 export const isLoggedIn = (strict = false, setHeaderOnValid = true, returnLastUserValues = false) => {
@@ -21,7 +22,7 @@ export const isLoggedIn = (strict = false, setHeaderOnValid = true, returnLastUs
                 const decodedToken = jwt.decode(token.replace('Bearer ', ''));
                 const tokenUserID = decodedToken.userID;
                 const user = await findUser(tokenUserID, true, false);
-                if(user.updatedAt > decodedToken.iat) throw new Error();
+                if(user.updatedAt > decodedToken.iat || await isTokenBlacklisted(token)) throw new Error();
                 // NOTE: Passing the user's email verification status to the next middleware for further verifications
                 req.userEmailStatus = user.verified;
                 if(returnLastUserValues) req.lastUserValues = user;
