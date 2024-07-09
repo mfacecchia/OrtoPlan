@@ -1,5 +1,6 @@
 import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
+import { blacklistToken } from '../jwt/blacklist.jwt.js';
 import argon2 from 'argon2';
 import { validateUserUpdate } from '../validation/user.validation.js';
 import { generateEmailVerificationLink, sendVerificationMail, resetVerificationStatus } from '../auth/verificateEmailAddress.auth.js';
@@ -56,7 +57,13 @@ async function deleteUpdateUser(req, res){
     const decodedToken = decodeToken(req.headers.authorization, false);
     try{
         let user = undefined;
-        if(req.method === 'DELETE') user = await removeUser(decodedToken.userID)
+        if(req.method === 'DELETE'){
+            const [userPromise, _] = await Promise.all([
+                removeUser(decodedToken.userID),
+                blacklistToken(req.headers.authorization)
+            ]);
+            user = userPromise;
+        }
         else if(req.method === 'PUT'){
             user = await updateUser(req.body, decodedToken.userID);
             user.credential = user.credential[0];
@@ -73,6 +80,10 @@ async function deleteUpdateUser(req, res){
                 }catch(err){
                     throw new Error(err.message);
                 }
+            }
+            // Blacklisting the token if the password changes
+            if(req.body.password && !(await argon2.verify(req.lastUserValues.password, req.body.password))){
+                await blacklistToken(req.headers.authorization);
             }
         }
         res.status(200).json({
@@ -101,7 +112,8 @@ function updateUser(userInfo, userID){
                         update: {
                             data: {
                                 email: userInfo.email && userInfo.email !== ''? userInfo.email: undefined,
-                                password: userInfo.hashedPass? userInfo.hashedPass: undefined
+                                password: userInfo.hashedPass? userInfo.hashedPass: undefined,
+                                updatedAt: userInfo.hashedPass? Math.floor(Date.now() / 1000): undefined
                             },
                             where: {
                                 userID: userID
