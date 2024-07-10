@@ -2,7 +2,7 @@ import validate from 'validate.js';
 import { defaultPresenceValidator } from './customDefaultValidators.validation.js';
 
 
-export const validatePasswordReset = () => {
+export function validatePasswordReset(){
     return async(req, res, next) => {
         const validators = {
             password: {
@@ -29,7 +29,7 @@ export const validatePasswordReset = () => {
     }
 }
 
-export const validatePasswordResetEmailInput = () => {
+export function validatePasswordResetEmailInput(){
     return async(req, res, next) => {
         const validators = {
             email: {

@@ -3,7 +3,7 @@ import { defaultPresenceValidator } from './customDefaultValidators.validation.j
 import moment from 'moment';
 
 
-export const validateTreatment = () => {
+export function validateTreatment(){
     return async (req, res, next) => {
         const validators = {
             treatmentType: {

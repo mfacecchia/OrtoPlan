@@ -2,7 +2,7 @@ import validate from 'validate.js'
 import { defaultPresenceValidator, defaultPrismaMaxLength } from './customDefaultValidators.validation.js';
 
 
-export const validateNotification = () => {
+export function validateNotification(){
     return async (req, res, next) => {
         const validators = {
             message: {

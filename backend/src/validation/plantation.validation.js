@@ -3,7 +3,7 @@ import { defaultPresenceValidator, defaultPrismaMaxLength } from './customDefaul
 import getLocation from '../apis/getLocation.api.js';
 
 
-export const validatePlantation = () => {
+export function validatePlantation(){
     return async (req, res, next) => {
         const validators = {
             plantationName: {

@@ -3,7 +3,7 @@ import { defaultPresenceValidator, defaultPrismaMaxLength } from './customDefaul
 import getPlant from '../apis/getPlant.api.js';
 
 
-export const validatePlant = () => {
+export function validatePlant(){
     return async (req, res, next) => {
         const validators = {
             plantName: {

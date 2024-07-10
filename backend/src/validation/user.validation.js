@@ -5,7 +5,7 @@ import argon2 from 'argon2';
 import decodeToken from '../jwt/decode.jwt.js';
 
 
-export const validateLoginSignup = (isLogin = true) => {
+export function validateLoginSignup(isLogin = true){
     /*
         * User login/signup form validation
         * The `isLogin` parameter defines if the validation should be made for login form (`isLogin = true`) or signup (`isLogin = false`)
@@ -69,7 +69,7 @@ export const validateLoginSignup = (isLogin = true) => {
     }
 }
 
-export const validateUserUpdate = () => {
+export function validateUserUpdate(){
     return async(req, res, next) => {
         const validators = {};
         if(req.body.lastName){

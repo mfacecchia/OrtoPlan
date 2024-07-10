@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { isTokenBlacklisted } from "../jwt/blacklist.jwt.js";
 
 
-export const isLoggedIn = (strict = false, setHeaderOnValid = true, returnLastUserValues = false) => {
+export function isLoggedIn(strict = false, setHeaderOnValid = true, returnLastUserValues = false){
     /*
         * Checks if the user is already logged in by validating the Bearer tokn passed in the request header
         * Returns a 401 Unauthorized response status if the token is nto valid, otherwise calls the `next()` middleware
