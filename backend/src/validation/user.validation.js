@@ -129,11 +129,8 @@ export function validateUserUpdate(){
         }
         validate.validators.oldPasswordMatches = async (value) => {
             return new Promise(async (resolve, reject) => {
-                const decodedToken = decodeToken(req.headers.authorization);
-                const userID = decodedToken.userID;
                 try{
-                    const userCredentials = await findUser(userID, true, false);
-                    if(await argon2.verify(userCredentials.password, value)) resolve();
+                    if(await argon2.verify(req.lastUserValues.password, value)) resolve();
                     else throw new Error();
                 }catch(err){
                     resolve('^Invalid password or user not found');
