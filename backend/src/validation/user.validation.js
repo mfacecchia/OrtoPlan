@@ -95,9 +95,7 @@ export const validateUserUpdate = () => {
         if(req.body.password){
             validators.oldPassword = {
                 ...defaultPresenceValidator,
-                oldPasswordMatches: {
-                    email: req.body.email
-                }
+                oldPasswordMatches: true
             };
             validators.password = {
                 ...defaultPresenceValidator,
@@ -129,11 +127,12 @@ export const validateUserUpdate = () => {
                 }
             });
         }
-        // FIXME: Validation ot working if email is not found in request body
-        validate.validators.oldPasswordMatches = async (value, options) => {
+        validate.validators.oldPasswordMatches = async (value) => {
             return new Promise(async (resolve, reject) => {
+                const decodedToken = decodeToken(req.headers.authorization);
+                const userID = decodedToken.userID;
                 try{
-                    const userCredentials = await findUser(options.email);
+                    const userCredentials = await findUser(userID, true, false);
                     if(await argon2.verify(userCredentials.password, value)) resolve();
                     else throw new Error();
                 }catch(err){
