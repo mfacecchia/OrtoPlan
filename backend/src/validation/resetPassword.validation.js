@@ -6,7 +6,8 @@ export function validatePasswordReset(){
     return async(req, res, next) => {
         const validators = {
             password: {
-                ...defaultPresenceValidator
+                ...defaultPresenceValidator,
+                isNewPasswordDifferent: true
             },
             passwordVerify: {
                 ...defaultPresenceValidator,
@@ -15,6 +16,16 @@ export function validatePasswordReset(){
                     message: '^Passwords do not match'
                 }
             }
+        };
+        validate.validators.isNewPasswordDifferent = (value) => {
+            return new Promise(async (resolve, reject) => {
+                try{
+                    if(await argon2.verify(req.lastUserValues.password, value)) throw new Error();
+                    else resolve();
+                }catch(err){
+                    resolve('^Cannot be the same password');
+                }
+            });
         };
         try{
             await validate.async(req.body, validators);

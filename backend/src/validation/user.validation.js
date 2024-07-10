@@ -102,7 +102,8 @@ export function validateUserUpdate(){
                 length: {
                     minimum: 15,
                     tooShort: '^Too short (minimum length is %{count} characters).'
-                }
+                },
+                isNewPasswordDifferent: true
             };
             validators.passwordVerify = {
                 ...defaultPresenceValidator,
@@ -134,6 +135,16 @@ export function validateUserUpdate(){
                     else throw new Error();
                 }catch(err){
                     resolve('^Invalid password or user not found');
+                }
+            });
+        };
+        validate.validators.isNewPasswordDifferent = (value) => {
+            return new Promise(async (resolve, reject) => {
+                try{
+                    if(await argon2.verify(req.lastUserValues.password, value)) throw new Error();
+                    else resolve();
+                }catch(err){
+                    resolve('^Cannot be the same password');
                 }
             });
         };
