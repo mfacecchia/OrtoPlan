@@ -1,22 +1,12 @@
-import { validateJWT } from '../auth/jwt.auth.js';
 import decodeToken from '../jwt/decode.jwt.js';
-import 'dotenv/config';
 import { findUser } from '../apis/findUser.api.js';
 import { generateEmailVerificationLink, sendVerificationMail, removeVerificationMessage, verifyEmailAddress } from '../auth/verificateEmailAddress.auth.js';
+import isVerificationTokenValid from '../middlewares/emailVerification.middleware.js';
 
 
 export default function emailAddressVerification(app){
-    app.post('/user/verify', async (req, res) => {
+    app.post('/user/verify', isVerificationTokenValid(), async (req, res) => {
         const token = req.body.verificationToken;
-        try{
-            await validateJWT(token, process.env.JWT_USER_ACTIONS_SECRET);
-        }catch(err){
-            res.status(401).json({
-                status: 401,
-                message: "Token not found or invalid"
-            });
-            return;
-        }
         const decodedToken = decodeToken(token, false);
         try{
             const message = await removeVerificationMessage(decodedToken.messageID);
