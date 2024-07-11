@@ -1,24 +1,14 @@
-import { validateJWT } from '../auth/jwt.auth.js';
 import decodeToken from '../jwt/decode.jwt.js';
-import 'dotenv/config';
 import { findUser } from '../apis/findUser.api.js';
 import { generatePasswordResetLink, sendPasswordResetMail, removePasswordResetMessage, updatePassword } from '../auth/resetPassword.auth.js';
 import argon2 from 'argon2';
 import { validatePasswordReset, validatePasswordResetEmailInput } from '../validation/resetPassword.validation.js';
+import isResetTokenValid from '../middlewares/resetPassword.middleware.js';
 
 
 export default function passwordReset(app){
-    app.put('/user/reset', validatePasswordReset(), async (req, res) => {
+    app.put('/user/reset', isResetTokenValid(), validatePasswordReset(), async (req, res) => {
         const token = req.body.resetToken;
-        try{
-            await validateJWT(token, process.env.JWT_USER_ACTIONS_SECRET);
-        }catch(err){
-            res.status(401).json({
-                status: 401,
-                message: "Token not found or invalid"
-            });
-            return;
-        }
         const decodedToken = decodeToken(token, false);
         const newPassword = req.body.password;
         let newHashedPass;
