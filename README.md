@@ -110,7 +110,7 @@
 <ul>
   <li>Create a MySQL schema</li>
   <li>Change your terminal's directory to <code>OrtoPlan/backend</code> (command to change directory in terminal may vary based on the shell you're using)</li>
-  <li>While located in the <code>backend</code> directory, run <code>npx prisma migrate dev</code> to create all the tables based on the <code><a href = "https://github.com/mfacecchia/OrtoPlan/blob/main/backend/prisma/schema.prisma">schema.prisma</a></code> file, and <code>npx prisma generate</code> to generate the prisma client file which will be used to handle and craft all the queries.</li>
+  <li>While located in the <code>backend</code> directory, run <code>npx prisma db push</code> to create all the tables based on the <code><a href = "https://github.com/mfacecchia/OrtoPlan/blob/main/backend/prisma/schema.prisma">schema.prisma</a></code> file, and <code>npx prisma generate</code> to generate the prisma client file which will be used to handle and craft all the queries.</li>
 </ul>
 <p>If you want to test this project yourself, you can compile the <code>Plant</code> and <code>Location</code> tables by just running <code>npm run setupDB</code> and wait for completion.</p>
 <b>DISCLAIMER: in order for this to work you have to first set the <code>RAPIDAPI_KEY</code> as well as the <code>UNSPLASHAPI_KEY</code> API Keys since all data obtained comes from external sources.</b>
