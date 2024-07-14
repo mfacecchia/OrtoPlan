@@ -10,6 +10,7 @@ async function validateJWT(){
             if(!isTokenValid.ok){
                 localStorage.removeItem('OPToken');
                 window.location.pathname = '/login';
+                return;
             }
             if(['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/user/plantations';
         }catch(err){ }
