@@ -5,6 +5,7 @@ import { findUser } from '../apis/findUser.api.js';
 import { validateLoginSignup } from '../validation/user.validation.js';
 import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 import sendWelcomeEmail from '../mail/welcome.mail.js';
+import { blacklistToken } from '../jwt/blacklist.jwt.js';
 
 
 export default function userAuth(app){
@@ -45,6 +46,16 @@ export default function userAuth(app){
                 message: "User not found. Please try again."
             });
         }
+    });
+
+    app.post('/user/logout', isLoggedIn(true, false, false), async (req, res) => {
+        const token = req.headers.authorization;
+        await blacklistToken(token);
+        res.status(200).json({
+            status: 200,
+            message: "Logged out successfully"
+        });
+        return;
     });
 }
 
