@@ -6,7 +6,7 @@ import { validatePasswordReset, validatePasswordResetEmailInput } from '../valid
 import isResetTokenValid from '../middlewares/resetPassword.middleware.js';
 
 
-export default function passwordReset(app){
+export default function resetPassword(app){
     app.put('/user/reset', isResetTokenValid(), validatePasswordReset(), async (req, res) => {
         const token = req.body.resetToken;
         const decodedToken = decodeToken(token, false);
