@@ -834,6 +834,7 @@ html {
   opacity: 0.9;
 }
     .inputStyleContainer :is(input, textarea, select, option) {
+  border-radius: 0px;
   border-style: none;
   padding: 0px;
 }

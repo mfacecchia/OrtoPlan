@@ -104,7 +104,7 @@
         @apply text-black opacity-90 input-disabled;
     }
     .inputStyleContainer :is(input, textarea, select, option){
-        @apply border-none p-0;
+        @apply border-none p-0 rounded-none;
     }
     input[type="checkbox"]{
         @apply appearance-auto w-auto;
