@@ -8,7 +8,7 @@ function newElement(type, plantationID = undefined){
     
     newElementDialog.onclose = e => {
         clearFormErrorMessages(newElementForm, true);
-        setTabIndexToMinusOne(newElementDialog);
+        disableDialogFocus(newElementDialog);
         newElementForm.onsubmit = undefined;
     };
     newElementForm.onsubmit = async e => {
@@ -68,7 +68,7 @@ function newElement(type, plantationID = undefined){
         newElementDialog.close();
     }
     newElementDialog.showModal();
-    setTabIndexToZero(newElementDialog);
+    enableDialogFocus(newElementDialog);
 }
 
 function addElementToList(elementData, type){
@@ -156,7 +156,7 @@ async function modify(elementID, type){
     }
     updateElementDialog.onclose = e => {
         clearFormErrorMessages(updateElementForm, true);
-        setTabIndexToMinusOne(updateElementDialog);
+        disableDialogFocus(updateElementDialog);
         updateElementForm.onsubmit = undefined;
     }
     updateElementForm.onsubmit = async e => {
@@ -219,7 +219,7 @@ async function modify(elementID, type){
         updateElementDialog.close();
     }
     updateElementDialog.showModal();
-    setTabIndexToZero(updateElementDialog);
+    enableDialogFocus(updateElementDialog);
 }
 
 function modifyCardData(newCardData, cardElement, type){

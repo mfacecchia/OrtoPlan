@@ -36,8 +36,8 @@ function confirmRemoval(elementID, type, printError = true){
     }
     dialog.querySelector('p span').textContent = elementName;
     dialog.showModal();
-    setTabIndexToZero(dialog);
-    dialog.onclose = () => setTabIndexToMinusOne(dialog);
+    enableDialogFocus(dialog);
+    dialog.onclose = () => disableDialogFocus(dialog);
     dialog.querySelector('form').onsubmit = async e => {
         // NOTE: Backend endpoints use `type` but in plural
         const pluralType = type + 's';

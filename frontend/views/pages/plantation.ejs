@@ -38,7 +38,7 @@
         }) %>
         <%- include('../partials/updateUser.partial.ejs') %>
         <%- include('../partials/userRemovalConfirmation.partial.ejs') %>
-        <dialog class = "modal" id = "treatments">
+        <dialog class = "modal invisible" id = "treatments" aria-hidden = "true">
             <div class = "modal-box space-y-5 text-center">
                 <form method = "dialog">
                     <button class = "btn btn-square rounded-md btn-outline absolute right-2 top-2 btn-primary">X</button>
@@ -59,7 +59,7 @@
                 <div class = "btn btn-primary rounded-full w-1/2 py-2 px-3" id = "newTreatment" role = "button"><p>New treatment</p></div>
             </div>
         </dialog>
-        <dialog class = "modal" id = "plantInfo">
+        <dialog class = "modal invisible" id = "plantInfo" aria-hidden = "true">
             <div class = "modal-box">
                 <form method = "dialog">
                     <button class = "btn btn-square rounded-md btn-outline absolute right-2 top-2 btn-primary">X</button>

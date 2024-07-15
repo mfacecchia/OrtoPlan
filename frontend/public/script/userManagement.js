@@ -26,7 +26,7 @@ async function updateUser(){
 
     updateUserDialog.onclose = () =>{
         clearFormErrorMessages(updateUserForm, true);
-        setTabIndexToMinusOne(updateUserDialog);
+        disableDialogFocus(updateUserDialog);
     }
     updateUserForm.onsubmit = async e => {
         e.preventDefault();
@@ -78,7 +78,7 @@ async function updateUser(){
         displayMessage('User information updated successfully.', 'success');
     }
     updateUserDialog.showModal();
-    setTabIndexToZero(updateUserDialog);
+    enableDialogFocus(updateUserDialog);
 }
 
 function confirmUserRemoval(){
@@ -87,7 +87,7 @@ function confirmUserRemoval(){
     */
     const confirmUserRemovalDialog = document.querySelector('#confirmUserRemoval');
     const confirmRemovalForm = confirmUserRemovalDialog.querySelector('form');
-    confirmUserRemovalDialog.onclose = () => setTabIndexToMinusOne(confirmUserRemovalDialog);
+    confirmUserRemovalDialog.onclose = () => disableDialogFocus(confirmUserRemovalDialog);
     confirmRemovalForm.onsubmit = async e => {
         e.preventDefault();
         try{
@@ -111,7 +111,7 @@ function confirmUserRemoval(){
         }
     }
     confirmUserRemovalDialog.showModal();
-    setTabIndexToZero(confirmUserRemovalDialog);
+    enableDialogFocus(confirmUserRemovalDialog);
 }
 
 async function checkEmailVerification(updateLocalStorage = true){

@@ -142,7 +142,7 @@ async function getPlantTreatments(plantID){
     
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
     treatmentsModal.onclose = () => {
-        setTabIndexToMinusOne(treatmentsModal);
+        disableDialogFocus(treatmentsModal);
         // Resetting the edit button clicks count global variable to its initial state
         editButtonClicksCount = 0;
         // Updating the separators count to assert that all the separators get actually removed
@@ -171,7 +171,7 @@ async function getPlantTreatments(plantID){
     }
     else showNotice();
     treatmentsModal.showModal();
-    setTabIndexToZero(treatmentsModal);
+    enableDialogFocus(treatmentsModal);
 }
 
 function newTreatment(plantID){
@@ -182,7 +182,7 @@ function newTreatment(plantID){
     
     newTreatmentDialog.onclose = () => {
         clearFormErrorMessages(newTreatmentForm, true);
-        setTabIndexToMinusOne(newTreatmentDialog);
+        disableDialogFocus(newTreatmentDialog);
         newTreatmentForm.onsubmit = undefined;
     };
     newTreatmentForm.onsubmit = async e => {
@@ -238,7 +238,7 @@ function newTreatment(plantID){
         newTreatmentDialog.close();
     }
     newTreatmentDialog.showModal();
-    setTabIndexToZero(newTreatmentDialog);
+    enableDialogFocus(newTreatmentDialog);
 }
 
 function insertTreatmentInList(formsContainer, treatmentForm){
