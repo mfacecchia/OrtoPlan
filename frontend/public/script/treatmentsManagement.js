@@ -122,7 +122,8 @@ function resetTreatmentsList(form){
     document.querySelector('#newTreatment').removeAttribute('disabled');
 }
 
-async function getPlantTreatments(plantID){
+async function getPlantTreatments(plantID, keyPressed){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     const treatmentsModal = document.querySelector('#treatments');
     // Obtaining data from the API
     const treatmentsData = await getTreatmentsList(plantID);
@@ -138,6 +139,7 @@ async function getPlantTreatments(plantID){
     let separatorsList = formsContainer.querySelectorAll('hr:not(.green-line)');
 
     treatmentsModal.querySelector('#newTreatment').onclick = e => newTreatment(plantID);
+    treatmentsModal.querySelector('#newTreatment').onkeydown = e => newTreatment(plantID, e.code);
     treatmentFormTempate.classList.remove('hidden');
     
     // Removing all the forms from the dialog in case it gets closed (e.g. setting it back to its initial state)
@@ -174,7 +176,8 @@ async function getPlantTreatments(plantID){
     enableDialogFocus(treatmentsModal);
 }
 
-function newTreatment(plantID){
+function newTreatment(plantID, keyPressed){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     const newTreatmentDialog = document.querySelector('#newTreatment');
     const newTreatmentForm = document.querySelector('#newTreatmentForm');
     newTreatmentDialog.querySelector('header span').textContent = document.querySelector(`[data-plant-id="${plantID}"] [role="definition"]`).textContent;

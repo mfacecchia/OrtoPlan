@@ -9,7 +9,8 @@ async function updateDropdownUserName(){
     userNameSurname[1].textContent = userInfo.lastName;
 }
 
-async function updateUser(){
+async function updateUser(keyPressed = undefined){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     const updateUserDialog = document.querySelector('#updateUser');
     const updateUserForm = updateUserDialog.querySelector('#updateUserForm');
     
@@ -81,10 +82,11 @@ async function updateUser(){
     enableDialogFocus(updateUserDialog);
 }
 
-function confirmUserRemoval(){
+function confirmUserRemoval(keyPressed){
     /*
         * Opens the dialog and checks for submit event to process the DELETE request
     */
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     const confirmUserRemovalDialog = document.querySelector('#confirmUserRemoval');
     const confirmRemovalForm = confirmUserRemovalDialog.querySelector('form');
     confirmUserRemovalDialog.onclose = () => disableDialogFocus(confirmUserRemovalDialog);

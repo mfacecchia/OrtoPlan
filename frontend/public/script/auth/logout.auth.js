@@ -1,4 +1,5 @@
-async function logout(){
+async function logout(keyPressed){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     displayMessage('Logging out. Please wait', 'info');
     try{
         const res = await fetch(`${BACKEND_ADDRESS}/user/logout`, {

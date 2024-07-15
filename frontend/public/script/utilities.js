@@ -18,13 +18,14 @@ function createElement(elementName, attributes = null, classes = null){
     return element;
 }
 
-function confirmRemoval(elementID, type, printError = true){
+function confirmRemoval(elementID, type, printError = true, keyPressed = undefined){
     /*
         * Manages the plant/plantation removal based on the modal selection
         * Takes as parameter the plant/plantation id and uses it to process all the relative removal confirmation mechanism
         * The `elementType` parameter accepts a string value and is used to determine the element to remove (the element should contain a `data-elementType-id` attribute)
         * The `printError` prameter allows to choose whetever to display an erorr message to the user or not
     */
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     const elementSelector = `[data-${type}-id="${elementID}"]`;
     const dialog = document.querySelector('#confirmRemoval');
     let elementName = undefined

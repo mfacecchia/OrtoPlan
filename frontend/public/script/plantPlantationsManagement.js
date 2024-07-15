@@ -1,4 +1,5 @@
-function newElement(type, plantationID = undefined){
+function newElement(type, plantationID = undefined, keyPressed){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     if(!USER_SETTINGS.verified){
         displayMessage('Please verify your Email before.', 'error');
         return;
@@ -89,11 +90,15 @@ function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
     
     dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}')`)
+    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onkeydown', `confirmRemoval(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}', true, event.code)`)
     dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}')`)
+    dropdownOptions.querySelector('[role="Modify"]').setAttribute('onkeydown', `modify(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}', event.code)`)
     if(type === 'plant'){
         card.setAttribute('data-plant-id', elementData.plantationPlantID);
         dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantationPlantID})`);
+        dropdownOptions.querySelector('[role="Plan"]').setAttribute('onkeydown', `getPlantTreatments(${elementData.plantationPlantID}, event.code)`);
         dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${elementData.plantationPlantID})`);
+        dropdownOptions.querySelector('[role="Information"]').setAttribute('onkeydown', `showPlantInformation(${elementData.plantationPlantID}, event.code)`);
         card.querySelector(`.cardContent p`).textContent = elementData.plant.plantFamily;
         card.querySelector(`.cardContent h2`).textContent = elementData.plant.plantName;
         if(elementData.plant.imageURL.includes('https://'))
@@ -114,7 +119,8 @@ function setCardData(card, elementData, type){
     return card;
 }
 
-async function modify(elementID, type){
+async function modify(elementID, type, keyPressed = undefined){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     if(!USER_SETTINGS.verified){
         displayMessage('Please verify your Email before.', 'error');
         return;
@@ -280,7 +286,8 @@ async function updatePageData(plantationID){
     plantationMainData.querySelector('b').textContent = plantation.location.locationName;
 }
 
-async function showPlantInformation(plantID){
+async function showPlantInformation(plantID, keyPressed){
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
     const res = await getPlantInfo(plantID);
     if(!res){
         displayMessage('Plant not found.', 'error');
