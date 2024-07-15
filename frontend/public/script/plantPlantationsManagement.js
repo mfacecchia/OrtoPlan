@@ -89,16 +89,16 @@ function insertElementInList(parentNode, elementCard){
 function setCardData(card, elementData, type){
     const dropdownOptions = card.querySelector('.dropdown-content');
     
-    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onclick', `confirmRemoval(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}')`)
-    dropdownOptions.querySelector('[role="Remove"]').setAttribute('onkeydown', `confirmRemoval(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}', true, event.code)`)
-    dropdownOptions.querySelector('[role="Modify"]').setAttribute('onclick', `modify(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}')`)
-    dropdownOptions.querySelector('[role="Modify"]').setAttribute('onkeydown', `modify(${type === 'plant'? elementData.plantationPlantID: elementData.plantationID}, '${type}', event.code)`)
+    dropdownOptions.querySelector('[role="Remove"]').addEventListener('click', (e) => confirmRemoval(type === 'plant'? elementData.plantationPlantID: elementData.plantationID, type));
+    dropdownOptions.querySelector('[role="Remove"]').addEventListener('keydown', (e) => confirmRemoval(type === 'plant'? elementData.plantationPlantID: elementData.plantationID, type, true, e.code));
+    dropdownOptions.querySelector('[role="Modify"]').addEventListener('click', (e) => modify(type === 'plant'? elementData.plantationPlantID: elementData.plantationID, type));
+    dropdownOptions.querySelector('[role="Modify"]').addEventListener('keydown', (e) => modify(type === 'plant'? elementData.plantationPlantID: elementData.plantationID, type, e.code));
     if(type === 'plant'){
         card.setAttribute('data-plant-id', elementData.plantationPlantID);
-        dropdownOptions.querySelector('[role="Plan"]').setAttribute('onclick', `getPlantTreatments(${elementData.plantationPlantID})`);
-        dropdownOptions.querySelector('[role="Plan"]').setAttribute('onkeydown', `getPlantTreatments(${elementData.plantationPlantID}, event.code)`);
-        dropdownOptions.querySelector('[role="Information"]').setAttribute('onclick', `showPlantInformation(${elementData.plantationPlantID})`);
-        dropdownOptions.querySelector('[role="Information"]').setAttribute('onkeydown', `showPlantInformation(${elementData.plantationPlantID}, event.code)`);
+        dropdownOptions.querySelector('[role="Plan"]').addEventListener('click', (e) => getPlantTreatments(elementData.plantationPlantID));
+        dropdownOptions.querySelector('[role="Plan"]').addEventListener('keydown', (e) => getPlantTreatments(elementData.plantationPlantID, e.code));
+        dropdownOptions.querySelector('[role="Information"]').addEventListener('click', (e) => showPlantInformation(elementData.plantationPlantID));
+        dropdownOptions.querySelector('[role="Information"]').addEventListener('keydown', (e) => showPlantInformation(elementData.plantationPlantID, e.code));
         card.querySelector(`.cardContent p`).textContent = elementData.plant.plantFamily;
         card.querySelector(`.cardContent h2`).textContent = elementData.plant.plantName;
         if(elementData.plant.imageURL.includes('https://'))
