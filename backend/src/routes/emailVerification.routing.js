@@ -1,7 +1,7 @@
 import decodeToken from '../jwt/decode.jwt.js';
-import { findUser } from '../apis/findUser.api.js';
 import { generateEmailVerificationLink, sendVerificationMail, removeVerificationMessage, verifyEmailAddress } from '../auth/verificateEmailAddress.auth.js';
 import isVerificationTokenValid from '../middlewares/emailVerification.middleware.js';
+import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 
 
 export default function emailAddressVerification(app){
@@ -23,18 +23,8 @@ export default function emailAddressVerification(app){
         }
     });
 
-    app.post('/user/verify/generate', async (req, res) => {
-        let user;
-        try{
-            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
-            user = await findUser(decodedToken.userID, true, false);
-        }catch(err){
-            res.status(404).json({
-                status: 404,
-                message: err.message
-            });
-            return;
-        }
+    app.post('/user/verify/generate', isLoggedIn(true, false, true), async (req, res) => {
+        const user = req.lastUserValues;
         if(user.verified){
             res.status(401).json({
                 status: 401,
