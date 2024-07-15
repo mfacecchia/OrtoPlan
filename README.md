@@ -105,7 +105,7 @@
 <hr>
 
 <h2 id = "db">Database</h2>
-<img src = "https://github.com/mfacecchia/OrtoPlan/assets/86726458/8a989d25-b4d9-428c-ae8d-47c3c5d1f4b2" alt = "Database representation">
+<img src = "https://github.com/user-attachments/assets/1fae5951-ae37-4e66-856e-8f1357fa3a4a" alt = "Database representation">
 <p>To quickly setup the database with all the tables and relations, follow the following instructions:</p>
 <ul>
   <li>Create a MySQL schema</li>
