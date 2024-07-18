@@ -3,25 +3,27 @@ import { createClient } from "redis";
 
 let redis;
 
-export async function connectToRedis(){
+export function connectToRedis(){
     /*
         * Connects to a local redis server.
         * Returns `redis` client if the connection end up successful,
         * otherwise `false` if the connection fails
     */
-    if(redis && redis.isReady) return true
-    try{
-        redis = await createClient()
-            .on('error', () => {
-                console.log("Failed connection with redis.");
-                throw new Error();
-            })
-            .connect();
-    }catch(err){
-        redis = null;
-        return false;
-    }
-    return redis;
+    return new Promise(async (resolve, reject) => {
+        if(redis && redis.isReady) resolve(redis);
+        try{
+            redis = await createClient()
+                // Failed connection to Redis server
+                .on('error', () => {
+                    throw new Error();
+                })
+                .connect();
+        }catch(err){
+            redis = null;
+            reject(false);
+        }
+        resolve(redis);
+    });
 }
 
 export async function disconnectToRedis(){
