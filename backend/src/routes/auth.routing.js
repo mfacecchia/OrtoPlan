@@ -6,6 +6,7 @@ import { validateLoginSignup } from '../validation/user.validation.js';
 import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 import sendWelcomeEmail from '../mail/welcome.mail.js';
 import { blacklistToken } from '../jwt/blacklist.jwt.js';
+import generateCsrf from '../csrf/generateCsrf.csrf.js';
 
 
 export default function userAuth(app){
@@ -34,7 +35,17 @@ export default function userAuth(app){
             const token = await generateJWT({
                 userID: userExists.userID
             }, Boolean(req.body.rememberMe));
-            res.status(200).json({
+            let csrfToken;
+            try{
+                csrfToken = await generateCsrf(userExists.userID);
+            }catch(err){
+                throw new Error();
+            }
+            res.status(200).cookie('csrf', csrfToken, {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'none'
+            }).json({
                 status: 200,
                 message: "Logged in successfully.",
                 token: token,
@@ -43,7 +54,7 @@ export default function userAuth(app){
         }catch(err){
             res.status(404).json({
                 status : 404,
-                message: "User not found. Please try again."
+                message: "User not found or error while processing your request. Please try again."
             });
         }
     });
