@@ -33,7 +33,8 @@ const limiter = rateLimit({
 app.use(cors(
     {
         // Frontend address
-        origin: `${process.env.FRONTEND_ADDRESS}:${process.env.FRONTEND_PORT}`
+        origin: `${process.env.FRONTEND_ADDRESS}:${process.env.FRONTEND_PORT}`,
+        credentials: true
     }
 ));
 app.use(express.json());
