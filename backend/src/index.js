@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import requestIp from 'request-ip';
 import { rateLimit } from 'express-rate-limit';
@@ -37,6 +38,7 @@ app.use(cors(
         credentials: true
     }
 ));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 /*
