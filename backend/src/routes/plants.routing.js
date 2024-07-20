@@ -3,6 +3,7 @@ import decodeToken from '../jwt/decode.jwt.js';
 import getPlant, { getUserPlant } from '../apis/getPlant.api.js';
 import getPlantation from '../apis/getPlantation.api.js';
 import { validatePlant } from '../validation/plant.validation.js';
+import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
 
 
 export default function plants(app){
@@ -26,7 +27,7 @@ export default function plants(app){
                 });
             }
         })
-        .post(validatePlant(), async (req, res) => {
+        .post(isCsrfTokenValid(), validatePlant(), async (req, res) => {
             req.body.plantationID = parseInt(req.body.plantationID) || 0;
             // Data to pass to the function
             const plantData = { plantationID: req.body.plantationID };
@@ -65,8 +66,8 @@ export default function plants(app){
                 return;
             }
         })
-        .put(validatePlant(), deleteUpdatePlant)
-        .delete(deleteUpdatePlant);
+        .put(isCsrfTokenValid(), validatePlant(), deleteUpdatePlant)
+        .delete(isCsrfTokenValid(), deleteUpdatePlant);
 
     app.get('/api/plants/all', async (req, res) => {
         /*

@@ -4,6 +4,7 @@ import { blacklistToken } from '../jwt/blacklist.jwt.js';
 import argon2 from 'argon2';
 import { validateUserUpdate } from '../validation/user.validation.js';
 import { generateEmailVerificationLink, sendVerificationMail, resetVerificationStatus } from '../auth/verificateEmailAddress.auth.js';
+import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
 
 
 export default function users(app){
@@ -24,8 +25,8 @@ export default function users(app){
                 });
             }
         })
-        .put(validateUserUpdate(), deleteUpdateUser)
-        .delete(deleteUpdateUser)
+        .put(isCsrfTokenValid(), validateUserUpdate(), deleteUpdateUser)
+        .delete(isCsrfTokenValid(), deleteUpdateUser)
 }
 
 function getUserFullInfo(userID){

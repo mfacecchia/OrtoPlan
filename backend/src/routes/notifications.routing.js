@@ -2,6 +2,7 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import { getUserNotification } from '../apis/getUserNotifications.api.js';
 import { validateNotification } from '../validation/notification.validation.js';
+import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
 
 
 export default function notifications(app){
@@ -25,7 +26,7 @@ export default function notifications(app){
                 });
             }
         })
-        .post(validateNotification(), async (req, res) => {
+        .post(validateNotification(), isCsrfTokenValid(), async (req, res) => {
             const decodedToken = decodeToken(req.headers.authorization, false);
             req.body.userID = decodedToken.userID;
             try{

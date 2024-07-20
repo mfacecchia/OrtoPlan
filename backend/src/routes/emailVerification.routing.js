@@ -2,6 +2,7 @@ import decodeToken from '../jwt/decode.jwt.js';
 import { generateEmailVerificationLink, sendVerificationMail, removeVerificationMessage, verifyEmailAddress } from '../auth/verificateEmailAddress.auth.js';
 import isVerificationTokenValid from '../middlewares/emailVerification.middleware.js';
 import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
+import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
 
 
 export default function emailAddressVerification(app){
@@ -23,7 +24,7 @@ export default function emailAddressVerification(app){
         }
     });
 
-    app.post('/user/verify/generate', isLoggedIn(true, false, true), async (req, res) => {
+    app.post('/user/verify/generate', isCsrfTokenValid(), isLoggedIn(true, false, true), async (req, res) => {
         const user = req.lastUserValues;
         if(user.verified){
             res.status(401).json({

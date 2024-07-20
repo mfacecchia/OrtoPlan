@@ -2,6 +2,7 @@ import prisma from '../../db/prisma.db.js';
 import decodeToken from '../jwt/decode.jwt.js';
 import { getUserPlant } from '../apis/getPlant.api.js'
 import { validateTreatment } from '../validation/treatments.validation.js';
+import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
 
 
 export default function treatments(app){
@@ -26,7 +27,7 @@ export default function treatments(app){
                 });
             }
         })
-        .post(validateTreatment(), async (req, res) => {
+        .post(isCsrfTokenValid(), validateTreatment(), async (req, res) => {
             // Passing all required data to create a treatment in an Object that will be passed to the appropriate function later on
             const treatmentData = {};
             ['treatmentType', 'notes', 'treatmentDate', 'treatmentRecurrence', 'plantationPlantID'].forEach(key => {
@@ -58,8 +59,8 @@ export default function treatments(app){
                 return;
             }
         })
-        .put(validateTreatment(), deleteUpdateTreatment)
-        .delete(deleteUpdateTreatment)
+        .put(isCsrfTokenValid(), validateTreatment(), deleteUpdateTreatment)
+        .delete(isCsrfTokenValid(), deleteUpdateTreatment)
 
     app.get('/api/treatments/all', async (req, res) => {
         /*

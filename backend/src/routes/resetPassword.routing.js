@@ -4,6 +4,7 @@ import { generatePasswordResetLink, sendPasswordResetMail, removePasswordResetMe
 import argon2 from 'argon2';
 import { validatePasswordReset, validatePasswordResetEmailInput } from '../validation/resetPassword.validation.js';
 import isResetTokenValid from '../middlewares/resetPassword.middleware.js';
+import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
 
 
 export default function resetPassword(app){
@@ -35,7 +36,7 @@ export default function resetPassword(app){
         }
     });
 
-    app.post('/user/reset/generate', validatePasswordResetEmailInput(), async (req, res) => {
+    app.post('/user/reset/generate', isCsrfTokenValid(), validatePasswordResetEmailInput(), async (req, res) => {
         try{
             const user = await findUser(req.body.email, false, false);
             const messageLink = await generatePasswordResetLink(user.email, true);
