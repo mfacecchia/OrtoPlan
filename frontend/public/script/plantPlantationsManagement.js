@@ -244,7 +244,7 @@ async function getUserList(type, plantationID = undefined){
     */
     // NOTE: Backend endpoints use `type` but in plural
     const pluralType = type + 's';
-    const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}/all?plantationID=${plantationID}`, {
+    const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}/all${type === 'plant'? `?plantationID=${plantationID}`: ''}`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
