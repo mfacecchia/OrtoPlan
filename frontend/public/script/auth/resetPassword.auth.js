@@ -23,7 +23,8 @@ resetPasswordForm.onsubmit = async e => {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(userData),
+            credentials: 'include'
         });
         clearFormErrorMessages(resetPasswordForm, false);
         const jsonRes = await res.json();

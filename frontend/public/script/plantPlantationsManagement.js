@@ -45,7 +45,8 @@ function newElement(type, plantationID = undefined, keyPressed){
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
-                body: JSON.stringify(newElementData)
+                body: JSON.stringify(newElementData),
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             // Backend validation not passed
@@ -200,7 +201,8 @@ async function modify(elementID, type, keyPressed = undefined){
                 body: JSON.stringify({
                     ...keyValue,
                     ...updateElementData
-                })
+                }),
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             // Backend validation not passed

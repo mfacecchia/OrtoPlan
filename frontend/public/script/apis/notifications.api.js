@@ -22,7 +22,8 @@ async function removeAllNotifications(){
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            }
+            },
+            credentials: 'include'
         });
         const jsonRes = await res.json();
         if(!res.ok) throw new Error(jsonRes.message);
@@ -45,7 +46,8 @@ async function addTreatmentNotification(treatmentData){
                 message: `${treatmentData.treatmentType} scheduled for ${treatmentData.plantationName}'s ${treatmentData.plantName} ${treatmentData.dueInDays > 0? `in ${treatmentData.dueInDays} day(s)`: 'today'}.`,
                 notificationType: 'treatment',
                 notificationIcon: `${treatmentData.treatmentType.toLowerCase()}_green.svg`
-            })
+            }),
+            credentials: 'include'
         });
         const jsonRes = await res.json();
         if(!res.ok) throw new Error(jsonRes.message);

@@ -55,7 +55,8 @@ function confirmRemoval(elementID, type, printError = true, keyPressed = undefin
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
-                body: JSON.stringify(keyValue)
+                body: JSON.stringify(keyValue),
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             if(!res.ok) throw new Error(jsonRes.message);

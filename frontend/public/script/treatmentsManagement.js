@@ -73,7 +73,8 @@ async function updateTreatmentInfo(e, form, treatmentID){
                 "Accept": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
             },
-            body: JSON.stringify(updatedTreatmentData)
+            body: JSON.stringify(updatedTreatmentData),
+            credentials: 'include'
         });
         const jsonRes = await res.json();
         // Backend validation not passed
@@ -213,7 +214,8 @@ function newTreatment(plantID, keyPressed){
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
-                body: JSON.stringify(newTreatmentData)
+                body: JSON.stringify(newTreatmentData),
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             // Backend validation not passed

@@ -24,7 +24,7 @@ userLoginForm.onsubmit = async e => {
                 "Accept": "application/json"
             },
             body: JSON.stringify(userData),
-            credentials: "include"
+            credentials: 'include'
         });
         clearFormErrorMessages(userLoginForm, false);
         if(res.status === 404){

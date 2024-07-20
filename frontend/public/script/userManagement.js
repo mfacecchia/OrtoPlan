@@ -53,7 +53,8 @@ async function updateUser(keyPressed = undefined){
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
-                body: JSON.stringify(newUserFormData)
+                body: JSON.stringify(newUserFormData),
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             if(res.status === 403){
@@ -98,7 +99,8 @@ function confirmUserRemoval(keyPressed){
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-                }
+                },
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             if(!res.ok) throw new Error(jsonRes.message);
