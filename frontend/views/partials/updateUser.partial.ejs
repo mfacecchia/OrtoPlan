@@ -17,9 +17,9 @@
                     <img class = "w-4 xl:w-5" src = "/assets/icons/info.svg" alt = "Information about updating email address" title = "About updating email address">
                 </div>
             </div>
-            <input type = "password" name = "oldPassword" placeholder = "Old Password">
-            <input type = "password" name = "password" placeholder = "New Password">
-            <input type = "password" name = "passwordVerify" placeholder = "Verify new password">
+            <%- include('../partials/passwordField.partial.ejs', {fieldName: "oldPassword", placeholder: "Old Password", isRequired: false, isDialog: true}) %>
+            <%- include('../partials/passwordField.partial.ejs', {placeholder: "New Password", isRequired: false, isDialog: true}) %>
+            <%- include('../partials/passwordField.partial.ejs', {fieldName: "passwordVerify", placeholder: "Verify new password", isRequired: false, isDialog: true}) %>
             <button type = "submit">Update</button>
         </form>
     </div>
