@@ -146,3 +146,16 @@ function clearFormErrorMessages(formElement, clearInputValues = false){
     // Removing input data if `removeData` variable is set to `true`, otherwise just removing error classes
     if(clearInputValues) formElement.reset();
 }
+
+function togglePasswordField(inputContainer, keyPressed = undefined){
+    /*
+        * Lets the user see the password field in form of text/asterisks
+    */
+    if(keyPressed !== undefined && keyPressed !== 'Enter') return;
+    const defaultAssetsDir = '/assets/icons';
+    const inputField = inputContainer.querySelector('input');
+    const togglePasswordImg = inputContainer.querySelector('img');
+    const isPassword = inputContainer.querySelector('input').getAttribute('type') === 'password';
+    inputField.setAttribute('type', isPassword? 'text': 'password');
+    togglePasswordImg.setAttribute('src', isPassword? `${defaultAssetsDir}/eye_dashed.svg`: `${defaultAssetsDir}/eye.svg`);
+}
