@@ -159,3 +159,12 @@ function togglePasswordField(inputContainer, keyPressed = undefined){
     inputField.setAttribute('type', isPassword? 'text': 'password');
     togglePasswordImg.setAttribute('src', isPassword? `${defaultAssetsDir}/eye_dashed.svg`: `${defaultAssetsDir}/eye.svg`);
 }
+
+function toggleCheckbox(element, keyPressed){
+    if(keyPressed !== 'Enter') return;
+    if(element.tagName === 'input') element.checked = !element.checked;
+    else{
+        const checkbox = element.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+    }
+}
