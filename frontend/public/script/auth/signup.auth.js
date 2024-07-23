@@ -16,6 +16,7 @@ userSignupForm.onsubmit = async e => {
         }
         return;
     }
+    displayMessage('Signing you up. Please wait.', 'info');
     try{
         const res = await fetch(`${BACKEND_ADDRESS}/user/signup`, {
             method: 'POST',
