@@ -62,6 +62,11 @@ export default function userAuth(app){
     app.post('/user/logout', isLoggedIn(true, false, false), async (req, res) => {
         const token = req.headers.authorization;
         await blacklistToken(token);
+        res.clearCookie('csrf', {
+            secure: true,
+            httpOnly: true,
+            sameSite: 'none'
+        });
         res.status(200).json({
             status: 200,
             message: "Logged out successfully"

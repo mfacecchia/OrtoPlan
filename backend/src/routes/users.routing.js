@@ -64,6 +64,11 @@ async function deleteUpdateUser(req, res){
                 blacklistToken(req.headers.authorization)
             ]);
             user = userPromise;
+            res.clearCookie('csrf', {
+                secure: true,
+                httpOnly: true,
+                sameSite: 'none'
+            });
         }
         else if(req.method === 'PUT'){
             user = await updateUser(req.body, decodedToken.userID);
@@ -85,6 +90,11 @@ async function deleteUpdateUser(req, res){
             // Blacklisting the token if the password changes
             if(req.body.password && !(await argon2.verify(req.lastUserValues.password, req.body.password))){
                 await blacklistToken(req.headers.authorization);
+                res.clearCookie('csrf', {
+                    secure: true,
+                    httpOnly: true,
+                    sameSite: 'none'
+                });
             }
         }
         res.status(200).json({
