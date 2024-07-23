@@ -106,9 +106,10 @@ function confirmUserRemoval(keyPressed){
             if(!res.ok) throw new Error(jsonRes.message);
             confirmUserRemovalDialog.close();
             displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 3 seconds.`, 'success');
+            localStorage.clear();
             setTimeout(() => {
-                logout();
-            }, 3000);
+                window.location.pathname = '/';
+            }, 5000);
         }catch(err){
             confirmUserRemovalDialog.close();
             displayMessage(`Could not complete the request. ${err.message}`, 'error');
