@@ -13,8 +13,8 @@
             <form class = "mt-5" id = "userLogin">
                 <input type = "email" name = "email" placeholder = "Email*" required>
                 <%- include('../partials/passwordField.partial.ejs', {isRequired: true, isDialog: false}) %>
-                <label class = "flex flex-wrap items-center justify-center gap-2 whitespace-nowrap">
-                    <input type = "checkbox" name = "rememberMe">
+                <label class = "flex flex-wrap items-center justify-center gap-2 whitespace-nowrap" tabindex = "0" onkeydown = "toggleCheckbox(this, event.code)">
+                    <input type = "checkbox" name = "rememberMe" tabindex = "-1">
                     <p>Remember me</p>
                 </label>
                 <a class = "text-primary" href = "/user/reset">Forgot password? Click here!</a>
