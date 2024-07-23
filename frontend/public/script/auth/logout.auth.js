@@ -6,7 +6,8 @@ async function logout(keyPressed){
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            }
+            },
+            credentials: 'include'
         });
         if(!res.ok){
             const jsonRes = await res.json();
