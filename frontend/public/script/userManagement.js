@@ -71,6 +71,13 @@ async function updateUser(keyPressed = undefined){
                 return;
             }
             if(!res.ok) throw new Error(jsonRes.message);
+            if(newUserFormData.password){
+                displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 5 seconds.`, 'success');
+                localStorage.clear();
+                setTimeout(() => {
+                    window.location.pathname = '/';
+                }, 5000);
+            }
         }catch(err){
             updateUserDialog.close();
             displayMessage(`Could not update user information. ${err.message}`, 'error');
@@ -105,7 +112,7 @@ function confirmUserRemoval(keyPressed){
             const jsonRes = await res.json();
             if(!res.ok) throw new Error(jsonRes.message);
             confirmUserRemovalDialog.close();
-            displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 3 seconds.`, 'success');
+            displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 5 seconds.`, 'success');
             localStorage.clear();
             setTimeout(() => {
                 window.location.pathname = '/';
