@@ -26,6 +26,12 @@ async function updateUser(keyPressed = undefined){
     updateUserForm.querySelector('[name="email"]').value = userInfo.credential[0].email;
 
     updateUserDialog.onclose = () =>{
+        // Setting all password fields to their initial state
+        // NOTE: The `i` in `querySelectorAll()` is used for case-insensitive attribute filtering
+        updateUserForm.querySelectorAll('.inputStyleContainer:has(input[name*="password" i])').forEach(passwordField => {
+            passwordField.querySelector('input').setAttribute('type', 'password');
+            passwordField.querySelector('img').setAttribute('src', '/assets/icons/eye.svg');
+        });
         clearFormErrorMessages(updateUserForm, true);
         disableDialogFocus(updateUserDialog);
     }
