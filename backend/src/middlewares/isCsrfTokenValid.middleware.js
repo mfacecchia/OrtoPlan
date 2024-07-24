@@ -31,8 +31,12 @@ function getSecretFromRedis(userID){
         }catch(err){
             reject(false);
         }
-        const secret = await redis.get(`csrfSecret:${userID}`);
-        if(secret) resolve(secret);
-        else reject(false);
+        try{
+            const secret = await redis.get(`csrfSecret:${userID}`);
+            if(secret) resolve(secret);
+            else reject(false);
+        }catch{
+            reject(false);
+        }
     });
 }
