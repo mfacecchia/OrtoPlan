@@ -72,7 +72,7 @@ async function updateUser(keyPressed = undefined){
             }
             if(!res.ok) throw new Error(jsonRes.message);
             if(newUserFormData.password){
-                displayMessage(`${jsonRes.message}. You're getting redirected to the homepage in 5 seconds.`, 'success');
+                displayMessage(`You're getting redirected to the homepage in 5 seconds.`, 'success');
                 localStorage.clear();
                 setTimeout(() => {
                     window.location.pathname = '/';
