@@ -13,7 +13,16 @@ async function validateJWT(){
                 return;
             }
             if(['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/user/plantations';
-        }catch(err){ }
+        }catch(err){
+            displayMessage('Unknown error. Please try again later.', 'error');
+            setTimeout(() => {
+                window.location.pathname = '/';
+            }, 1000);
+            return;
+        }
+        setTimeout(() => {
+            removeLoadingScreen();
+        }, 500);
         return;
     }
     if(!['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/login';
