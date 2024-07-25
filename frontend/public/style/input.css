@@ -20,6 +20,9 @@
     body{
         @apply overflow-x-clip min-h-screen flex flex-col relative;
     }
+    body:is([inert]){
+        @apply overflow-hidden;
+    }
     h1{
         @apply text-2xl;
         @apply md:text-3xl;
@@ -230,6 +233,9 @@
     }
     #notVerifiedNotice article img{
         @apply h-11;
+    }
+    .loadingBackdrop{
+        @apply bg-black/80 absolute top-0 left-0 w-full h-full flex items-center justify-center flex-col gap-5 z-50;
     }
 }
 
