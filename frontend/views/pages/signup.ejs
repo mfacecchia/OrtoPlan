@@ -2,7 +2,8 @@
 
 <html lang = "en">
     <%- include('../partials/head.partial.ejs', {title: 'Sign-up'}) %>
-    <body>
+    <body inert>
+        <%- include('../partials/loading.partial.ejs') %>
         <%- include('../partials/nav.partial.ejs', {isSignupPage: true}) %>
         <section class = "m-auto flex flex-col justify-center items-center">
             <b>Welcome</b>
