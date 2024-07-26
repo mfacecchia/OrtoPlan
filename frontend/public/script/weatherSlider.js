@@ -1,9 +1,12 @@
 async function addSliderElements(plantationID){
     const forecast = await getWeatherInfo(plantationID);
+    const sliderDescription = document.querySelector('.glide > h1[role="definition"]');
     if(!forecast){
+        sliderDescription.textContent = 'Weather not available';
         displayMessage('Weather not available for this location at the moment. Please try again later', 'error');
         return;
     }
+    document.querySelector('#weatherSlider').removeChild(sliderDescription);
     const widget = document.querySelector('#weatherSlider .glide__slides');
     forecast.forEach(forecastDay => {
         const weatherElement = createElement('li', undefined, ['glide__slide']);
