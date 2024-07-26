@@ -235,7 +235,7 @@
         @apply h-11;
     }
     .loadingBackdrop{
-        @apply bg-black/80 absolute top-0 left-0 w-full h-full flex items-center justify-center flex-col gap-5 z-50;
+        @apply bg-black/80 absolute top-0 left-0 w-full h-screen flex items-center justify-center flex-col gap-5 z-40;
     }
 }
 
@@ -303,7 +303,7 @@
         @apply !text-base-100;
     }
     .toast{
-        @apply whitespace-normal;
+        @apply whitespace-normal z-50;
     }
     .alert span{
         @apply max-w-56 text-right;
