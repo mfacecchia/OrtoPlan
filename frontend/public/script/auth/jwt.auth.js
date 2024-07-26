@@ -26,6 +26,9 @@ async function validateJWT(){
         return;
     }
     if(!['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/login';
+    setTimeout(() => {
+        removeLoadingScreen();
+    }, 500);
 }
 
 validateJWT();
