@@ -5,7 +5,8 @@
         title: 'plantationName',
         stylesheets: ["https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css"]
     }) %>
-    <body>
+    <body inert>
+        <%- include('../partials/loading.partial.ejs') %>
         <%- include('../partials/nav.partial.ejs', {showDropdownMenus: 'true'}) %>
         <%- include('../partials/confirmRemovalModal.partial.ejs', {customMessage: "<p>Are you sure you want to remove \"<span></span>\"?</p>"}) %>
         <%- include('../partials/addPlantPlantation.partial.ejs', {
