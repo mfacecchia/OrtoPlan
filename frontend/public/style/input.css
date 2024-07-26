@@ -208,6 +208,9 @@
     .plantationsPlantsList{
         @apply grid justify-start grid-cols-1;
     }
+    #weatherSlider > h1[role="definition"]{
+        @apply text-black/60 font-semibold;
+    }
     .weather{
         @apply flex flex-col items-center justify-center;
     }
@@ -235,6 +238,7 @@
         @apply h-11;
     }
     .loadingBackdrop{
+        /* FIXME: Always on top */
         @apply bg-black/80 absolute top-0 left-0 w-full h-screen flex items-center justify-center flex-col gap-5 z-40;
     }
 }
