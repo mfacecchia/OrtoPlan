@@ -20,6 +20,7 @@ model User {
 
   // NOTE: Foreign key "links"
   credential Credentials[]
+  OAuth OAuth[]
   plantation Plantation[]
   notification Notification[]
 }
@@ -27,13 +28,20 @@ model User {
 model Credentials {
   email String @id
   password String
-  githubID String?
-  googleID String?
   verified Boolean @default(false)
   userID Int @unique
   updatedAt Int
   userAction UserAction[]
   // NOTE: Foreign key (1:N relation with `User` table)
+  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
+}
+
+model OAuth {
+  oauthID Int @id @default(autoincrement())
+  githubID String? @unique
+  googleID String? @unique
+  userID Int @unique
+
   user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
 }
 
