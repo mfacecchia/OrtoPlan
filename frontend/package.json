@@ -24,6 +24,7 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "google-auth-library": "^9.11.0",
     "node-fetch": "^3.3.2"
   }
 }
