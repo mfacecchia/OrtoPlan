@@ -13,7 +13,7 @@ export default function plants(app){
                 * Gets a single plant from a given `plantID` (in request body) and userID (in JWT payload)
             */
             try{
-                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const decodedToken = decodeToken(req.cookies.OPSession);
                 const plant = await getUserPlant(parseInt(req.query.plantID) || 0, decodedToken.userID);
                 res.status(200).json({
                     status: 200,
@@ -42,7 +42,7 @@ export default function plants(app){
                 return;
             }
             try{
-                const decodedToken = decodeToken(req.headers.authorization, false);
+                const decodedToken = decodeToken(req.cookies.OPSession, false);
                 await getPlantation(req.body.plantationID, decodedToken.userID);
             }catch(err){
                 res.status(404).json({
@@ -73,7 +73,7 @@ export default function plants(app){
         /*
             * Gets all plants from a given userID (in JWT payload)
         */
-        const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+        const decodedToken = decodeToken(req.cookies.OPSession);
         const plantsList = await getUserPlantsList(parseInt(req.query.plantationID) || 0, decodedToken.userID);
         res.status(200).json({
             status: 200,
@@ -128,7 +128,7 @@ async function deleteUpdatePlant(req, res){
     req.body.plantationPlantID = parseInt(req.body.plantationPlantID) || 0;
     try{
         let plant = undefined;
-        const decodedToken = decodeToken(req.headers.authorization, false);
+        const decodedToken = decodeToken(req.cookies.OPSession, false);
         const userID = decodedToken.userID;
         if(req.method === 'DELETE') plant = await removePlant(req.body, userID);
         else if(req.method === 'PUT'){

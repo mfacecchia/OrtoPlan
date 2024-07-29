@@ -13,7 +13,7 @@ export default function treatments(app){
                 * Returns all treatment's information as well as all relative plant and plantation's treatment
             */
             try{
-                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const decodedToken = decodeToken(req.cookies.OPSession);
                 const treatment = await getPlantTreatment(parseInt(req.query.treatmentID) || 0, decodedToken.userID);
                 res.status(200).json({
                     status: 200,
@@ -35,7 +35,7 @@ export default function treatments(app){
             });
             // Checking if the plant exists and is actually owned by the user who's making the request
             try{
-                const decodedToken = decodeToken(req.headers.authorization, false);
+                const decodedToken = decodeToken(req.cookies.OPSession, false);
                 await getUserPlant(req.body.plantationPlantID, decodedToken.userID);
             }catch(err){
                 res.status(404).json({
@@ -67,7 +67,7 @@ export default function treatments(app){
             * Gets all treatments from a given `plantationPlantID` (in request body), and userID (in JWT payload)
             * Returns an Array with all treatments' information as well as all relative plant and plantation's information
         */
-        const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+        const decodedToken = decodeToken(req.cookies.OPSession);
         const treatment = await getPlantTreatmentsList(parseInt(req.query.plantationPlantID) || undefined, decodedToken.userID);
         res.status(200).json({
             status: 200,
@@ -153,7 +153,7 @@ async function deleteUpdateTreatment(req, res){
     ['treatmentType', 'notes', 'treatmentDate', 'treatmentRecurrence', 'treatmentID'].forEach(key => {
         treatmentData[key] = req.body[key];
     });
-    const decodedToken = decodeToken(req.headers.authorization, false);
+    const decodedToken = decodeToken(req.cookies.OPSession, false);
     try{
         let treatment = undefined;
         if(req.method === 'DELETE') treatment = await removeTreatment(parseInt(treatmentData.treatmentID) || 0, decodedToken.userID);

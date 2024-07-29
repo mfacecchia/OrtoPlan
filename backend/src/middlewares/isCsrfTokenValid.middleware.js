@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 export default function isCsrfTokenValid(){
     return async (req, res, next) => {
         const tokens = new Tokens();
-        const token = req.headers.authorization;
+        const token = req.cookies.OPSession;
         const decodedToken = jwt.decode(token.replace('Bearer ', ''));
         const tokenUserID = decodedToken.userID;
         try{

@@ -1,5 +1,6 @@
 import prisma from '../../db/prisma.db.js';
 import argon2 from 'argon2';
+import { defaultCookieOptions } from '../constants.js';
 import { generateJWT } from '../auth/jwt.auth.js';
 import { findUser } from '../apis/findUser.api.js';
 import { validateLoginSignup } from '../validation/user.validation.js';
@@ -7,6 +8,7 @@ import { isLoggedIn } from '../middlewares/isLoggedIn.middleware.js';
 import sendWelcomeEmail from '../mail/welcome.mail.js';
 import { blacklistToken } from '../jwt/blacklist.jwt.js';
 import generateCsrf from '../csrf/generateCsrf.csrf.js';
+import clearAllCookies from '../cookies/clearAllCookies.cookies.js';
 
 
 export default function userAuth(app){
@@ -41,14 +43,11 @@ export default function userAuth(app){
             }catch(err){
                 throw new Error();
             }
-            res.status(200).cookie('csrf', csrfToken, {
-                secure: true,
-                httpOnly: true,
-                sameSite: 'none'
-            }).json({
+            res.cookie('csrf', csrfToken, defaultCookieOptions);
+            res.cookie('OPSession', token, defaultCookieOptions);
+            res.status(200).json({
                 status: 200,
                 message: "Logged in successfully.",
-                token: token,
                 verified: userExists.verified
             });
         }catch(err){
@@ -60,13 +59,9 @@ export default function userAuth(app){
     });
 
     app.post('/user/logout', isLoggedIn(true, false, false), async (req, res) => {
-        const token = req.headers.authorization;
+        const token = req.cookies.OPSession;
         await blacklistToken(token);
-        res.clearCookie('csrf', {
-            secure: true,
-            httpOnly: true,
-            sameSite: 'none'
-        });
+        clearAllCookies(req, res);
         res.status(200).json({
             status: 200,
             message: "Logged out successfully"

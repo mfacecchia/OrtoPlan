@@ -5,13 +5,14 @@ import argon2 from 'argon2';
 import { validateUserUpdate } from '../validation/user.validation.js';
 import { generateEmailVerificationLink, sendVerificationMail, resetVerificationStatus } from '../auth/verificateEmailAddress.auth.js';
 import isCsrfTokenValid from '../middlewares/isCsrfTokenValid.middleware.js';
+import clearAllCookies from '../cookies/clearAllCookies.cookies.js'
 
 
 export default function users(app){
     app.route('/api/user')
         .get(async (req, res) => {
             try{
-                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const decodedToken = decodeToken(req.cookies.OPSession);
                 const user = await getUserFullInfo(decodedToken.userID);
                 res.status(200).json({
                     status: 200,
@@ -55,20 +56,16 @@ function getUserFullInfo(userID){
 }
 
 async function deleteUpdateUser(req, res){
-    const decodedToken = decodeToken(req.headers.authorization, false);
+    const decodedToken = decodeToken(req.cookies.OPSession, false);
     try{
         let user = undefined;
         if(req.method === 'DELETE'){
             const [userPromise, _] = await Promise.all([
                 removeUser(decodedToken.userID),
-                blacklistToken(req.headers.authorization)
+                blacklistToken(req.cookies.OPSession)
             ]);
             user = userPromise;
-            res.clearCookie('csrf', {
-                secure: true,
-                httpOnly: true,
-                sameSite: 'none'
-            });
+            clearAllCookies(req, res);
         }
         else if(req.method === 'PUT'){
             user = await updateUser(req.body, decodedToken.userID);
@@ -89,12 +86,8 @@ async function deleteUpdateUser(req, res){
             }
             // Blacklisting the token if the password changes
             if(req.body.password && !(await argon2.verify(req.lastUserValues.password, req.body.password))){
-                await blacklistToken(req.headers.authorization);
-                res.clearCookie('csrf', {
-                    secure: true,
-                    httpOnly: true,
-                    sameSite: 'none'
-                });
+                await blacklistToken(req.cookies.OPSession);
+                clearAllCookies(req, res);
             }
         }
         res.status(200).json({

@@ -122,7 +122,7 @@ export function validateUserUpdate(){
                     resolve();
                 }catch(err){
                     // If the user is found, then check if the corresponsing userID is different to the user who is making the actual request
-                    const userID = decodeToken(req.headers.authorization).userID;
+                    const userID = decodeToken(req.cookies.OPSession).userID;
                     if(userID === err.userID) resolve();
                     else resolve('^Email already in use.');
                 }

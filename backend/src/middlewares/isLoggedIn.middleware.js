@@ -14,7 +14,7 @@ export function isLoggedIn(strict = false, setHeaderOnValid = true, returnLastUs
     */
     return async (req, res, next) => {
         try{
-            const token = req.headers.authorization;
+            const token = req.cookies.OPSession;
             if(strict && !token) throw new Error('Invalid token.');
             if(token){
                 await validateJWT(token.replace('Bearer ', ''), process.env.JWT_SECRET);

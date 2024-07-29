@@ -14,7 +14,7 @@ export default function plantations(app){
                 * Gets a single plantation from a given `plantationID` (in request body) and userID (in JWT payload)
             */
             try{
-                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const decodedToken = decodeToken(req.cookies.OPSession);
                 const plantation = await getPlantation(parseInt(req.query.plantationID) || 0, decodedToken.userID);
                 res.status(200).json({
                     status: 200,
@@ -49,7 +49,7 @@ export default function plantations(app){
             }catch(err){
                 plantationData.imageURL = 'plantation.webp';
             }
-            const decodedToken = decodeToken(req.headers.authorization, false);
+            const decodedToken = decodeToken(req.cookies.OPSession, false);
             plantationData.userID = decodedToken.userID;
             try{
                 const newPlantation = await createPlantation(plantationData);
@@ -73,7 +73,7 @@ export default function plantations(app){
         /*
             * Gets all plantations from a given userID (in JWT payload)
         */
-        const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+        const decodedToken = decodeToken(req.cookies.OPSession);
         const plantationsList = await getPlantationsList(decodedToken.userID);
         res.status(200).json({
             status: 200,
@@ -106,7 +106,7 @@ function getRandomImage(){
 async function deleteUpdatePlantation(req, res){
     try{
         let plantation = undefined;
-        const decodedToken = decodeToken(req.headers.authorization, false);
+        const decodedToken = decodeToken(req.cookies.OPSession, false);
         const userID = decodedToken.userID;
         if(req.method === 'DELETE') plantation = await removePlantation(req.body.plantationID, userID);
         else if(req.method === 'PUT') plantation = await updatePlantation(req.body, userID);

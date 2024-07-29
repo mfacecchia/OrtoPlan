@@ -12,7 +12,7 @@ export default function notifications(app){
                 * Gets a single notification from a given `notificationID` (in request body) and userID (in JWT payload)
             */
             try{
-                const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+                const decodedToken = decodeToken(req.cookies.OPSession.replace('Bearer ', ''));
                 const notification = await getUserNotification(parseInt(req.query.notificationID) || 0, decodedToken.userID);
                 res.status(200).json({
                     status: 200,
@@ -27,7 +27,7 @@ export default function notifications(app){
             }
         })
         .post(validateNotification(), isCsrfTokenValid(), async (req, res) => {
-            const decodedToken = decodeToken(req.headers.authorization, false);
+            const decodedToken = decodeToken(req.cookies.OPSession, false);
             req.body.userID = decodedToken.userID;
             try{
                 const newNotification = await createNotification(req.body);
@@ -46,7 +46,7 @@ export default function notifications(app){
         })
         .delete(async (req, res) => {
             try{
-                const decodedToken = decodeToken(req.headers.authorization, false);
+                const decodedToken = decodeToken(req.cookies.OPSession, false);
                 const userID = decodedToken.userID;
                 const notification = await removeNotification(parseInt(req.body.notificationID) || 0, userID);
                 res.status(200).json({
@@ -64,7 +64,7 @@ export default function notifications(app){
     
     app.route('/api/notifications/all')
         .get(async (req, res) => {
-            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+            const decodedToken = decodeToken(req.cookies.OPSession);
             const notificationsList = await getNotificationsList(decodedToken.userID);
             res.status(200).json({
                 status: 200,
@@ -73,7 +73,7 @@ export default function notifications(app){
             });
         })
         .delete(async (req, res) => {
-            const decodedToken = decodeToken(req.headers.authorization.replace('Bearer ', ''));
+            const decodedToken = decodeToken(req.cookies.OPSession);
             try{
                 const notificationsList = await removeAllNotifications(decodedToken.userID);
                 res.status(200).json({
