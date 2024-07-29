@@ -10,6 +10,7 @@
 <a href = "#db">Database Entity Relationship model</a><br>
 <a href = "#app-routes">App Routes</a><br>
 <a href = "#hashing-methods">Hashing methods</a><br>
+<a href = "#testing-backend-endpoints">Testing Backend Endpoints</a><br>
 <a href = "#functionalities-roadmap">Functionalities roadmap</a><br>
 <hr>
 
@@ -136,12 +137,16 @@
 <p>All user-related sensitive data such as passwords are securely hashed and stored in the database using the <a href = "https://en.wikipedia.org/wiki/Argon2">Argon2id algorithm</a>. To manage and verify such data, <a href = "https://www.npmjs.com/package/argon2">argon2</a> module is being used, in particular the <code>argon2.hash()</code> and <code>argon2.verify()</code> functions with default memory cost, time complexity, and parallellism values.</p>
 <hr>
 
+<h2 id = "testing-backend-endpoints">Testing Backend Endpoints</h2>
+<p>If you want to test your backend endpoints without running the Frontend server as well, a <a href = "https://www.postman.com/fe-is/workspace/ortoplan/overview">Postman Workspace</a> has been created with all the web application's endpoints and core functionalities</p>
+<hr>
+
 <h2 id = "functionalities-roadmap">Functionalities Roadmap</h2>
 <p>I aim to keep this repository updated for as long as possible, all the future updates, improvements and ideas are listed below:
   <ul>
     <li><i><s>User email verification functionality</s></i> (<b>Released in <a href = "https://github.com/mfacecchia/OrtoPlan/releases/tag/v1.1">v1.1</a></b>) 🎉</li>
     <li><i><s>Password recovery functionality</s></i> (<b>Released in <a href = "https://github.com/mfacecchia/OrtoPlan/releases/tag/v1.1">v1.1</a></b>) 🎉</li>
-    <li>Anti-CSRF Token</li>
+    <li><i><s>Anti-CSRF Token</s></i> (<b>Released in <a href = "https://github.com/mfacecchia/OrtoPlan/releases/tag/v1.1.2">v1.1.2</a></b>)</li>
     <li>Google/GitHub login functionality</li>
     <li>Plantations sharing and collaboration functionality</li>
     <li>Plant finder with <a href = "https://www.algolia.com/doc/">Algolia Search</a> API</li>
