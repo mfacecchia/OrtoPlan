@@ -53,7 +53,6 @@ function confirmRemoval(elementID, type, printError = true, keyPressed = undefin
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 body: JSON.stringify(keyValue),
                 credentials: 'include'

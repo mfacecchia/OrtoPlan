@@ -5,8 +5,7 @@ async function requestNewCode(){
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                "Accept": "application/json"
             },
             credentials: 'include'
         });

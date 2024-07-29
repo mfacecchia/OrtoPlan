@@ -9,9 +9,9 @@ async function getWeatherInfo(plantationID){
     const res = await fetch(`${BACKEND_ADDRESS}/api/weather?lat=${weatherData.locationLat}&long=${weatherData.locationLong}`, {
         method: 'GET',
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
             "Accept": "application/json"
-        }
+        },
+        credentials: 'include'
     });
     if(!res.ok){
         return false;

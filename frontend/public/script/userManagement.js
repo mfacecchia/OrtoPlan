@@ -57,7 +57,6 @@ async function updateUser(keyPressed = undefined){
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 body: JSON.stringify(newUserFormData),
                 credentials: 'include'
@@ -111,7 +110,6 @@ function confirmUserRemoval(keyPressed){
                 method: 'DELETE',
                 headers: {
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 credentials: 'include'
             });

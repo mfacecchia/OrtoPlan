@@ -1,34 +1,30 @@
 async function validateJWT(){
-    if(localStorage.getItem('OPToken')){
-        try{
-            const isTokenValid = await fetch(`${BACKEND_ADDRESS}/user/login`, {
-                method: 'POST',
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('OPToken')}`
-                }
-            });
-            if(!isTokenValid.ok){
-                localStorage.removeItem('OPToken');
-                window.location.pathname = '/login';
-                return;
-            }
-            if(['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/user/plantations';
-        }catch(err){
-            displayMessage('Unknown error. Please try again later.', 'error');
+    try{
+        const isTokenValid = await fetch(`${BACKEND_ADDRESS}/user/login`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        console.log(isTokenValid);
+        if(!isTokenValid.ok){
+            if(!['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/login';
             setTimeout(() => {
-                window.location.pathname = '/';
-            }, 1000);
+                removeLoadingScreen();
+            }, 500);
             return;
         }
+    }catch(err){
+        displayMessage('Unknown error. Please try again later.', 'error');
         setTimeout(() => {
-            removeLoadingScreen();
-        }, 500);
+            window.location.pathname = '/';
+        }, 1000);
         return;
     }
-    if(!['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/login';
+    // Valid JWT
+    if(['/login', '/signup'].includes(window.location.pathname)) window.location.pathname = '/user/plantations';
     setTimeout(() => {
         removeLoadingScreen();
     }, 500);
+    return;
 }
 
 validateJWT();

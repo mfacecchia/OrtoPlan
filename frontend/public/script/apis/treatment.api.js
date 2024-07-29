@@ -4,8 +4,8 @@ async function getTreatmentsList(plantID = undefined){
             method: 'GET',
             headers: {
                 "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            }
+            },
+            credentials: 'include'
         });
         const jsonRes = await res.json();
         if(!res.ok) throw new Error(jsonRes.message);

@@ -71,7 +71,6 @@ async function updateTreatmentInfo(e, form, treatmentID){
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
             },
             body: JSON.stringify(updatedTreatmentData),
             credentials: 'include'
@@ -212,7 +211,6 @@ function newTreatment(plantID, keyPressed){
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 body: JSON.stringify(newTreatmentData),
                 credentials: 'include'

@@ -43,7 +43,6 @@ function newElement(type, plantationID = undefined, keyPressed){
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 body: JSON.stringify(newElementData),
                 credentials: 'include'
@@ -141,9 +140,9 @@ async function modify(elementID, type, keyPressed = undefined){
             const res = await fetch(`${BACKEND_ADDRESS}/api/plants?plantID=${elementID}`, {
                 method: 'GET',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
                     "Accept": "application/json"
-                }
+                },
+                credentials: 'include'
             });
             const jsonRes = await res.json();
             const plantData = jsonRes.plants.plant;
@@ -196,7 +195,6 @@ async function modify(elementID, type, keyPressed = undefined){
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
                 },
                 body: JSON.stringify({
                     ...keyValue,
@@ -249,9 +247,9 @@ async function getUserList(type, plantationID = undefined){
     const res = await fetch(`${BACKEND_ADDRESS}/api/${pluralType}/all${type === 'plant'? `?plantationID=${plantationID}`: ''}`, {
         method: 'GET',
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem('OPToken')}`,
             "Accept": 'application/json'
-        }
+        },
+        credentials: 'include'
     });
     const jsonRes = await res.json();
     const list = jsonRes[pluralType];

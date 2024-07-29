@@ -3,9 +3,9 @@ async function getNotificationsList(){
         const res = await fetch(`${BACKEND_ADDRESS}/api/notifications/all`, {
             method: 'GET',
             headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            }
+                "Accept": "application/json"
+            },
+            credentials: 'include'
         });
         const jsonRes = await res.json();
         if(!res.ok) throw new Error(jsonRes.message);
@@ -20,8 +20,7 @@ async function removeAllNotifications(){
         const res = await fetch(`${BACKEND_ADDRESS}/api/notifications/all`, {
             method: 'DELETE',
             headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                "Accept": "application/json"
             },
             credentials: 'include'
         });
@@ -39,8 +38,7 @@ async function addTreatmentNotification(treatmentData){
             method: 'POST',
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 message: `${treatmentData.treatmentType} scheduled for ${treatmentData.plantationName}'s ${treatmentData.plantName} ${treatmentData.dueInDays > 0? `in ${treatmentData.dueInDays} day(s)`: 'today'}.`,

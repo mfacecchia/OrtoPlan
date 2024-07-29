@@ -4,9 +4,6 @@ async function logout(keyPressed){
     try{
         const res = await fetch(`${BACKEND_ADDRESS}/user/logout`, {
             method: 'POST',
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('OPToken')}`
-            },
             credentials: 'include'
         });
         if(!res.ok){
