@@ -1,6 +1,6 @@
 <img src = "https://github.com/mfacecchia/OrtoPlan/assets/86726458/4a83f60c-361e-45b3-8228-721ee043b1be" alt = "OrtoPlan Logo">
 <h1 align = "center">OrtoPlan</h1>
-<p align = "center">Simple yer useful app to manage plants' care with treatments planning & weather notifications functionalities</p>
+<p align = "center">Simple yet useful app to manage plants' care with treatments planning & weather notifications functionalities</p>
 
 <h2>Table of contents</h2>
 <a href = "#built-in">Built in - Technologies</a><br>
